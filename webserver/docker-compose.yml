@@ -1,0 +1,49 @@
+version: '3.5'
+
+services:
+  web:
+    image: dpdocker-web
+    environment:
+      STARTUP_COMMAND_1: cp /var/www/html/Projects/DPDocker/webserver/scripts/index.php /var/www/html
+      STARTUP_COMMAND_2: php /var/www/html/Projects/DPDocker/webserver/scripts/setup-joomla-site.php j all mysql ${REBUILD}
+      STARTUP_COMMAND_3: php /var/www/html/Projects/DPDocker/webserver/scripts/setup-joomla-site.php dev all mysql ${REBUILD}
+      STARTUP_COMMAND_4: php /var/www/html/Projects/DPDocker/webserver/scripts/setup-joomla-site.php play '' mysql ${REBUILD}
+      STARTUP_COMMAND_5: php /var/www/html/Projects/DPDocker/webserver/scripts/setup-joomla-core.php cms ${REBUILD}
+      STARTUP_COMMAND_6: php /var/www/html/Projects/DPDocker/webserver/scripts/setup-joomla-core.php j4 ${REBUILD}
+      STARTUP_COMMAND_7: sed -i "s/smtphost = 'localhost'/smtphost = 'mailcatcher'/g" /var/www/html/j/configuration.php
+      STARTUP_COMMAND_8: sed -i "s/smtphost = 'localhost'/smtphost = 'mailcatcher'/g" /var/www/html/dev/configuration.php
+    links:
+      - mysql:mysql
+      - mailcatcher:mailcatcher
+    ports:
+      - 80:80
+    volumes:
+      - ./www:/var/www/html
+      - ../..:/var/www/html/Projects
+    extra_hosts:
+      - "joomla.box:127.0.0.1"
+      - "dockerhost:$DOCKERHOST"
+
+  mysql:
+    image: mysql:5.6
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - ./mysql_data:/var/lib/mysql
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+      PMA_USER: root
+      PMA_PASSWORD: root
+    links:
+      - mysql
+    ports:
+      - 81:80
+
+  mailcatcher:
+    image: schickling/mailcatcher
+    ports:
+      - 82:1080

@@ -1,0 +1,14 @@
+version: '3.5'
+
+services:
+  install:
+    image: dpdocker-cli
+    command: /usr/src/Projects/DPDocker/composer/scripts/exec-install.sh ${EXTENSION} ${EXTENSION_FOLDER}
+    volumes:
+      - ../..:/usr/src/Projects
+
+  update:
+    image: dpdocker-cli
+    command: /usr/src/Projects/DPDocker/composer/scripts/exec-update.sh ${EXTENSION} ${EXTENSION_FOLDER}
+    volumes:
+      - ../..:/usr/src/Projects

@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<ruleset name="Digital Peak">
+	<description>The Digital Peak coding standard, based on PSR-2.</description>
+
+	<rule ref="PSR2">
+		<!-- Use tabs -->
+		<exclude name="Generic.WhiteSpace.DisallowTabIndent"/>
+
+		<!-- Allow none namespaced classes -->
+		<exclude name="PSR1.Classes.ClassDeclaration"/>
+
+		<!-- Allow special joomla class names like Pkg_Foo -->
+		<exclude name="Squiz.Classes.ValidClassName"/>
+
+		<!-- Allow underscore in properties and functions for Joomla compat -->
+		<exclude name="PSR2.Classes.PropertyDeclaration"/>
+		<exclude name="PSR2.Methods.MethodDeclaration"/>
+
+		<!-- Allow code in classes like class check on top -->
+		<exclude name="PSR1.Files.SideEffects"/>
+
+		<!-- Allow else if -->
+		<exclude name="PSR2.ControlStructures.ElseIfDeclaration"/>
+	</rule>
+
+	<!-- Use tabs instead of spaces -->
+	<rule ref="Generic.WhiteSpace.DisallowSpaceIndent"/>
+	<rule ref="Generic.WhiteSpace.ScopeIndent">
+		<properties>
+			<property name="indent" value="4"/>
+			<property name="tabIndent" value="true"/>
+		</properties>
+	</rule>
+
+	<!-- Allow line length 150 -->
+	<rule ref="Generic.Files.LineLength">
+		<properties>
+			<!-- We are tolerant here -->
+			<property name="lineLimit" value="1500"/>
+			<property name="absoluteLineLimit" value="0"/>
+		</properties>
+	</rule>
+
+	<!-- Else if divided -->
+	<rule ref="Squiz.ControlStructures.ElseIfDeclaration"/>
+
+	<!-- Short arrays -->
+	<rule ref="Generic.Arrays.DisallowLongArraySyntax.Found"/>
+
+	<!-- Strict documents -->
+	<!-- <rule ref="Generic.Commenting.DocComment"/> -->
+
+	<!-- Excludes -->
+	<exclude-pattern>*/node_modules/*</exclude-pattern>
+	<exclude-pattern>*/vendor/*</exclude-pattern>
+	<exclude-pattern>*/media/*</exclude-pattern>
+	<!-- Wait till https://github.com/squizlabs/PHP_CodeSniffer/issues/2747 is fixed -->
+	<exclude-pattern>**/*.js</exclude-pattern>
+</ruleset>

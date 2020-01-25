@@ -1,0 +1,6 @@
+{
+  "require": {
+    "codeception/codeception": "~3.1.1",
+    "joomla-projects/joomla-browser": "~3.9"
+  }
+}

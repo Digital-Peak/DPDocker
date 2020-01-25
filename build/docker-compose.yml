@@ -1,0 +1,8 @@
+version: '3.5'
+
+services:
+  build:
+    image: dpdocker-cli
+    command: /usr/src/Projects/DPDocker/build/scripts/exec-build.sh ${EXTENSION} ${VERSION}
+    volumes:
+      - ../..:/usr/src/Projects

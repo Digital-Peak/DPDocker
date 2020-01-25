@@ -1,0 +1,14 @@
+{
+  "name": "DPDocker",
+  "engines": {
+    "node": "12.x"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.7.2",
+    "@babel/preset-env": "^7.7.1",
+    "node-sass": "^4.13.0",
+    "node-watch": "^0.6.3",
+    "uglify-js": "^3.6.8",
+    "rollup": "^1.29.0"
+  }
+}

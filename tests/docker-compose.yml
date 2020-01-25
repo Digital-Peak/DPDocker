@@ -1,0 +1,56 @@
+version: '3.5'
+
+services:
+  system-tests:
+    image: dpdocker-cli
+    command: /usr/src/Projects/DPDocker/tests/scripts/exec-system-tests.sh ${EXTENSION} ${TEST}
+    volumes:
+      - ../..:/usr/src/Projects
+      - /tmp/tests:/tmp/tests
+
+  selenium-test:
+    image: selenium/standalone-chrome-debug
+    ports:
+      - 4444:4444
+      - 5900:5900
+    volumes:
+      - /dev/shm:/dev/shm
+      - /tmp/tests:/tmp/tests
+
+  web-test:
+    image: dpdocker-web
+    environment:
+      STARTUP_COMMAND_1: php /var/www/html/Projects/DPDocker/webserver/scripts/setup-joomla-site.php joomla ${EXTENSION} mysql-test ${REBUILD}
+      # Some defaults
+      STARTUP_COMMAND_2: sudo sed -i "s/error_reporting = 'default'/error_reporting = 'development'/g" /var/www/html/joomla/configuration.php
+      STARTUP_COMMAND_3: sudo sed -i "s/debug = 1/debug = 0/g" /var/www/html/joomla/configuration.php
+      STARTUP_COMMAND_4: sudo sed -i "s/sef = 1/sef = 0/g" /var/www/html/joomla/configuration.php
+      STARTUP_COMMAND_5: sudo sed -i "s/mailonline = '1'/mailonline = '0'/g" /var/www/html/joomla/configuration.php
+    links:
+      - mysql-test
+    ports:
+      - 8080:80
+    volumes:
+      - ./www:/var/www/html
+      - ../..:/var/www/html/Projects
+
+  mysql-test:
+    image: mysql:5.6
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - 3306:3306
+    volumes:
+      - ./mysql_data:/var/lib/mysql
+
+  phpmyadmin-test:
+    image: phpmyadmin/phpmyadmin
+    environment:
+      PMA_HOST: mysql-test
+      PMA_PORT: 3306
+      PMA_USER: root
+      PMA_PASSWORD: root
+    links:
+      - mysql-test
+    ports:
+      - 8081:80

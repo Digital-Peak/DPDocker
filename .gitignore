@@ -1,0 +1,8 @@
+.idea
+**/tmp
+**/www
+**/mysql_data
+**/vendor/
+**/node_modules/
+build/dist
+code/config/joomla

@@ -1,0 +1,20 @@
+version: '3.5'
+
+services:
+  check:
+    image: dpdocker-cli
+    command: /usr/src/Projects/DPDocker/code/scripts/exec-check.sh ${EXTENSION} ${FILE}
+    volumes:
+      - ../..:/usr/src/Projects
+
+  fix:
+    image: dpdocker-cli
+    command: /usr/src/Projects/DPDocker/code/scripts/exec-fix.sh ${EXTENSION} ${FILE}
+    volumes:
+      - ../..:/usr/src/Projects
+
+  stats:
+    image: dpdocker-cli
+    command: /usr/src/Projects/DPDocker/code/scripts/exec-stats.sh ${EXTENSION} ${FILE}
+    volumes:
+      - ../..:/usr/src/Projects

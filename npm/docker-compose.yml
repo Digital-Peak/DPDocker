@@ -1,0 +1,35 @@
+version: '3.5'
+
+services:
+  install:
+    image: dpdocker-cli
+    command: npm install ${INCLUDE_VENDOR}
+    working_dir: /usr/src/Projects/${EXTENSION}/package
+    volumes:
+      - ../..:/usr/src/Projects
+
+  update:
+    image: dpdocker-cli
+    command: npm update
+    working_dir: /usr/src/Projects/${EXTENSION}/package
+    volumes:
+      - ../..:/usr/src/Projects
+
+  outdated:
+    image: dpdocker-cli
+    command: npm outdated
+    working_dir: /usr/src/Projects/${EXTENSION}/package
+    volumes:
+      - ../..:/usr/src/Projects
+
+  build:
+    image: dpdocker-cli
+    command: /usr/src/Projects/DPDocker/npm/scripts/exec-build.sh /usr/src/Projects/${EXTENSION} ${INCLUDE_VENDOR}
+    volumes:
+      - ../..:/usr/src/Projects
+
+  watch:
+    image: dpdocker-cli
+    command: /usr/src/Projects/DPDocker/npm/scripts/exec-watch.sh /usr/src/Projects/${EXTENSION} ${INCLUDE_VENDOR}
+    volumes:
+      - ../..:/usr/src/Projects

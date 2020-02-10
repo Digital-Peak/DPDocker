@@ -25,13 +25,13 @@ if ($argv[2] == 'all') {
 }
 
 foreach ($folders as $project) {
-	// Ignore projects with a dash when not a dev site is built
-	if ($argv[1] != 'dev' && strpos($project, '-') > 0) {
+	// Ignore projects with a dash when not a dev site is built and we use all extensions
+	if ($argv[2] == 'all' && $argv[1] != 'dev' && strpos($project, '-') > 0) {
 		continue;
 	}
 
-	// Ignore all non dev projects when we have a dev site
-	if ($argv[1] == 'dev' && strpos($project, '-Dev') === false) {
+	// Ignore all non dev projects when we have a dev site and we use all extensions
+	if ($argv[2] == 'all' && $argv[1] == 'dev' && strpos($project, '-Dev') === false) {
 		continue;
 	}
 

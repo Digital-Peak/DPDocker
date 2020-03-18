@@ -25,7 +25,7 @@ services:
       STARTUP_COMMAND_2: sudo sed -i "s/error_reporting = 'default'/error_reporting = 'development'/g" /var/www/html/joomla/configuration.php
       STARTUP_COMMAND_3: sudo sed -i "s/debug = 1/debug = 0/g" /var/www/html/joomla/configuration.php
       STARTUP_COMMAND_4: sudo sed -i "s/sef = 1/sef = 0/g" /var/www/html/joomla/configuration.php
-      STARTUP_COMMAND_5: sudo sed -i "s/mailonline = '1'/mailonline = '0'/g" /var/www/html/joomla/configuration.php
+      STARTUP_COMMAND_5: sed -i "s/smtphost = 'localhost'/smtphost = 'mailcatcher-test'/g" /var/www/html/joomla/configuration.php
     links:
       - mysql-test
     ports:
@@ -54,3 +54,8 @@ services:
       - mysql-test
     ports:
       - 8081:80
+
+  mailcatcher-test:
+    image: schickling/mailcatcher
+    ports:
+      - 8082:1080

@@ -20,6 +20,8 @@ The test attribute is optional. If it is set then only this test is executed, ot
 ## Internals
 Running the system tests is a rather complex setup. Due some startup issues we need to start every container manually. Five containers are started actually. First the mySQL container. Then the web server which is accessible on the url _localhost:8080/joomla_ and selenium. If all are up, then the actual system tests are executed.
 
+During a test PHPMyAdmin is available under _localhost:8081_ and the mailcatcher on _localhost:8082_.
+
 Every suite needs an install folder which contains some setup tasks during installation of the extension.
 
 ## Result

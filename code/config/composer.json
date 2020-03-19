@@ -1,6 +1,6 @@
 {
     "require": {
         "squizlabs/php_codesniffer": "^3.5",
-        "phploc/phploc": "^5.0"
+        "phploc/phploc": "^6.0"
     }
 }

@@ -19,9 +19,14 @@ if (is_dir($wwwRoot)) {
 }
 shell_exec($binary . ' site:create ' . $argv[1] . ' --www=/var/www/html --disable-ssl --mysql-host=' . $db);
 
+// Check if extensions are needed to be installed
+if (!$argv[2]) {
+	return;
+}
+
 $folders = explode(',', $argv[2]);
 if ($argv[2] == 'all') {
-	$folders = array_diff(scandir(dirname(dirname(dirname(__DIR__)))), array('..', '.'));
+	$folders = array_diff(scandir(dirname(dirname(dirname(__DIR__)))), ['..', '.', 'DPDocker']);
 }
 
 foreach ($folders as $project) {

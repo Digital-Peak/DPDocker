@@ -5,6 +5,10 @@
  * @license    http://www.gnu.org/licenses/gpl.html GNU/GPL
  */
 
+if (!is_dir('/var/www/html/Projects/' . $argv[1])) {
+	return;
+}
+
 $wwwRoot = '/var/www/html/' . $argv[1];
 $force   = array_key_exists(2, $argv) ? (bool)$argv[2] : false;
 

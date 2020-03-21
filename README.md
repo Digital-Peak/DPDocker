@@ -14,7 +14,7 @@ You only need the `docker` and `docker-compose` binaries installed. For your con
 ## Installation
 Clone this repository:
 
-`clone https://github.com/Digital-Peak/DPDocker.git`
+`git clone https://github.com/Digital-Peak/DPDocker.git`
 
 Build the images for the different tasks:
 

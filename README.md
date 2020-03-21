@@ -14,7 +14,7 @@ You only need the `docker` and `docker-compose` binaries installed. For your con
 ## Installation
 Clone this repository:
 
-`clone https://github.com/Digital-Peak/DPDocker.git`
+`git clone https://github.com/Digital-Peak/DPDocker.git`
 
 Build the images for the different tasks:
 
@@ -29,6 +29,8 @@ Creates installable packages based on a build.json file.
 Different code quality tasks.
 - [Composer](composer)  
 Installs or updates all PHP dependencies in the extension and performs some cleanup to be production ready.
+- [Joomla PR](joomla-pr)  
+Does start a web server with a joomla pr.
 - [Npm](npm)  
 Some npm tasks to install or update the Javascript dependencies. Additionally there is a task to build the assets or do watch the extension for changes and do direct builds.
 - [Tests](tests)  

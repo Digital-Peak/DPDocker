@@ -17,7 +17,7 @@ ln -s /usr/src/Projects/DPDocker/composer/tmp /home/docker/.composer
 echo "Started to update the PHP dependencies on $root/$1!"
 
 # Loop over composer files
-for fname in $(find $root/$1/$2 -path ./vendor -prune -o -name "composer.json"); do
+for fname in $(find $root/$1/$2 -path ./vendor -prune -o -name "composer.json" 2>/dev/null); do
   # Exclude the files in vendor directories
   if [[ $fname == *"vendor"* ]]; then
     continue

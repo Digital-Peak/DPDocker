@@ -12,3 +12,15 @@ services:
     command: /usr/src/Projects/DPDocker/composer/scripts/exec-update.sh ${EXTENSION} ${EXTENSION_FOLDER}
     volumes:
       - ../..:/usr/src/Projects
+
+  dep-tree:
+    image: dpdocker-cli
+    command: /usr/src/Projects/DPDocker/composer/scripts/exec-dep-tree.sh ${EXTENSION} ${EXTENSION_FOLDER}
+    volumes:
+      - ../..:/usr/src/Projects
+
+  list:
+    image: dpdocker-cli
+    command: /usr/src/Projects/DPDocker/composer/scripts/exec-list.sh ${EXTENSION} ${EXTENSION_FOLDER}
+    volumes:
+      - ../..:/usr/src/Projects

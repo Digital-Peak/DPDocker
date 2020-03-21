@@ -14,7 +14,7 @@ fi
 
 ln -s /usr/src/Projects/DPDocker/composer/tmp /home/docker/.composer
 
-echo "Started to install the PHP dependencies on $root/$1!"
+echo "Started to show the PHP dependency tree on $root/$1!"
 
 # Loop over composer files
 for fname in $(find $root/$1/$2 -path ./vendor -prune -o -name "composer.json" 2>/dev/null); do
@@ -32,26 +32,7 @@ for fname in $(find $root/$1/$2 -path ./vendor -prune -o -name "composer.json" 2
 
   cd $projectDirectory
 
-  echo "Installing $(dirname ${fname#"$root/"})!"
+  echo "Showing tree for $(dirname ${fname#"$root/"})!"
 
-  # Remove the vendors directory
-  if [ -d "$projectDirectory/vendor" ]; then
-    sudo rm -rf "$projectDirectory/vendor"
-  fi
-
-  # Install the dependencies
-  composer install -o --no-dev --prefer-dist --quiet
-
-  if [ -z $3 ]; then
-    echo "Outdated packages"
-    composer outdated
-  fi
-
-  # If we are not generating an extension cleanup the directory
-  if [[ "$2" != "docs" && "$2" != "tests" ]]; then
-    echo "Cleaning up files in vendor"
-    php $(dirname $0)/cleanup-vendors.php $projectDirectory > /dev/null
-  fi
-
-  echo "Finished installing $(dirname ${fname#"$root/"})!"
+  composer show --tree
 done

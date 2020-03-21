@@ -1,0 +1,43 @@
+version: '3.5'
+
+services:
+  joomla-pr:
+    image: dpdocker-web
+    environment:
+      STARTUP_COMMAND_1: /var/www/html/Projects/DPDocker/joomla-pr/scripts/exec-joomla-pr-webserver.sh ${TEST} ${REBUILD}
+      JOOMLA_INSTALLATION_DISABLE_LOCALHOST_CHECK: 1
+    links:
+      - mysql-pr
+      - mailcatcher-pr
+      - phpmyadmin-pr
+    ports:
+      - 8090:80
+    volumes:
+      - ./www:/var/www/html
+      - ../..:/var/www/html/Projects
+
+  mysql-pr:
+    image: mysql:5.6
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - 3306:3306
+    volumes:
+      - ./mysql_data:/var/lib/mysql
+
+  phpmyadmin-pr:
+    image: phpmyadmin/phpmyadmin
+    environment:
+      PMA_HOST: mysql-pr
+      PMA_PORT: 3306
+      PMA_USER: root
+      PMA_PASSWORD: root
+    links:
+      - mysql-pr
+    ports:
+      - 8091:80
+
+  mailcatcher-pr:
+    image: schickling/mailcatcher
+    ports:
+      - 8092:1080

@@ -7,7 +7,7 @@ Through a VNC viewer you can actually see what is executed inside a container in
 The extension needs a tests folder with an acceptance folder which contains the tests.
 
 ## Execute
-To run a build, execute the following command:
+To run the extension tests, execute the following command:
 
 `./run-system-tests.sh extension [test]`
 

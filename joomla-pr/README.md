@@ -13,7 +13,7 @@ Example
 The rebuild attribute is optional. If it is set and you have used that pr before it cleans the installation, otherwise it just reuses it.
 
 ## Internals
-Joomla is cloned from Github and the given pr is checked out. "npm install" and "composer install" is executed after the clone. The MySQL server is available on "mysql-pr" with root/root as credentials.
+Joomla is cloned from Github and the given pr is checked out. "npm install" and "composer install" is executed after the clone. Then the joomla SQL file is executed and the proper configuration.php file created. After installation is the website ready to be used.
 
 During a test PHPMyAdmin is available under _localhost:8091_ and the mailcatcher on _localhost:8092_.
 

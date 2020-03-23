@@ -18,8 +18,8 @@ echo "Started to update the PHP dependencies on $root/$1!"
 
 # Loop over composer files
 for fname in $(find $root/$1/$2 -path ./vendor -prune -o -name "composer.json" 2>/dev/null); do
-  # Exclude the files in vendor directories
-  if [[ $fname == *"vendor"* ]]; then
+  # Exclude the files in vendor, www or tmp directories
+  if [[ $fname == *"vendor"* || $fname == *"www"* || $fname == *"tmp"* ]]; then
     continue
   fi
 

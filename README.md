@@ -1,5 +1,5 @@
-# Docker containers for Joomla extension development
-This repository contains different docker tasks which do help for Joomla extension development.
+# Docker containers for Joomla core and extension development
+This repository contains different docker tasks which do help for Joomla core and extension development.
 
 ## Introduction
 Docker allows to perform tasks inside containers. Like that you are not forced to mess around with dependencies on your working computer. Just execute the containers and you are good to go.

@@ -26,11 +26,13 @@ fi
 if [ -f $root/package.json ]; then
   if [ ! -z $rebuild ]; then
     echo "Cleaning the assets"
-    npm c &>/dev/null
+    rm -rf $root/node_modules
+    rm -rf $root/administrator/components/com_media/node_modules
+    rm -rf $root/media
   fi
-  if [[ ! -d $root/media/vendor ||  ! -z $rebuild ]]; then
-    echo "Installing the assets"
-    npm i &>/dev/null
+  if [ ! -d $root/media/vendor ]; then
+    echo "Installing the assets (takes a while!)"
+    npm ci &>/dev/null
   fi
 fi
 

@@ -38,7 +38,7 @@ git checkout pr-$1 &>/dev/null
 
 /var/www/html/Projects/DPDocker/webserver/scripts/install-joomla.sh $root $2-pr pr_$1 "Joomla PR $1" mailcatcher-pr $3
 
-echo -e "\e[32mPR $1 is checked out and ready to test on http://localhost:8090/pr/$1!"
+echo -e "\e[32mPR $1 is checked out and ready to test on http://localhost:8090/pr/$1/administrator!"
 echo -e "\e[32mYou can log in with admin/admin!"
 echo -e "\e[32mPHPMyAdmin is available on http://localhost:8091!"
 echo -e "\e[32mpgAdmin is available on http://localhost:8092, credentials are admin@example.com/root!"

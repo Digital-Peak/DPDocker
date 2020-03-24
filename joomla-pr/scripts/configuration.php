@@ -12,8 +12,8 @@ class JConfig {
 	public $debug = false;
 	public $debug_lang = false;
 	public $debug_lang_const = true;
-	public $dbtype = 'mysqli';
-	public $host = 'mysql-pr';
+	public $dbtype = '{DBDRIVER}';
+	public $host = '{DBHOST}';
 	public $user = 'root';
 	public $password = 'root';
 	public $db = 'joomla_pr_{PR}';

@@ -6,4 +6,4 @@ if [ ! -d $(dirname $0)/www ]; then
 fi
 
 # Start the dev server
-TEST=$1 REBUILD=$2 EXTENSION= docker-compose -f $(dirname $0)/docker-compose.yml up joomla-pr
+PR=$1 DB=$2 REBUILD=$3 docker-compose -f $(dirname $0)/docker-compose.yml up joomla-pr

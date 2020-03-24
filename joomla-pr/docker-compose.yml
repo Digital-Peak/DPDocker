@@ -4,12 +4,14 @@ services:
   joomla-pr:
     image: dpdocker-web
     environment:
-      STARTUP_COMMAND_1: /var/www/html/Projects/DPDocker/joomla-pr/scripts/exec-joomla-pr-webserver.sh ${TEST} ${REBUILD}
+      STARTUP_COMMAND_1: /var/www/html/Projects/DPDocker/joomla-pr/scripts/exec-joomla-pr-webserver.sh ${PR} ${DB} ${REBUILD}
       JOOMLA_INSTALLATION_DISABLE_LOCALHOST_CHECK: 1
     links:
       - mysql-pr
-      - mailcatcher-pr
+      - postgres-pr
       - phpmyadmin-pr
+      - pgadmin-pr
+      - mailcatcher-pr
     ports:
       - 8090:80
     volumes:
@@ -20,16 +22,21 @@ services:
     image: mysql:5.6
     environment:
       MYSQL_ROOT_PASSWORD: root
-    ports:
-      - 3306:3306
     volumes:
       - ./mysql_data:/var/lib/mysql
+
+  postgres-pr:
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: root
+      POSTGRES_USER: root
+    volumes:
+      - ./postgres_data:/var/lib/postgresql/data
 
   phpmyadmin-pr:
     image: phpmyadmin/phpmyadmin
     environment:
       PMA_HOST: mysql-pr
-      PMA_PORT: 3306
       PMA_USER: root
       PMA_PASSWORD: root
     links:
@@ -37,7 +44,17 @@ services:
     ports:
       - 8091:80
 
+  pgadmin-pr:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@example.com
+      PGADMIN_DEFAULT_PASSWORD: root
+    links:
+      - postgres-pr
+    ports:
+      - 8092:80
+
   mailcatcher-pr:
     image: schickling/mailcatcher
     ports:
-      - 8092:1080
+      - 8093:1080

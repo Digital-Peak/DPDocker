@@ -11,16 +11,17 @@ Nothing special, the extensions do need to follow the directory structure mentio
 ## Execute
 To start the web server, execute the following command:
 
-`./run.sh [rebuild]`
+`./run.sh [db-type] [rebuild]`
 
 Example
 
-`./run.sh`
+`./run.sh postgres rebuild`
 
-The rebuild argument is optional, if set then the whole web server is rebuild and you have a clean setup as when you started it for the first time.
+- The db-type attribute is optional. You can use either _mysql_ or _postgres_. If set then the joomla core installations will be installed with the respective driver. The extension dev sites are always installed with mysql (this will probably change in the future).
+- The rebuild argument is optional, if set then the whole web server is rebuild and you have a clean setup as when you started it for the first time.
 
 ## Internals
-When starting the web server, there are four docker containers executed. An Apache web server, a MySQL server, a phpMyAdmin server and a Mailcatcher. All of them are out of the box ready to use.
+When starting the web server, there are four docker containers executed. An Apache web server, a MySQL server, a phpMyAdmin server, a postgres server, a pgAdmin server and a Mailcatcher. All of them are out of the box ready to use.
 
 To manage the joomla sites and link extensions the great [joomla console project](https://github.com/joomlatools/joomlatools-console) from the joomlatools guys is used.
 
@@ -44,5 +45,7 @@ With the url _localhost/j4_ you get access to a joomla instance which is linked 
 With the url _localhost/wg_ you get access to a webgrind instance, which displays some profiling information. Profiling is enabled on all sites but only with a trigger. This means you have to add _XDEBUG_PROFILE_ to the url or use a browser extension like [Xdebug helper for Firefox](https://addons.mozilla.org/en-US/firefox/addon/xdebug-helper-for-firefox) to profile a site. More information how webgrind works can be found [here](https://github.com/jokkedk/webgrind).
 - **phpMyAdmin**  
 With the url _localhost:81_ you get access to a phpMyAdmin instance.
+- **pgAdmin**  
+With the url _localhost:82_ you get access to a pgAdmin instance.
 - **MailCatcher**  
-With the url _localhost:82_ you get access to a MailCatcher instance. [Mailcatcher](https://mailcatcher.me/) is a simple web front end to read mails. All sites are configured the way that mails are not sent to the real recipient but do land instead in the mailcatcher. This is handy when yo have to deal with mails.
+With the url _localhost:83_ you get access to a MailCatcher instance. [Mailcatcher](https://mailcatcher.me/) is a simple web front end to read mails. All sites are configured the way that mails are not sent to the real recipient but do land instead in the mailcatcher. This is handy when yo have to deal with mails.

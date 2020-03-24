@@ -10,4 +10,4 @@ if [ ! -d $root ]; then
 	ln -s /var/www/html/Projects/$1 $root
 fi
 
-./install-joomla.sh $root $2 $1 "Joomla $1" mailcatcher $3
+/var/www/html/Projects/DPDocker/webserver/scripts/install-joomla.sh $root $2 joomla_$1 "Joomla $1" mailcatcher $3

@@ -14,6 +14,7 @@ services:
       STARTUP_COMMAND_8: sed -i "s/smtphost = 'localhost'/smtphost = 'mailcatcher'/g" /var/www/html/dev/configuration.php
     links:
       - mysql:mysql
+      - postgres:postgres
       - mailcatcher:mailcatcher
     ports:
       - 80:80
@@ -31,7 +32,7 @@ services:
     volumes:
       - ./mysql_data:/var/lib/mysql
 
-  postgres-pr:
+  postgres:
     image: postgres
     environment:
       POSTGRES_PASSWORD: root
@@ -53,17 +54,17 @@ services:
     ports:
       - 81:80
 
-  pgadmin-pr:
+  pgadmin:
     image: dpage/pgadmin4
     environment:
       PGADMIN_DEFAULT_EMAIL: admin@example.com
       PGADMIN_DEFAULT_PASSWORD: root
     links:
-      - postgres-pr
+      - postgres
     ports:
-      - 8092:80
+      - 82:80
 
   mailcatcher:
     image: schickling/mailcatcher
     ports:
-      - 82:1080
+      - 83:1080

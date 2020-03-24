@@ -22,8 +22,6 @@ services:
     image: mysql:5.6
     environment:
       MYSQL_ROOT_PASSWORD: root
-    ports:
-      - 3306:3306
     volumes:
       - ./mysql_data:/var/lib/mysql
 
@@ -32,8 +30,6 @@ services:
     environment:
       POSTGRES_PASSWORD: root
       POSTGRES_USER: root
-    ports:
-      - 5432:5432
     volumes:
       - ./postgres_data:/var/lib/postgresql/data
 
@@ -41,7 +37,6 @@ services:
     image: phpmyadmin/phpmyadmin
     environment:
       PMA_HOST: mysql-pr
-      PMA_PORT: 3306
       PMA_USER: root
       PMA_PASSWORD: root
     links:

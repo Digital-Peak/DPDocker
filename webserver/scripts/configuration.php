@@ -16,7 +16,7 @@ class JConfig {
 	public $host = '{DBHOST}';
 	public $user = 'root';
 	public $password = 'root';
-	public $db = 'joomla_{DBNAME}';
+	public $db = '{DBNAME}';
 	public $dbprefix = 'j_';
 	public $dbencryption = 0;
 	public $dbsslverifyservercert = false;

@@ -15,13 +15,13 @@ To start the web server, execute the following command:
 
 Example
 
-`./run.sh`
+`./run.sh postgres rebuild`
 
 - The db-type attribute is optional. You can use either _mysql_ or _postgres_. If set then the joomla core installations will be installed with the respective driver. The extension dev sites are always installed with mysql (this will probably change in the future).
 - The rebuild argument is optional, if set then the whole web server is rebuild and you have a clean setup as when you started it for the first time.
 
 ## Internals
-When starting the web server, there are four docker containers executed. An Apache web server, a MySQL server, a phpMyAdmin server and a Mailcatcher. All of them are out of the box ready to use.
+When starting the web server, there are four docker containers executed. An Apache web server, a MySQL server, a phpMyAdmin server, a postgres server, a pgAdmin server and a Mailcatcher. All of them are out of the box ready to use.
 
 To manage the joomla sites and link extensions the great [joomla console project](https://github.com/joomlatools/joomlatools-console) from the joomlatools guys is used.
 

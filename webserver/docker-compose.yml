@@ -8,8 +8,8 @@ services:
       STARTUP_COMMAND_2: php /var/www/html/Projects/DPDocker/webserver/scripts/setup-joomla-site.php j all mysql ${REBUILD}
       STARTUP_COMMAND_3: php /var/www/html/Projects/DPDocker/webserver/scripts/setup-joomla-site.php dev all mysql ${REBUILD}
       STARTUP_COMMAND_4: php /var/www/html/Projects/DPDocker/webserver/scripts/setup-joomla-site.php play '' mysql ${REBUILD}
-      STARTUP_COMMAND_5: php /var/www/html/Projects/DPDocker/webserver/scripts/setup-joomla-core.php cms ${REBUILD}
-      STARTUP_COMMAND_6: php /var/www/html/Projects/DPDocker/webserver/scripts/setup-joomla-core.php j4 ${REBUILD}
+      STARTUP_COMMAND_5: /var/www/html/Projects/DPDocker/webserver/scripts/setup-joomla-core.sh cms ${DB} ${REBUILD}
+      STARTUP_COMMAND_6: /var/www/html/Projects/DPDocker/webserver/scripts/setup-joomla-core.sh j4 ${DB} ${REBUILD}
       STARTUP_COMMAND_7: sed -i "s/smtphost = 'localhost'/smtphost = 'mailcatcher'/g" /var/www/html/j/configuration.php
       STARTUP_COMMAND_8: sed -i "s/smtphost = 'localhost'/smtphost = 'mailcatcher'/g" /var/www/html/dev/configuration.php
     links:
@@ -31,6 +31,16 @@ services:
     volumes:
       - ./mysql_data:/var/lib/mysql
 
+  postgres-pr:
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: root
+      POSTGRES_USER: root
+    ports:
+      - 5432:5432
+    volumes:
+      - ./postgres_data:/var/lib/postgresql/data
+
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     environment:
@@ -42,6 +52,16 @@ services:
       - mysql
     ports:
       - 81:80
+
+  pgadmin-pr:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@example.com
+      PGADMIN_DEFAULT_PASSWORD: root
+    links:
+      - postgres-pr
+    ports:
+      - 8092:80
 
   mailcatcher:
     image: schickling/mailcatcher

@@ -4,7 +4,7 @@ class JConfig {
 	public $offline_message = 'This site is down for maintenance.<br>Please check back again soon.';
 	public $display_offline_message = 1;
 	public $offline_image = '';
-	public $sitename = 'PR {PR}';
+	public $sitename = '{SITE}';
 	public $editor = 'tinymce';
 	public $captcha = '0';
 	public $list_limit = 20;
@@ -16,7 +16,7 @@ class JConfig {
 	public $host = '{DBHOST}';
 	public $user = 'root';
 	public $password = 'root';
-	public $db = 'joomla_pr_{PR}';
+	public $db = 'joomla_{DBNAME}';
 	public $dbprefix = 'j_';
 	public $dbencryption = 0;
 	public $dbsslverifyservercert = false;
@@ -39,12 +39,12 @@ class JConfig {
 	public $mailonline = true;
 	public $mailer = 'mail';
 	public $mailfrom = 'admin@example.com';
-	public $fromname = 'PR {PR}';
+	public $fromname = '{SITE}';
 	public $sendmail = '/usr/sbin/sendmail';
 	public $smtpauth = false;
 	public $smtpuser = '';
 	public $smtppass = '';
-	public $smtphost = 'mailcatcher-pr';
+	public $smtphost = '{SMTPHOST}';
 	public $smtpsecure = 'none';
 	public $smtpport = 25;
 	public $caching = 0;
@@ -62,8 +62,8 @@ class JConfig {
 	public $unicodeslugs = false;
 	public $feed_limit = 10;
 	public $feed_email = 'none';
-	public $log_path = '/var/www/html/pr/{PR}/administrator/logs';
-	public $tmp_path = '/var/www/html/pr/{PR}/tmp';
+	public $log_path = '{PATH}/administrator/logs';
+	public $tmp_path = '{PATH}/tmp';
 	public $lifetime = 15;
 	public $session_handler = 'database';
 	public $shared_session = false;

@@ -1,8 +1,7 @@
 {
   "require": {
-    "php-webdriver/webdriver": "1.7.1",
     "codeception/codeception": "~4.1",
-    "codeception/module-webdriver": "^1.0",
+    "codeception/module-webdriver": "^1.0.6",
     "codeception/module-db": "^1.0",
     "codeception/module-filesystem": "^1.0",
     "codeception/module-asserts": "^1.1",

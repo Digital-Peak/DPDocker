@@ -5,13 +5,11 @@ services:
     image: dpdocker-web
     environment:
       STARTUP_COMMAND_1: cp /var/www/html/Projects/DPDocker/webserver/scripts/index.php /var/www/html
-      STARTUP_COMMAND_2: php /var/www/html/Projects/DPDocker/webserver/scripts/setup-joomla-site.php j all mysql ${REBUILD}
-      STARTUP_COMMAND_3: php /var/www/html/Projects/DPDocker/webserver/scripts/setup-joomla-site.php dev all mysql ${REBUILD}
-      STARTUP_COMMAND_4: php /var/www/html/Projects/DPDocker/webserver/scripts/setup-joomla-site.php play '' mysql ${REBUILD}
+      STARTUP_COMMAND_2: php /var/www/html/Projects/DPDocker/webserver/scripts/setup-joomla-site.php j all ${DB} ${REBUILD}
+      STARTUP_COMMAND_3: php /var/www/html/Projects/DPDocker/webserver/scripts/setup-joomla-site.php dev all ${DB} ${REBUILD}
+      STARTUP_COMMAND_4: php /var/www/html/Projects/DPDocker/webserver/scripts/setup-joomla-site.php play '' ${DB} ${REBUILD}
       STARTUP_COMMAND_5: /var/www/html/Projects/DPDocker/webserver/scripts/setup-joomla-core.sh cms ${DB} ${REBUILD}
       STARTUP_COMMAND_6: /var/www/html/Projects/DPDocker/webserver/scripts/setup-joomla-core.sh j4 ${DB} ${REBUILD}
-      STARTUP_COMMAND_7: sed -i "s/smtphost = 'localhost'/smtphost = 'mailcatcher'/g" /var/www/html/j/configuration.php
-      STARTUP_COMMAND_8: sed -i "s/smtphost = 'localhost'/smtphost = 'mailcatcher'/g" /var/www/html/dev/configuration.php
     links:
       - mysql:mysql
       - postgres:postgres

@@ -17,7 +17,7 @@ Example
 
 `./run.sh postgres rebuild`
 
-- The db-type attribute is optional. You can use either _mysql_ or _postgres_. If set then the joomla core installations will be installed with the respective driver. The extension dev sites are always installed with mysql (this will probably change in the future).
+- The db-type attribute is optional. You can use either _mysql_ or _postgres_. If set then the joomla installations will be installed with the respective driver.
 - The rebuild argument is optional, if set then the whole web server is rebuild and you have a clean setup as when you started it for the first time.
 
 ## Internals

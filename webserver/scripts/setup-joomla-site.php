@@ -6,18 +6,34 @@
  */
 
 $wwwRoot = '/var/www/html/' . $argv[1];
-$db      = $argv[3];
+$db      = array_key_exists(3, $argv) ? $argv[3] : 'mysql';
 $force   = array_key_exists(4, $argv) ? (bool)$argv[4] : false;
 $binary  = '/home/docker/.composer/vendor/bin/joomla';
 
-if (is_dir($wwwRoot)) {
-	if (!$force) {
-		return;
+if (is_dir($wwwRoot) && !$force) {
+	return;
+}
+
+if (!is_dir($wwwRoot) || $force) {
+	if (!is_dir('/var/www/html/cache')) {
+		shell_exec('git clone https://github.com/joomla/joomla-cms.git /var/www/html/cache 2>&1 > /dev/null');
+	} else {
+		shell_exec('git --work-tree=/var/www/html/cache --git-dir=/var/www/html/cache/.git fetch origin 2>&1 > /dev/null');
 	}
 
-	shell_exec($binary . ' site:delete ' . $argv[1] . ' --www=/var/www/html --mysql-host=' . $db);
+	shell_exec('rm -rf ' . $wwwRoot);
+	shell_exec('cp -r /var/www/html/cache ' . $wwwRoot);
+
+	$versions = json_decode(file_get_contents('https://downloads.joomla.org/api/v1/latest/cms'));
+	foreach ($versions->branches as $branch) {
+		if (strpos($branch->version, '3.') !== 0) {
+			continue;
+		}
+		// Latest stable release is not working on PHP 7.4
+		//shell_exec('git --work-tree=' . $wwwRoot . ' --git-dir=' . $wwwRoot . '/.git checkout tags/' . $branch->version . ' 2>&1 > /dev/null');
+	}
 }
-shell_exec($binary . ' site:create ' . $argv[1] . ' --www=/var/www/html --disable-ssl --mysql-host=' . $db);
+echo shell_exec('/var/www/html/Projects/DPDocker/webserver/scripts/install-joomla.sh ' . $wwwRoot . ' ' . $db . ' sites_' . $argv[1] . ' "Joomla ' . $argv[1] . '" mailcatcher');
 
 // Check if extensions are needed to be installed
 if (!$argv[2]) {
@@ -42,11 +58,14 @@ foreach ($folders as $project) {
 
 	createLinks('/var/www/html/Projects/' . $project . '/', $wwwRoot);
 }
+echo 'Discovering extensions on ' . $wwwRoot . PHP_EOL;
+rename($wwwRoot . '/installation', $wwwRoot . '/_installation');
 shell_exec($binary . ' extension:install ' . $argv[1] . ' all --www=/var/www/html');
+rename($wwwRoot . '/_installation', $wwwRoot . '/installation');
 
 function createLinks($folderRoot, $wwwRoot)
 {
-	echo 'Starting to create the links for ' . $folderRoot . '.' . PHP_EOL;
+	echo 'Starting to create the links for ' . $folderRoot . PHP_EOL;
 
 	foreach (new DirectoryIterator($folderRoot) as $filename) {
 		if (strpos($filename, 'com_') === 0) {
@@ -89,7 +108,7 @@ function createLinks($folderRoot, $wwwRoot)
 			createLink($folderRoot . $filename, $wwwRoot . '/templates/' . str_replace('tmpl_', '', $filename));
 		}
 	}
-	echo 'Finished to create the links for ' . $folderRoot . '.' . PHP_EOL;
+	echo 'Finished to create the links for ' . $folderRoot . PHP_EOL;
 }
 
 function createLink($source, $target)

@@ -64,7 +64,7 @@ class JConfig {
 	public $feed_email = 'none';
 	public $log_path = '{PATH}/administrator/logs';
 	public $tmp_path = '{PATH}/tmp';
-	public $lifetime = '15';
+	public $lifetime = '9999';
 	public $session_handler = 'database';
 	public $shared_session = '0';
 	public $session_metadata = '1';

@@ -9,7 +9,7 @@ class JConfig {
 	public $captcha = '0';
 	public $list_limit = '20';
 	public $access = '1';
-	public $debug = '0';
+	public $debug = '1';
 	public $debug_lang = '0';
 	public $debug_lang_const = '1';
 	public $dbtype = '{DBDRIVER}';
@@ -56,8 +56,8 @@ class JConfig {
 	public $MetaAuthor = '1';
 	public $MetaVersion = '0';
 	public $robots = '';
-	public $sef = '0';
-	public $sef_rewrite = '0';
+	public $sef = '1';
+	public $sef_rewrite = '1';
 	public $sef_suffix = '0';
 	public $unicodeslugs = '0';
 	public $feed_limit = '10';

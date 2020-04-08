@@ -43,6 +43,10 @@ fi
 
 echo "Setting up Joomla"
 
+if [ ! -f $root/.htaccess ]; then
+  cp $root/htaccess.txt $root/.htaccess
+fi
+
 # Setup configuration file
 cp $(dirname $0)/configuration.php $root/configuration.php
 sed -i "s/{SITE}/$site/g" $root/configuration.php

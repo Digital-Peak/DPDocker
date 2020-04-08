@@ -22,10 +22,9 @@ services:
     environment:
       STARTUP_COMMAND_1: php /var/www/html/Projects/DPDocker/webserver/scripts/setup-joomla-site.php joomla ${EXTENSION} mysql-test ${REBUILD}
       # Some defaults
-      STARTUP_COMMAND_2: sudo sed -i "s/error_reporting = 'default'/error_reporting = 'development'/g" /var/www/html/joomla/configuration.php
-      STARTUP_COMMAND_3: sudo sed -i "s/debug = 1/debug = 0/g" /var/www/html/joomla/configuration.php
-      STARTUP_COMMAND_4: sudo sed -i "s/sef = 1/sef = 0/g" /var/www/html/joomla/configuration.php
-      STARTUP_COMMAND_5: sed -i "s/smtphost = 'localhost'/smtphost = 'mailcatcher-test'/g" /var/www/html/joomla/configuration.php
+      STARTUP_COMMAND_2: sudo sed -i "s/debug = '1'/debug = 0/g" /var/www/html/joomla/configuration.php
+      STARTUP_COMMAND_3: sudo sed -i "s/sef = '1'/sef = 0/g" /var/www/html/joomla/configuration.php
+      STARTUP_COMMAND_4: sudo sed -i "s/smtphost = 'mailcatcher'/smtphost = 'mailcatcher-test'/g" /var/www/html/joomla/configuration.php
     links:
       - mysql-test
     ports:

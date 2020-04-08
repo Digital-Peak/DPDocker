@@ -6,6 +6,8 @@ Through a VNC viewer you can actually see what is executed inside a container in
 ## Prerequisites
 The extension needs a tests folder with an acceptance folder which contains the tests.
 
+If you  have some install tasks which should be executed before every test, then put them into the acceptance/install folder. Additionally add the group annotation @install, because DPDocker is skipping this group on the main codeception install run. [Here](https://codeception.com/docs/07-AdvancedUsage#Groups) you can find more information about codeception groups.
+
 ## Execute
 To run the extension tests, execute the following command:
 
@@ -22,7 +24,7 @@ Running the system tests is a rather complex setup. Due some startup issues we n
 
 During a test PHPMyAdmin is available under _localhost:8081_ and the mailcatcher on _localhost:8082_.
 
-Every suite needs an install folder which contains some setup tasks during installation of the extension.
+Every suite needs an install folder which contains some setup tasks during installation of the extension. The order of the other tests is randomly to prevent execution order issues as every tests need to be isolated.
 
 ## Result
 You will see directly the output of the tests in the console where the system tests are started. If some do fail, then detailed reports are printed.

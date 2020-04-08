@@ -25,16 +25,13 @@ if [ ! -z "$2" ]; then
   exit 1
 fi
 
-# Run the install task first
-vendor/bin/codecept run --env desktop acceptance/install
+if [ -d acceptance/install ]; then
+  # Run the install task first
+  vendor/bin/codecept run --env desktop acceptance/install
 
-# Execute the tests
-for suite in acceptance/*/; do
-  # Install is done already
-  if [[ $suite == *"install"* ]]; then
-    continue
-  fi
+  # Remove the install tests, so they wont be executed again
+  rm -rf acceptance/install
+fi
 
-  # Run the tests
-  vendor/bin/codecept run --env desktop $suite
-done
+# Run the tests
+vendor/bin/codecept run --env desktop acceptance

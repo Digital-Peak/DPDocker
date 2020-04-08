@@ -39,10 +39,7 @@ if [[ $(command -v vinagre) ]]; then
 fi
 
 # Run the tests
-SECONDS=0
 EXTENSION=$1 TEST=$2 REBUILD= docker-compose -f $(dirname $0)/docker-compose.yml run system-tests
-duration=$SECONDS
-echo "It took $(($duration / 60)) minutes and $(($duration % 60)) seconds to run the tests."
 
 # Stop the containers
 if [ -z "$2" ]; then

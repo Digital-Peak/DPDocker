@@ -47,8 +47,8 @@ for fname in $(find $root/$1/$2 -path ./vendor -prune -o -name "composer.json" 2
     composer outdated
   fi
 
-  # If we are not generating an extension cleanup the directory
-  if [[ "$2" != "docs" && "$2" != "tests" ]]; then
+  # Cleanup the directory when we are in an extension directory
+  if [[ "$2" != *"docs"* && "$2" != *"tests"* ]]; then
     echo "Cleaning up files in vendor"
     php $(dirname $0)/cleanup-vendors.php $projectDirectory > /dev/null
   fi

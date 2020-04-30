@@ -21,5 +21,5 @@ RUN sudo apt-get install -y graphviz python
 RUN sudo apt-get install -y build-essential
 RUN sudo apt-get install -y rsync
 
-# Install joomla tools
-RUN composer global require joomlatools/console
+# Install joomla tools to a specific directory to not clash with global composer console dependency
+RUN composer require joomlatools/console -d /home/docker

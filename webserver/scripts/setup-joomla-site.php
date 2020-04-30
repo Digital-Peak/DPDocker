@@ -8,7 +8,7 @@
 $wwwRoot = '/var/www/html/' . $argv[1];
 $db      = array_key_exists(3, $argv) ? $argv[3] : 'mysql';
 $force   = array_key_exists(4, $argv) ? (bool)$argv[4] : false;
-$binary  = '/home/docker/.composer/vendor/bin/joomla';
+$binary  = '/home/docker/vendor/bin/joomla';
 
 if (is_dir($wwwRoot) && !$force) {
 	return;

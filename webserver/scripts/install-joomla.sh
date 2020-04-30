@@ -55,6 +55,12 @@ sed -i "s/{DBNAME}/$dbName/g" $root/configuration.php
 sed -i "s/{SMTPHOST}/$smtpHost/g" $root/configuration.php
 sed -i "s/{PATH}/${root//\//\\/}/g" $root/configuration.php
 
+# Define install folder
+installFolder=$root/installation
+if [ ! -d $installFolder ]; then
+  installFolder=$root/_installation
+fi
+
 if [[ -z $dbHost || $dbHost == 'mysql'* ]]; then
   echo "Installing Joomla with mysql"
   sed -i "s/{DBDRIVER}/mysqli/g" $root/configuration.php
@@ -62,7 +68,7 @@ if [[ -z $dbHost || $dbHost == 'mysql'* ]]; then
   # Install joomla
   mysql -u root -proot -h $dbHost -e "drop database if exists $dbName"
   mysql -u root -proot -h $dbHost -e "create database $dbName"
-  sed "s/#_/j/g" $root/installation/sql/mysql/joomla.sql | mysql -u root -proot -h $dbHost -D $dbName
+  sed "s/#_/j/g" $installFolder/sql/mysql/joomla.sql | mysql -u root -proot -h $dbHost -D $dbName
   mysql -u root -proot -h $dbHost -D $dbName -e "INSERT INTO j_users (id, name, username, email, password, block) VALUES(42, 'Admin', 'admin', 'admin@example.com', '\$2y\$10\$O.A8bZcuC6yFfgjzycqzku7LuG6zvBiozJcjXD4FP3bhJdvyKdtoG', 0)"
   mysql -u root -proot -h $dbHost -D $dbName -e "INSERT INTO j_user_usergroup_map (user_id, group_id) VALUES ('42', '8')"
   mysql -u root -proot -h $dbHost -D $dbName -e "INSERT INTO j_users (id, name, username, email, password, block) VALUES(43, 'Manager', 'manager', 'manager@example.com', '\$2y\$10\$GICucf86nqR95Jz0mGTPkej8Mvzll/DRdXVClsUOkzyIPl6XF.2hS', 0)"
@@ -84,7 +90,7 @@ if [[ $dbHost == 'postgres'* ]]; then
   # Install joomla
   psql -U root -h $dbHost -c "drop database if exists $dbName" > /dev/null
   psql -U root -h $dbHost -c "create database $dbName" > /dev/null
-  sed "s/#_/j/g" $root/installation/sql/postgresql/joomla.sql | psql -U root -h $dbHost -d $dbName > /dev/null
+  sed "s/#_/j/g" $installFolder/sql/postgresql/joomla.sql | psql -U root -h $dbHost -d $dbName > /dev/null
   psql -U root -h $dbHost -d $dbName -c "INSERT INTO j_users (id, name, username, email, password, block,  \"registerDate\", params) VALUES(42, 'Admin', 'admin', 'admin@example.com', '\$2y\$10\$O.A8bZcuC6yFfgjzycqzku7LuG6zvBiozJcjXD4FP3bhJdvyKdtoG', 0, '2020-01-01 00:00:00', '{}')" > /dev/null
   psql -U root -h $dbHost -d $dbName -c "INSERT INTO j_user_usergroup_map (user_id, group_id) VALUES ('42', '8')" > /dev/null
   psql -U root -h $dbHost -d $dbName -c "INSERT INTO j_users (id, name, username, email, password, block,  \"registerDate\", params) VALUES(43, 'Manager', 'manager', 'manager@example.com', '\$2y\$10\$GICucf86nqR95Jz0mGTPkej8Mvzll/DRdXVClsUOkzyIPl6XF.2hS', 0, '2020-01-01 00:00:00', '{}')" > /dev/null

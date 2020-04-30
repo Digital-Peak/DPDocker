@@ -26,11 +26,13 @@ if (!is_dir($wwwRoot) || $force) {
 
 	$versions = json_decode(file_get_contents('https://downloads.joomla.org/api/v1/latest/cms'));
 	foreach ($versions->branches as $branch) {
-		if (strpos($branch->version, '3.') !== 0) {
+		if ($branch->branch !== 'Joomla! 3') {
 			continue;
 		}
-		// Latest stable release is not working on PHP 7.4
-		//shell_exec('git --work-tree=' . $wwwRoot . ' --git-dir=' . $wwwRoot . '/.git checkout tags/' . $branch->version . ' 2>&1 > /dev/null');
+		// Checkout latest stable release
+		shell_exec('git --work-tree=' . $wwwRoot . ' --git-dir=' . $wwwRoot . '/.git checkout tags/' . $branch->version . ' 2>&1 > /dev/null');
+		rename($wwwRoot . '/installation', $wwwRoot . '/_installation');
+		echo 'Switched to version ' . $branch->version . ' on ' . $wwwRoot . PHP_EOL;
 	}
 }
 echo shell_exec('/var/www/html/Projects/DPDocker/webserver/scripts/install-joomla.sh ' . $wwwRoot . ' ' . $db . ' sites_' . $argv[1] . ' "Joomla ' . $argv[1] . '" mailcatcher');
@@ -59,9 +61,7 @@ foreach ($folders as $project) {
 	createLinks('/var/www/html/Projects/' . $project . '/', $wwwRoot);
 }
 echo 'Discovering extensions on ' . $wwwRoot . PHP_EOL;
-rename($wwwRoot . '/installation', $wwwRoot . '/_installation');
 shell_exec($binary . ' extension:install ' . $argv[1] . ' all --www=/var/www/html');
-rename($wwwRoot . '/_installation', $wwwRoot . '/installation');
 
 function createLinks($folderRoot, $wwwRoot)
 {

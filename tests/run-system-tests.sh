@@ -1,5 +1,10 @@
 #!/bin/bash
 
+if [[ ! $(command -v curl) ]]; then
+  echo "Error: curl is not installed, can't run the tests!"
+  exit 1
+fi
+
 # Clear mysql data when running all tests
 if [ -z "$2" ]; then
   # Remove the containers

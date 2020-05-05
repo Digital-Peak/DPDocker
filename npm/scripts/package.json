@@ -7,7 +7,7 @@
     "@babel/core": "^7.8.7",
     "@babel/preset-env": "^7.8.7",
     "node-sass": "^4.13.1",
-    "node-watch": "^0.6.3",
+    "node-watch": "^0.6.4",
     "rollup": "^2.1",
     "uglify-js": "^3.8.0"
   }

@@ -31,6 +31,9 @@ if [ ! -z "$version" ]; then
   find $workingDir/$extension -type f -name "*.xml" -exec sed -i "s/DP_DEPLOY_DATE/$(LANG=en_us_88591; date "+%-d %b %Y")/g" {} +
 fi
 
+echo "Clearing comments from ini files"
+find $workingDir/$extension -type f -name "*.ini" -exec sed -i "/^;/d;/^$/d" {} +
+
 echo "Executing the build script to create the installation packages"
 php $(dirname $0)/build.php $workingDir/$extension
 

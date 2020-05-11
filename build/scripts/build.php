@@ -146,12 +146,6 @@ class DPDockerReleaseBuild
 			// Remove trailing slashes
 			$fileName = trim($fileName, '/');
 
-			// Remove comments in language files
-			if ($file->getExtension() == 'ini') {
-				// Remove lines starting with semi colon and delete empty lines
-				shell_exec("sed -i '/^;/d;/^$/d' " . $filePath);
-			}
-
 			// Add current file to archive
 			$zip->addFile($filePath, $fileName);
 		}

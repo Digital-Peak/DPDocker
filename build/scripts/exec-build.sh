@@ -23,9 +23,7 @@ echo "Installing dependencies"
 $(dirname $0)/../../composer/scripts/exec-install.sh $extension '' $workingDir
 
 echo "Building assets"
-cd $workingDir/$extension/package
-npm install
-$(dirname $0)/../../npm/scripts/exec-build.sh $workingDir/$extension true
+$(dirname $0)/../../npm/scripts/exec-npm-install.sh $extension '' $workingDir
 
 if [ ! -z "$version" ]; then
   echo "Define version number in manifest files"

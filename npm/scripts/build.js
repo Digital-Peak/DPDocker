@@ -7,6 +7,11 @@ const util = require('./util');
 // Global variables
 const root = path.resolve(process.argv[2]);
 
+if (!fs.existsSync(root + '/package/assets.json')) {
+	console.log('Nothing to build as ' + root + '/package/assets.json not found');
+	return;
+}
+
 // Loading the assets from the assets file of the extension
 const assets = JSON.parse(fs.readFileSync(root + '/package/assets.json', 'utf8'));
 

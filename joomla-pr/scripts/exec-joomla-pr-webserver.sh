@@ -29,14 +29,28 @@ fi
 
 cd $root
 
-# Switch to the pr
-echo "Switching to pr code"
-git reset --hard &>/dev/null
-git branch -D pr-$1 &>/dev/null
-git fetch origin pull/$1/head:pr-$1 &>/dev/null
-git checkout pr-$1 &>/dev/null
+if [[ ! $1 =~ ^-?[0-9]+$ ]]; then
+  # Switch to the branch
+  echo "Switching to branch $1 code"
+  git reset --hard &>/dev/null
+  git branch -D $1 &>/dev/null
+  git fetch origin $1 &>/dev/null
+  git checkout $1 &>/dev/null
+else
+  # Switch to the pr
+  echo "Switching to pr $1 code"
+  git reset --hard &>/dev/null
+  git branch -D pr-$1 &>/dev/null
+  git fetch origin pull/$1/head:pr-$1 &>/dev/null
+  git checkout pr-$1 &>/dev/null
+fi
 
-/var/www/html/Projects/DPDocker/webserver/scripts/install-joomla.sh $root $2-pr pr_$1 "Joomla PR $1" mailcatcher-pr $3
+dbHost=$2
+if [ -z $dbHost ]; then
+  dbHost="mysql"
+fi
+
+/var/www/html/Projects/DPDocker/webserver/scripts/install-joomla.sh $root $dbHost-pr pr_$1 "Joomla PR $1" mailcatcher-pr $3
 
 echo -e "\e[32mPR $1 is checked out and ready to test on http://localhost:8090/pr/$1/administrator!"
 echo -e "\e[32mYou can log in with admin/admin!"

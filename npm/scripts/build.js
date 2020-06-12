@@ -22,6 +22,10 @@ function buildAssets(root, assets, includeVendor)
 	// Looping over the assets
 	console.log('Started to build the assets for ' + root);
 	assets.local.forEach(asset => {
+		if (!fs.existsSync(root + '/' + asset.src)) {
+			return;
+		}
+
 		// If it is a single asset transpile it directly
 		if (!fs.lstatSync(root + '/' + asset.src).isDirectory()) {
 			util.transpile(root + '/' + asset.src, root + '/' + asset.dest, false);

@@ -21,6 +21,10 @@ if (assets.localDev) {
 }
 
 assets.local.forEach(asset => {
+	if (!fs.existsSync(root + '/' + asset.src)) {
+		return;
+	}
+
 	filesToWatch.push(root + '/' + asset.src);
 
 	// If it is a single file add it to the index only

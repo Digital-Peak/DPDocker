@@ -16,15 +16,19 @@ $toDelete = [
 	'git',
 	'build/',
 	'composer.json',
+	'composer.lock',
 	'README',
 	'ChangeLog',
 	'CONTRIBUTING',
 	'UPGRADE',
+	'UPGRADING',
 	'Makefile',
+	'Dockerfile',
 	'.travis',
 	'.styleci',
 	'.sh',
 	'.dist',
+	'.php_cs',
 	'scrutinizer'
 ];
 

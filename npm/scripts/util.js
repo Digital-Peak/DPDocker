@@ -24,6 +24,11 @@ function transpile(source, destination, isVendor)
 	switch (path.extname(source).replace('.', '')) {
 		case 'js':
 			const babelify = (file, full) => {
+				if (destination.indexOf('.min.') > 0) {
+					fs.copyFileSync(file, destination.replace('.min.js', '.js'));
+					return;
+				}
+
 				// Transform the content to ensure we support the required browsers
 				let result = babel.transformSync(fs.readFileSync(file, 'utf8'), {
 					sourceMaps: true,

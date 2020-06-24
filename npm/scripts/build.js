@@ -1,6 +1,7 @@
 // The needed libs
 const fs = require('fs');
 const path = require('path');
+const request = require('sync-request');
 const sass = require('node-sass');
 const util = require('./util');
 
@@ -80,8 +81,15 @@ function buildAssets(root, assets, includeVendor)
 				return;
 			}
 
+			let content = '';
+			if (source.indexOf('https://') === 0) {
+				content = '' + request('GET', source).getBody();
+			} else {
+				content = fs.readFileSync(file);
+			}
+
 			// Append to the existing file
-			fs.appendFileSync(root + '/' + asset.dest, fs.readFileSync(file));
+			fs.appendFileSync(root + '/' + asset.dest, content);
 		});
 
 		// If defined, replace in the asset copy some content

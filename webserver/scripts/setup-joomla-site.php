@@ -32,7 +32,7 @@ if (!is_dir($wwwRoot) || $force) {
 		// Checkout latest stable release
 		shell_exec('git --work-tree=' . $wwwRoot . ' --git-dir=' . $wwwRoot . '/.git checkout tags/' . $branch->version . ' 2>&1 > /dev/null');
 		rename($wwwRoot . '/installation', $wwwRoot . '/_installation');
-		echo 'Switched to version ' . $branch->version . ' on ' . $wwwRoot . PHP_EOL;
+		echo 'Using version ' . $branch->version . ' on ' . $wwwRoot . PHP_EOL;
 	}
 }
 echo shell_exec('/var/www/html/Projects/DPDocker/webserver/scripts/install-joomla.sh ' . $wwwRoot . ' ' . $db . ' sites_' . $argv[1] . ' "Joomla ' . $argv[1] . '" mailcatcher');
@@ -57,6 +57,15 @@ foreach ($folders as $project) {
 	if ($argv[2] == 'all' && $argv[1] == 'dev' && strpos($project, '-Dev') === false) {
 		continue;
 	}
+
+	// Check if it is a Joomla installation
+	if (file_exists('/var/www/html/Projects/' . $project . '/includes')) {
+		continue;
+	}
+
+	echo 'Building extension ' . $project . PHP_EOL;
+	shell_exec('/var/www/html/Projects/DPDocker/composer/scripts/exec-install.sh ' . $project);
+	shell_exec('/var/www/html/Projects/DPDocker/npm/scripts/exec-npm-install.sh ' . $project . ' 2>/dev/null');
 
 	createLinks('/var/www/html/Projects/' . $project . '/', $wwwRoot);
 }

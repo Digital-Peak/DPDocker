@@ -32,6 +32,7 @@ services:
     volumes:
       - ./www:/var/www/html
       - ../..:/var/www/html/Projects
+      - ../..:/usr/src/Projects
 
   mysql-test:
     image: mysql:5.6

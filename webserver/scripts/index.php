@@ -21,9 +21,12 @@
 <p>More information can be found on <a href="https://github.com/Digital-Peak/DPDocker/tree/initial/webserver">Github</a>.</p>
 <p>Here is the list of available sites:</p>
 <ul>
-	<li><a href="j">Patch release Joomla site with local extensions linked</a></li>
-	<li><a href="dev">Feature release Joomla site with dev extensions linked</a></li>
-	<li><a href="dev">Feature release Joomla site with dev extensions linked</a></li>
+	<li><a href="j3">Patch release Joomla 3 site with local extensions linked</a></li>
+	<li><a href="dev3">Feature release Joomla 3 site with dev extensions linked</a></li>
+	<li><a href="j4">Patch release Joomla 4 site with local extensions linked</a></li>
+	<li><a href="dev4">Feature release Joomla 4 site with dev extensions linked</a></li>
+	<li><a href="play3">Joomla 3 playground</a></li>
+	<li><a href="play4">Joomla 4 playground</a></li>
 	<li><a href="//<?php echo $_SERVER['SERVER_NAME']; ?>:81">PHPMyAdmin installation</a></li>
 	<li><a href="//<?php echo $_SERVER['SERVER_NAME']; ?>:82">Mailcatcher installation</a></li>
 </ul>

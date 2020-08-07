@@ -26,3 +26,13 @@ RUN composer require joomlatools/console -d /home/docker
 
 # Install webgrind
 RUN git clone https://github.com/jokkedk/webgrind /var/www/html/wg
+
+# Enable the apache ssl extensions
+ENV APACHE_EXTENSION_SOCACHE_SHMCB=1
+ENV APACHE_EXTENSION_SSL=1
+
+# Setup the keys
+RUN mkdir /home/docker/keys
+RUN openssl req -new -newkey rsa:4096 -nodes -keyout /home/docker/keys/server.key -out /home/docker/keys/server.csr -subj "/CN=localhost"
+RUN openssl x509 -req -days 365 -in /home/docker/keys/server.csr -signkey /home/docker/keys/server.key -out /home/docker/keys/server.crt
+COPY 000-default-ssl.conf /etc/apache2/sites-enabled/000-default-ssl.conf

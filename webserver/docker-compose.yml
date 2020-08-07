@@ -19,6 +19,7 @@ services:
       - mailcatcher:mailcatcher
     ports:
       - 80:80
+      - 443:443
     volumes:
       - ./www:/var/www/html
       - ../..:/var/www/html/Projects

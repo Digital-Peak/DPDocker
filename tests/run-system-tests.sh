@@ -12,8 +12,13 @@ if [ -z "$2" ]; then
 
   # Cleanup data dirs
   sudo rm -rf $(dirname $0)/mysql_data
-  sudo rm -rf $(dirname $0)/www
-  mkdir $(dirname $0)/www
+
+  if [ ! -d $(dirname $0)/www ]; then
+    mkdir $(dirname $0)/www
+  fi
+  if [ -d $(dirname $0)/www/joomla ]; then
+    sudo rm -rf $(dirname $0)/www/joomla
+  fi
 
   # We start mysql early to rebuild the database
   EXTENSION=$1 TEST=$2 REBUILD= docker-compose -f $(dirname $0)/docker-compose.yml up -d mysql-test

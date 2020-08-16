@@ -5,6 +5,15 @@ if [ -z $root ]; then
   root=$(realpath $(dirname $0)/../../../)
 fi
 
+# Link host directory as npm dir for caching
+rm -rf /home/docker/.npm
+
+if [ ! -d /usr/src/Projects/DPDocker/npm/tmp ]; then
+  mkdir /usr/src/Projects/DPDocker/npm/tmp
+fi
+
+ln -s /usr/src/Projects/DPDocker/composer/tmp /home/docker/.npm
+
 echo "Started to install and build the assets for $root/$1!"
 
 # Loop over manifest files

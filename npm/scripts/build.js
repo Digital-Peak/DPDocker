@@ -49,13 +49,12 @@ function buildAssets(root, assets, includeVendor)
 	});
 
 	// Check if the vendor dir needs to be built as well
-	if (!includeVendor) {
+	if (!includeVendor || !assets.vendor) {
 		return;
 	}
 
 	// Loop over the vendor assets
 	console.log('Started to build the vendor assets for ' + root);
-	if (assets.vendor) {
 	assets.vendor.forEach(asset => {
 		// Make sure that the destination folder exists
 		let dir = path.dirname(root + '/' + asset.dest);
@@ -128,7 +127,6 @@ function buildAssets(root, assets, includeVendor)
 			util.transpile(root + '/' + asset.dest, root + '/' + asset.dest, true);
 		}
 	});
-	}
 }
 
 module.exports = {

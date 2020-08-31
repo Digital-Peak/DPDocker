@@ -49,7 +49,7 @@ function buildAssets(root, assets, includeVendor)
 	});
 
 	// Check if the vendor dir needs to be built as well
-	if (!includeVendor) {
+	if (!includeVendor || !assets.vendor) {
 		return;
 	}
 

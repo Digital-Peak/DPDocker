@@ -44,6 +44,7 @@ class DPDockerReleaseBuild
 			// Iterate over the files in the manifest
 			foreach ($manifest->files->file as $file) {
 				$extension = null;
+				$id = "";
 
 				// Look for an override in the build config
 				foreach ($package->extensions as $ex) {
@@ -55,7 +56,7 @@ class DPDockerReleaseBuild
 				}
 
 				// If none override is found, create an extension from the manifest
-				if ($extension == null && isset($id)) {
+				if ($extension == null) {
 					$extension = (object)['name' => $id];
 				}
 				$extensions[] = $extension;

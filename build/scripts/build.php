@@ -25,7 +25,7 @@ class DPDockerReleaseBuild
 		// Read the build config
 		$config = json_decode(file_get_contents($this->extensionRoot . '/package/build.json'));
 		foreach ($config->packages as $package) {
-			// prepare the temp folder
+			// Prepare the temp folder
 			$tmpFolder = dirname($this->extensionRoot) . '/build';
 			shell_exec('rm -rf ' . $tmpFolder);
 			mkdir($tmpFolder);
@@ -63,7 +63,7 @@ class DPDockerReleaseBuild
 
 			// Loop over the extensions
 			foreach ($extensions as $extension) {
-				// Default hte excludes
+				// Default the excludes
 				$excludes = [];
 				if (!empty($extension->excludes)) {
 					foreach ($extension->excludes as $exclude) {

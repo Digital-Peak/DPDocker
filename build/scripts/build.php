@@ -55,7 +55,7 @@ class DPDockerReleaseBuild
 				}
 
 				// If none override is found, create an extension from the manifest
-				if ($extension == null) {
+				if ($extension == null && isset($id)) {
 					$extension = (object)['name' => $id];
 				}
 				$extensions[] = $extension;

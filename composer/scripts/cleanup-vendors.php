@@ -29,7 +29,12 @@ $toDelete = [
 	'.sh',
 	'.dist',
 	'.php_cs',
-	'scrutinizer'
+	'scrutinizer',
+	'phpstan-baseline.neon',
+	'psalm.xml',
+	'.idea',
+	'grumphp.yml',
+	'puli.json'
 ];
 
 $folder = $argv[1] . '/vendor';

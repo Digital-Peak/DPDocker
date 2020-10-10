@@ -114,9 +114,9 @@ function createLinks($folderRoot, $wwwRoot)
 			createLink($folderRoot . '/src/components/'. $filename, $wwwRoot . '/components/' . $filename);
 		}
 	}
-	$languages = array('en-GB', 'de-DE');
-	foreach ($languages as $language){
-		if (file_exists($folderRoot . '/src/language/' . $language)) {
+	if (file_exists($folderRoot . '/src/language')) {
+		$languages = scandir($folderRoot . '/src/language');
+		foreach ($languages as $language) {
 			foreach (new DirectoryIterator($folderRoot . '/src/language/' . $language) as $filename) {
 				createLink($folderRoot . '/src/language/' . $language . $filename, $wwwRoot . '/language/' . $language . $filename);
 			}
@@ -132,9 +132,9 @@ function createLinks($folderRoot, $wwwRoot)
 			createLink($folderRoot . '/src/modules/'. $filename, $wwwRoot . '/modules/' . $filename);
 		}
 	}
-	$groups = array('actionlog', 'content', 'webservices');
-	foreach ($groups as $group){
-		if (file_exists($folderRoot . '/src/plugins/' . $group)) {
+	if (file_exists($folderRoot . '/src/plugins')) {
+		$groups = scandir($folderRoot . '/src/plugins');
+		foreach ($groups as $group) {
 			foreach (new DirectoryIterator($folderRoot . '/src/plugins/' . $group) as $filename) {
 				createLink($folderRoot . '/src/plugins/' . $group . '/' . $filename, $wwwRoot . '/plugins/' . $group . '/' . $filename);
 			}

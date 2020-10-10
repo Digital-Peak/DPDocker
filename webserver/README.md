@@ -26,7 +26,9 @@ When starting the web server, there are four docker containers executed. An Apac
 To manage the joomla sites and link extensions the great [joomla console project](https://github.com/joomlatools/joomlatools-console) from the joomlatools guys is used.
 
 ### Extension linking
-Extensions in the same directory as this project will automatically being linked when the follow the directory structure as described in the [main document](..). After linking they are installed as well.
+Extensions in the same directory as this project will automatically being linked when they follow the directory structure as described in the [main document](https://github.com/Digital-Peak/DPDocker#structure) or the [Weblinks for Joomla! Repository](https://github.com/joomla-extensions/weblinks). 
+
+After linking they are mostly installed as well. In all cases you can dicover them manually.
 
 ## Result
 When the web server is successfully started then are the following sites available:

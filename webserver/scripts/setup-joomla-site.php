@@ -114,6 +114,14 @@ function createLinks($folderRoot, $wwwRoot)
 			createLink($folderRoot . '/src/components/'. $filename, $wwwRoot . '/components/' . $filename);
 		}
 	}
+	if (file_exists($folderRoot . '/src/administrator/language')) {
+		$languages = scandir($folderRoot . '/src/administrator/language');
+		foreach ($languages as $language) {
+			foreach (new DirectoryIterator($folderRoot . '/src/administrator/language/' . $language) as $filename) {
+				createLink($folderRoot . '/src/administrator/language/' . $language . $filename, $wwwRoot . '/administrator/language/' . $language . $filename);
+			}
+		}
+	}
 	if (file_exists($folderRoot . '/src/language')) {
 		$languages = scandir($folderRoot . '/src/language');
 		foreach ($languages as $language) {

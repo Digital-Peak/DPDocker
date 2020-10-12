@@ -46,7 +46,8 @@ Example
 `./run-watch.sh Foo`
 
 ## Internals
-The code to perform the tasks is running on node.js. It uses tools like sass compiler, babel, rollup or minifyjs. All the local assets of an extension should not be placed in the media folder, because the transpile tasks do copy them there. So you would end in an infinite loop. We at Digital Peak do place the assets always in the resource folder on the same level as the media folder is.
+The code to perform the tasks is running on node.js. It uses tools like sass compiler, babel, rollup or minifyjs. All the local assets of an extension should not be placed in the media folder, because the transpile tasks does copy them there. So you would end in an infinite loop. We at Digital Peak do place the assets always in the resource folder on the same level as the media folder is.
+If the assets file contans a "docBlock" property then all comments in the generated JS files are stripped out and the "docBlock" is added to the top of the generated file.
 
 ### Install/update
 npm install or update is executed within the package folder. All dependencies will then be available in the node_modules folder.
@@ -62,7 +63,7 @@ All assets and PHP dependencies are on the right location.
 ## Asset file documentation
 The asset.json file does define the assets of an extension. It can include local assets or external dependencies.
 
-The top level properties can be local, localDev or vendor. Each of them will be handled differently.
+The top level properties can be local, localDev, vendor or docBlock. Each of them will be handled differently.
 
 ### local
 The local property contains an array of _src_ and _dest_ properties. They can be a folder or file within the extension top level directory. If it is a folder then all files are generated on the target location with the same name.
@@ -102,3 +103,6 @@ Example:
   ]
 }
 ```
+
+### docBlock
+A docblock which is added to the top of the generated JS files. All the other ones are then stripped out of the file.

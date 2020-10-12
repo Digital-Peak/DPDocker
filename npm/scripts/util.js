@@ -5,6 +5,7 @@ const uglifyJS = require('uglify-js');
 const sass = require('node-sass');
 const babel = require('@babel/core');
 const rollup = require('rollup');
+const strip = require('js-cleanup');
 
 /**
  * Transpile function which can handle Javascript, SASS and CSS files.
@@ -12,8 +13,9 @@ const rollup = require('rollup');
  * @param string source The full path of the source file
  * @param string destination The full path of the destination file
  * @param string isVendor If the file is a vendor file and doesn't need some extra bundling
+ * @param string docToAdd A doc block to add on the files
  */
-function transpile(source, destination, isVendor)
+function transpile(source, destination, isVendor, docToAdd)
 {
 	// Ensure that the target directory exists
 	if (!fs.existsSync(path.dirname(destination))) {
@@ -44,8 +46,14 @@ function transpile(source, destination, isVendor)
 					fs.writeFileSync(destination + '.map', JSON.stringify(result.map));
 				}
 
+				let minified = uglifyJS.minify(result.code, {output: {comments: docToAdd ? 'all' : 'none'}});
+				if (minified.error) {
+					console.log(minified.error);
+					return
+				}
+
 				// Write the minified content to the destination file
-				fs.writeFileSync(destination.replace('.js', '.min.js'), uglifyJS.minify(result.code).code);
+				fs.writeFileSync(destination.replace('.js', '.min.js'), minified.code);
 			};
 
 			// Bundle only when it is an extension file
@@ -57,6 +65,12 @@ function transpile(source, destination, isVendor)
 
 					// Generate code
 					await bundle.write({file: destination, format: 'iife', sourcemap: true});
+
+					if (docToAdd) {
+						let content = strip(fs.readFileSync(destination, 'utf8'), null, {comments: 'none', sourcemap: true});
+						fs.writeFileSync(destination, docToAdd + "\n" + content.code);
+						fs.writeFileSync(destination + '.map', content.map);
+					}
 
 					babelify(destination, false);
 				})();

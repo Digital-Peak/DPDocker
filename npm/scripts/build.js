@@ -29,7 +29,7 @@ function buildAssets(root, assets, includeVendor)
 
 		// If it is a single asset transpile it directly
 		if (!fs.lstatSync(root + '/' + asset.src).isDirectory()) {
-			util.transpile(root + '/' + asset.src, root + '/' + asset.dest, false);
+			util.transpile(root + '/' + asset.src, root + '/' + asset.dest, false, assets.docBlock);
 			return;
 		}
 
@@ -44,7 +44,7 @@ function buildAssets(root, assets, includeVendor)
 			}
 
 			// Transpile the file
-			util.transpile(file, file.replace(asset.src, asset.dest).replace('scss', 'css'), false);
+			util.transpile(file, file.replace(asset.src, asset.dest).replace('scss', 'css'), false, assets.docBlock);
 		});
 	});
 

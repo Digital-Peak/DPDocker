@@ -6,10 +6,11 @@
   "devDependencies": {
     "@babel/core": "^7.8.7",
     "@babel/preset-env": "^7.8.7",
-    "node-sass": "^4.13.1",
+    "node-sass": "^4.14.1",
     "node-watch": "^0.6.4",
-    "rollup": "^2.1",
-    "uglify-js": "^3.8.0",
-    "sync-request": "^6.1.0"
+    "rollup": "^2.29.0",
+    "js-cleanup": "^1.2.0",
+    "sync-request": "^6.1.0",
+    "uglify-js": "^3.8.0"
   }
 }

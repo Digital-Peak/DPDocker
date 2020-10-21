@@ -13,13 +13,11 @@ To start the web server, execute the following command:
 
 `./run.sh [--DB db-type] [--MYSQL_DBVERSION mysql-db-version] [--POSTGRES_DBVERSION postgres-db-version] [--REBUILD rebuild]`
 
-Example
+ExampleS
 
-`./run.sh --DB mysql --MYSQL_DBVERSION 5.6`
+- `./run.sh --DB mysql --MYSQL_DBVERSION 5.6`
 
-or
-
-`./run.sh --DB postgres --POSTGRES_DBVERSION 13 --REBUILD rebuild`
+- `./run.sh --DB postgres --POSTGRES_DBVERSION 13 --REBUILD rebuild`
 
 All attributes are optional.
 
@@ -28,7 +26,7 @@ All attributes are optional.
 - `rebuild`; If set then the whole web server is rebuild and you have a clean setup as when you started it for the first time. The option must be selected if the database changes.
 
 ## Internals
-When starting the web server, there are four docker containers executed. An Apache web server, a MySQL server, a phpMyAdmin server, a postgres server, a pgAdmin server and a Mailcatcher. All of them are out of the box ready to use.
+When starting the web server, there are six docker containers executed. An Apache web server, a MySQL server, a phpMyAdmin server, a postgres server, a pgAdmin server and a Mailcatcher. All of them are out of the box ready to use.
 
 To manage the joomla sites and link extensions the great [joomla console project](https://github.com/joomlatools/joomlatools-console) from the joomlatools guys is used.
 

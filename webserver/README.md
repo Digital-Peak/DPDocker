@@ -11,14 +11,21 @@ Nothing special, the extensions do need to follow the directory structure mentio
 ## Execute
 To start the web server, execute the following command:
 
-`./run.sh [db-type] [rebuild]`
+`./run.sh [--DB db-type] [--MYSQL_DBVERSION mysql-db-version] [--POSTGRES_DBVERSION postgres-db-version] [--REBUILD rebuild]`
 
 Example
 
-`./run.sh postgres rebuild`
+`./run.sh --DB mysql --MYSQL_DBVERSION 5.6`
 
-- The db-type attribute is optional. You can use either _mysql_ or _postgres_. If set then the joomla installations will be installed with the respective driver.
-- The rebuild argument is optional, if set then the whole web server is rebuild and you have a clean setup as when you started it for the first time.
+or
+
+`./run.sh --DB postgres --POSTGRES_DBVERSION 13 --REBUILD rebuild`
+
+All attributes are optional.
+
+- `db-type`: You can use either _mysql_ or _postgres_. If set then the Joomla installations will be installed with the respective driver. _mysql_ is loaded by default.
+- `*-db-version`: You can use supported tags on hub.docker:  [_mysql_](https://hub.docker.com/_/mysql) or [_postgres_](https://hub.docker.com/_/postgres). If set then the Joomla installations will be installed with the respective driver. _latest_ is loaded by default.
+- `rebuild`; If set then the whole web server is rebuild and you have a clean setup as when you started it for the first time. The option must be selected if the database changes.
 
 ## Internals
 When starting the web server, there are four docker containers executed. An Apache web server, a MySQL server, a phpMyAdmin server, a postgres server, a pgAdmin server and a Mailcatcher. All of them are out of the box ready to use.

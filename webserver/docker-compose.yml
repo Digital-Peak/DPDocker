@@ -26,21 +26,22 @@ services:
       - ../..:/usr/src/Projects
 
   mysql:
-    image: mysql:5.6
+    image: mysql:${MYSQL_DBVERSION}
     environment:
       MYSQL_ROOT_PASSWORD: root
+    command: --default-authentication-plugin=mysql_native_password
     volumes:
-      - ./mysql_data:/var/lib/mysql
+      - ./mysql_${MYSQL_DBVERSION}_data:/var/lib/mysql
 
   postgres:
-    image: postgres
+    image: postgres:${POSTGRES_DBVERSION}
     environment:
       POSTGRES_PASSWORD: root
       POSTGRES_USER: root
     ports:
       - 5432:5432
     volumes:
-      - ./postgres_data:/var/lib/postgresql/data
+      - ./postgres_${POSTGRES_DBVERSION}_data:/var/lib/postgresql/data
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin

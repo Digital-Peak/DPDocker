@@ -2,7 +2,6 @@
 const fs = require('fs');
 const path = require('path');
 const request = require('sync-request');
-const sass = require('node-sass');
 const util = require('./util');
 
 // Global variables
@@ -107,24 +106,18 @@ function buildAssets(root, assets, includeVendor)
 			});
 		}
 
-		// If the asset is a minified one, then create the formatted file
-		if (asset.dest.indexOf('.min.css') > 0) {
-			// Read the content
-			let content = fs.readFileSync(root + '/' + asset.dest, 'utf8');
-
-			// Format the minified file
-			const code = sass.renderSync({data: content, outputStyle: 'expanded', indentType: 'tab', indentWidth: 1}).css.toString();
-
-			// Define the none minified file as destination
-			asset.dest = asset.dest.replace('.min.css', '.css');
-
-			// Write the formatted CSS back to the file
-			fs.writeFileSync(root + '/' + asset.dest, code);
+		// If the asset is a minified one, ignore
+		if (asset.dest.indexOf('.min.css') > 0 || asset.dest.indexOf('.min.js') > 0) {
+			return;
 		}
 
 		// Only transpile Javascript and CSS files
 		if (path.extname(asset.dest) == '.js' || path.extname(asset.dest) == '.css') {
 			util.transpile(root + '/' + asset.dest, root + '/' + asset.dest, true);
+		}
+
+		if (asset.onlyMinified === true) {
+			fs.unlinkSync(root + '/' + asset.dest);
 		}
 	});
 }

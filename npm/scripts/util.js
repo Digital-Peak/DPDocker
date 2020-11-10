@@ -26,11 +26,6 @@ function transpile(source, destination, isVendor, docToAdd)
 	switch (path.extname(source).replace('.', '')) {
 		case 'js':
 			const babelify = (file, full) => {
-				if (destination.indexOf('.min.') > 0) {
-					fs.copyFileSync(file, destination.replace('.min.js', '.js'));
-					return;
-				}
-
 				// Transform the content to ensure we support the required browsers
 				let result = babel.transformSync(fs.readFileSync(file, 'utf8'), {
 					sourceMaps: true,
@@ -59,22 +54,23 @@ function transpile(source, destination, isVendor, docToAdd)
 			// Bundle only when it is an extension file
 			if (isVendor) {
 				babelify(source, true);
-			} else {
-				(async () => {
-					const bundle = await rollup.rollup({input: source});
-
-					// Generate code
-					await bundle.write({file: destination, format: 'iife', sourcemap: true});
-
-					if (docToAdd) {
-						let content = strip(fs.readFileSync(destination, 'utf8'), null, {comments: 'none', sourcemap: true});
-						fs.writeFileSync(destination, docToAdd + "\n" + content.code);
-						fs.writeFileSync(destination + '.map', content.map);
-					}
-
-					babelify(destination, false);
-				})();
+				break;
 			}
+
+			(async () => {
+				const bundle = await rollup.rollup({input: source});
+
+				// Generate code
+				await bundle.write({file: destination, format: 'iife', sourcemap: true});
+
+				if (docToAdd) {
+					let content = strip(fs.readFileSync(destination, 'utf8'), null, {comments: 'none', sourcemap: true});
+					fs.writeFileSync(destination, docToAdd + "\n" + content.code);
+					fs.writeFileSync(destination + '.map', content.map);
+				}
+
+				babelify(destination, false);
+			})();
 			break;
 		case 'scss':
 		case 'css':

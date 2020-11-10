@@ -11,6 +11,6 @@
     "rollup": "^2.29.0",
     "js-cleanup": "^1.2.0",
     "sync-request": "^6.1.0",
-    "uglify-js": "^3.8.0"
+    "terser": "^5.3.8"
   }
 }

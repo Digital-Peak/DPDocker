@@ -28,7 +28,7 @@ function buildAssets(root, assets, includeVendor)
 
 		// If it is a single asset transpile it directly
 		if (!fs.lstatSync(root + '/' + asset.src).isDirectory()) {
-			util.transpile(root + '/' + asset.src, root + '/' + asset.dest, false, assets.docBlock);
+			util.transpile(root + '/' + asset.src, root + '/' + asset.dest, false, assets.config);
 			return;
 		}
 
@@ -43,7 +43,7 @@ function buildAssets(root, assets, includeVendor)
 			}
 
 			// Transpile the file
-			util.transpile(file, file.replace(asset.src, asset.dest).replace('scss', 'css'), false, assets.docBlock);
+			util.transpile(file, file.replace(asset.src, asset.dest).replace('scss', 'css'), false, assets.config);
 		});
 	});
 
@@ -113,7 +113,7 @@ function buildAssets(root, assets, includeVendor)
 
 		// Only transpile Javascript and CSS files
 		if (path.extname(asset.dest) == '.js' || path.extname(asset.dest) == '.css') {
-			util.transpile(root + '/' + asset.dest, root + '/' + asset.dest, true);
+			util.transpile(root + '/' + asset.dest, root + '/' + asset.dest, true, assets.config);
 		}
 
 		if (asset.onlyMinified === true) {

@@ -61,7 +61,7 @@ watch(
 
 		console.log('Transpiling the file ' + file.replace(root + '/', '') + ' to ' + index[file].replace(root + '/', ''));
 		try {
-			util.transpile(file, index[file], false, assets.docBlock);
+			util.transpile(file, index[file], false, assets.config);
 		} catch (e) {
 			console.log(e.message);
 		}

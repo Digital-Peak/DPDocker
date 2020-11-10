@@ -1,7 +1,7 @@
 // The needed libs
 const fs = require('fs');
 const path = require('path');
-const uglifyJS = require('uglify-js');
+const terser = require('terser');
 const sass = require('node-sass');
 const babel = require('@babel/core');
 const rollup = require('rollup');
@@ -13,10 +13,14 @@ const strip = require('js-cleanup');
  * @param string source The full path of the source file
  * @param string destination The full path of the destination file
  * @param string isVendor If the file is a vendor file and doesn't need some extra bundling
- * @param string docToAdd A doc block to add on the files
+ * @param object config Some configuration options
  */
-function transpile(source, destination, isVendor, docToAdd)
+function transpile(source, destination, isVendor, config)
 {
+	if (config === undefined || config === null) {
+		config = {};
+	}
+
 	// Ensure that the target directory exists
 	if (!fs.existsSync(path.dirname(destination))) {
 		fs.mkdirSync(path.dirname(destination), {recursive: true});
@@ -25,12 +29,15 @@ function transpile(source, destination, isVendor, docToAdd)
 	// Transpile the files
 	switch (path.extname(source).replace('.', '')) {
 		case 'js':
-			const babelify = (file, full) => {
+			const babelify = async (file, full) => {
 				// Transform the content to ensure we support the required browsers
 				let result = babel.transformSync(fs.readFileSync(file, 'utf8'), {
 					sourceMaps: true,
 					compact: false,
-					presets: [['@babel/preset-env', {'targets': {'browsers': ['> 0.25%, not dead', 'ie 11']}, 'modules': false}]]
+					presets: [['@babel/preset-env', {
+						'targets': {'browsers': config.compatibility ? config.compatibility : ['> 0.25%, not dead', 'ie 11']},
+						'modules': false
+					}]]
 				});
 
 				if (full) {
@@ -41,7 +48,7 @@ function transpile(source, destination, isVendor, docToAdd)
 					fs.writeFileSync(destination + '.map', JSON.stringify(result.map));
 				}
 
-				let minified = uglifyJS.minify(result.code, {output: {comments: docToAdd ? 'all' : 'none'}});
+				let minified = await terser.minify(result.code, {output: {comments: config.docBlock ? 'all' : 'none'}});
 				if (minified.error) {
 					console.log(minified.error);
 					return
@@ -51,21 +58,21 @@ function transpile(source, destination, isVendor, docToAdd)
 				fs.writeFileSync(destination.replace('.js', '.min.js'), minified.code);
 			};
 
-			// Bundle only when it is an extension file
-			if (isVendor) {
-				babelify(source, true);
-				break;
-			}
-
 			(async () => {
+				// Bundle only when it is an extension file
+				if (isVendor) {
+					babelify(source, true);
+					return;
+				}
+
 				const bundle = await rollup.rollup({input: source});
 
 				// Generate code
 				await bundle.write({file: destination, format: 'iife', sourcemap: true});
 
-				if (docToAdd) {
+				if (config.docBlock) {
 					let content = strip(fs.readFileSync(destination, 'utf8'), null, {comments: 'none', sourcemap: true});
-					fs.writeFileSync(destination, docToAdd + "\n" + content.code);
+					fs.writeFileSync(destination, config.docBlock + "\n" + content.code);
 					fs.writeFileSync(destination + '.map', content.map);
 				}
 

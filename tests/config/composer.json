@@ -5,6 +5,7 @@
     "codeception/module-db": "^1.0",
     "codeception/module-filesystem": "^1.0",
     "codeception/module-asserts": "^1.1",
+    "codeception/codeception-progress-reporter": "^4.0.2",
     "hoa/console": "^3.17",
     "joomla-projects/joomla-browser": "~3.9"
   }

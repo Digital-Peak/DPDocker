@@ -8,7 +8,6 @@ actor_suffix: Tester
 extensions:
   enabled:
     - Codeception\Extension\RunFailed
-    - Codeception\ProgressReporter\ProgressReporter
 bootstrap: _bootstrap.php
 settings:
   colors: true

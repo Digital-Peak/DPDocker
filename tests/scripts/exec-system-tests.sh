@@ -34,4 +34,4 @@ if [ -d acceptance/install ]; then
 fi
 
 # Run the tests
-vendor/bin/codecept run --env desktop acceptance
+vendor/bin/codecept run --env desktop --ext "Codeception\ProgressReporter\ProgressReporter" acceptance

@@ -108,6 +108,12 @@ function buildAssets(root, assets, includeVendor)
 
 		// If the asset is a minified one, ignore
 		if (asset.dest.indexOf('.min.css') > 0 || asset.dest.indexOf('.min.js') > 0) {
+			const data = fs.readFileSync(root + '/' + asset.dest, 'utf8');
+			fs.writeFileSync(
+				root + '/' + asset.dest,
+				data.split('\n').filter(line => !/^.*# sourceMappingURL=(.*\.map).*/.test(line)).join('\n').trim(),
+				'utf8'
+			);
 			return;
 		}
 

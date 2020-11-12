@@ -106,6 +106,15 @@ function buildAssets(root, assets, includeVendor)
 			});
 		}
 
+		// If defined, append in the asset copy
+		if (asset.append) {
+			// Loop over the assets replace array
+			asset.append.forEach(def => {
+				// Append to the existing file
+				fs.appendFileSync(root + '/' + asset.dest, def);
+			});
+		}
+
 		// If the asset is a minified one, ignore
 		if (asset.dest.indexOf('.min.css') > 0 || asset.dest.indexOf('.min.js') > 0) {
 			const data = fs.readFileSync(root + '/' + asset.dest, 'utf8');

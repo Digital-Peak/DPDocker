@@ -99,6 +99,7 @@ function buildAssets(root, assets, includeVendor)
 				let content = fs.readFileSync(root + '/' + asset.dest, 'utf8');
 
 				// Perform the search and replace
+				content = content.replace(def.search, def.replace);
 				content = content.replace(new RegExp(def.search, 'g'), def.replace);
 
 				// Write back the replaced code

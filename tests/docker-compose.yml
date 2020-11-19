@@ -4,6 +4,8 @@ services:
   system-tests:
     image: dpdocker-cli
     command: /usr/src/Projects/DPDocker/tests/scripts/exec-system-tests.sh ${EXTENSION} ${TEST}
+    links:
+      - mailcatcher-test
     volumes:
       - ../..:/usr/src/Projects
       - /tmp/tests:/tmp/tests
@@ -27,6 +29,7 @@ services:
       STARTUP_COMMAND_4: sudo sed -i "s/smtphost = 'mailcatcher'/smtphost = 'mailcatcher-test'/g" /var/www/html/joomla/configuration.php
     links:
       - mysql-test
+      - mailcatcher-test
     ports:
       - 8080:80
     volumes:

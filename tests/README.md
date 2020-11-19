@@ -26,5 +26,25 @@ During a test PHPMyAdmin is available under _localhost:8081_ and the mailcatcher
 
 Every suite needs an install folder which contains some setup tasks during installation of the extension. The order of the other tests is randomly to prevent execution order issues as every tests need to be isolated.
 
+### Mailcatcher usage
+Mailcatcher has a simple REST interface where you can interact with the mails. To access mailcatcher in codeception use the host mailcatcher-test:1080. The following code snippet is an example how to test if a mail contains a string:
+ 
+```
+public function clearEmails()
+{
+    (new \GuzzleHttp\Client())->delete('http://mailcatcher-test:1080/messages');
+}
+
+public function seeInEmails($needle)
+{
+    $mailcatcher = new \GuzzleHttp\Client(['base_uri' => 'http://mailcatcher-test:1080']);
+    $mails       = '';
+    foreach (json_decode($mailcatcher->get('/messages')->getBody()) as $email) {
+        $mails .= $mailcatcher->get('/messages/' . $email->id . '.html')->getBody();
+    }
+    $this->assertStringContainsString($needle, $mails);
+}
+```
+
 ## Result
 You will see directly the output of the tests in the console where the system tests are started. If some do fail, then detailed reports are printed.

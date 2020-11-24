@@ -14,6 +14,10 @@ fi
 
 ln -s /usr/src/Projects/DPDocker/composer/tmp /home/docker/.npm
 
+echo "Cleaning up in $root/$1/$2 the assets"
+sudo find $root/$1/$2 -path "*/media/css" -type d -exec rm -rf {} \; &>/dev/null
+sudo find $root/$1/$2 -path "*/media/js" -type d -exec rm -rf {} \; &>/dev/null
+
 echo "Started to update and build the assets for $root/$1!"
 
 # Loop over manifest files

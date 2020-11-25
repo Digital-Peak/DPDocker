@@ -1,4 +1,7 @@
 #!/bin/bash
+# @package   DPDocker
+# @copyright Copyright (C) 2020 Digital Peak GmbH. <https://www.digital-peak.com>
+# @license   http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
 
 # Create the www directory as the current user so all subdirs will inherit the permissions
 if [ ! -d $(dirname $0)/www ]; then

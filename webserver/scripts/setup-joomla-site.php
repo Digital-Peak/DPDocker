@@ -33,8 +33,8 @@ if (!is_dir($wwwRoot) || $force) {
 
 	if (substr($argv[1], -1) == 4 && $hasInternet) {
 		// Checkout latest stable release
-		shell_exec('git --work-tree=' . $wwwRoot . ' --git-dir=' . $wwwRoot . '/.git checkout tags/4.0.0-beta4 2>&1 > /dev/null');
-		echo 'Using version 4.0.0-beta4 on ' . $wwwRoot . PHP_EOL;
+		shell_exec('git --work-tree=' . $wwwRoot . ' --git-dir=' . $wwwRoot . '/.git checkout tags/4.0.0-beta5 2>&1 > /dev/null');
+		echo 'Using version 4.0.0-beta5 on ' . $wwwRoot . PHP_EOL;
 	} else if ($hasInternet) {
 		$versions = json_decode(file_get_contents('https://downloads.joomla.org/api/v1/latest/cms'));
 		foreach ($versions->branches as $branch) {

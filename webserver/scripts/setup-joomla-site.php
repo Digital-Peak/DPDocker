@@ -78,7 +78,7 @@ foreach ($folders as $project) {
 		continue;
 	}
 
-	if ($hasInternet) {
+	if ($hasInternet && $argv[2] != 'all') {
 		echo 'Building extension ' . $project . PHP_EOL;
 		shell_exec('/var/www/html/Projects/DPDocker/composer/scripts/exec-install.sh ' . $project);
 		shell_exec('/var/www/html/Projects/DPDocker/npm/scripts/exec-npm-install.sh ' . $project . ' 2>/dev/null');
@@ -96,29 +96,31 @@ function createLinks($folderRoot, $wwwRoot)
 	// Folder structure like https://github.com/joomla-extensions/weblinks
 	if (file_exists($folderRoot . '/src/administrator/components/')) {
 		foreach (new DirectoryIterator($folderRoot . '/src/administrator/components/') as $filename) {
-			createLink($folderRoot . '/src/administrator/components/'. $filename, $wwwRoot . '/administrator/components/' . $filename);
+			createLink($folderRoot . '/src/administrator/components/' . $filename, $wwwRoot . '/administrator/components/' . $filename);
 		}
 	}
 	if (file_exists($folderRoot . '/src/administrator/manifests/packages/')) {
 		foreach (new DirectoryIterator($folderRoot . '/src/administrator/manifests/packages/') as $filename) {
-			createLink($folderRoot . '/src/administrator/manifests/packages/'. $filename, $wwwRoot . '/administrator//manifests/packages/' . $filename);
+			createLink($folderRoot . '/src/administrator/manifests/packages/' . $filename,
+				$wwwRoot . '/administrator//manifests/packages/' . $filename);
 		}
 	}
 	if (file_exists($folderRoot . '/src/api/components/')) {
 		foreach (new DirectoryIterator($folderRoot . '/src/api/components/') as $filename) {
-			createLink($folderRoot . '/src/api/components/'. $filename, $wwwRoot . '/api/components/' . $filename);
+			createLink($folderRoot . '/src/api/components/' . $filename, $wwwRoot . '/api/components/' . $filename);
 		}
 	}
 	if (file_exists($folderRoot . '/src/components/')) {
 		foreach (new DirectoryIterator($folderRoot . '/src/components/') as $filename) {
-			createLink($folderRoot . '/src/components/'. $filename, $wwwRoot . '/components/' . $filename);
+			createLink($folderRoot . '/src/components/' . $filename, $wwwRoot . '/components/' . $filename);
 		}
 	}
 	if (file_exists($folderRoot . '/src/administrator/language')) {
 		$languages = scandir($folderRoot . '/src/administrator/language');
 		foreach ($languages as $language) {
 			foreach (new DirectoryIterator($folderRoot . '/src/administrator/language/' . $language) as $filename) {
-				createLink($folderRoot . '/src/administrator/language/' . $language . $filename, $wwwRoot . '/administrator/language/' . $language . $filename);
+				createLink($folderRoot . '/src/administrator/language/' . $language . $filename,
+					$wwwRoot . '/administrator/language/' . $language . $filename);
 			}
 		}
 	}
@@ -132,12 +134,12 @@ function createLinks($folderRoot, $wwwRoot)
 	}
 	if (file_exists($folderRoot . '/src/media/')) {
 		foreach (new DirectoryIterator($folderRoot . '/src/media/') as $filename) {
-			createLink($folderRoot . '/src/media/'. $filename, $wwwRoot . '/media/' . $filename);
+			createLink($folderRoot . '/src/media/' . $filename, $wwwRoot . '/media/' . $filename);
 		}
 	}
 	if (file_exists($folderRoot . '/src/modules/')) {
 		foreach (new DirectoryIterator($folderRoot . '/src/modules/') as $filename) {
-			createLink($folderRoot . '/src/modules/'. $filename, $wwwRoot . '/modules/' . $filename);
+			createLink($folderRoot . '/src/modules/' . $filename, $wwwRoot . '/modules/' . $filename);
 		}
 	}
 	if (file_exists($folderRoot . '/src/plugins')) {
@@ -150,7 +152,7 @@ function createLinks($folderRoot, $wwwRoot)
 	}
 	if (file_exists($folderRoot . '/src/templates/')) {
 		foreach (new DirectoryIterator($folderRoot . '/src/templates/') as $filename) {
-			createLink($folderRoot . '/src/templates/'. $filename, $wwwRoot . '/templates/' . $filename);
+			createLink($folderRoot . '/src/templates/' . $filename, $wwwRoot . '/templates/' . $filename);
 		}
 	}
 

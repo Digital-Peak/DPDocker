@@ -173,15 +173,15 @@ function copyFolderRecursiveSync(source, target) {
 
     // Copy
     if (fs.lstatSync(source).isDirectory()) {
-        files = fs.readdirSync( source );
-        files.forEach( function ( file ) {
+        files = fs.readdirSync(source);
+        files.forEach(function (file) {
             var curSource = path.join(source, file);
             if (fs.lstatSync(curSource).isDirectory()) {
                 copyFolderRecursiveSync(curSource, targetFolder);
             } else {
                 copyFileSync(curSource, targetFolder);
             }
-        } );
+        });
     }
 }
 

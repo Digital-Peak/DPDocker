@@ -11,13 +11,16 @@ If you  have some install tasks which should be executed before every test, then
 ## Execute
 To run the extension tests, execute the following command:
 
-`./run-system-tests.sh --EXTENSION extension [--TEST test]`
+`./run-system-tests.sh --EXTENSION extension [--TEST test] [--JOOMLA_MAJOR_VERSION version]`
 
 Example
 
-`./run-system-tests.sh --EXTENSION Foo --TEST tests/acceptance/views/ArticleViewCest.php:canSeeUploadFormInArticle`
+`./run-system-tests.sh --EXTENSION Foo --TEST tests/acceptance/views/ArticleViewCest.php:canSeeUploadFormInArticle --JOOMLA_MAJOR_VERSION 4`
 
-The test attribute is optional. If it is set then only this test is executed, otherwise the whole extension.
+The `test`, `rebuild` and `joomla_major_version` attributes are optional.  
+- If `test` is set then only this test is executed, otherwise the whole extension.  
+- If `rebuild` is not set then it defaults to false. 
+- If `joomla_major_version` is _not_ set then version `3` is used. You have to set it to `4` if you need Joomla version 4.
 
 ## Internals
 Running the system tests is a rather complex setup. Due some startup issues we need to start every container manually. Five containers are started actually. First the mySQL container. Then the web server which is accessible on the url _localhost:8080/joomla_ and selenium. If all are up, then the actual system tests are executed.

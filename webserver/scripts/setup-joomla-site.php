@@ -5,11 +5,12 @@
  * @license   http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
  */
 
-$hasInternet = true;
-$wwwRoot     = '/var/www/html/' . $argv[1];
-$db          = array_key_exists(3, $argv) ? $argv[3] : 'mysql';
-$force       = array_key_exists(4, $argv) ? (bool)$argv[4] : false;
-$binary      = '/home/docker/vendor/bin/joomla';
+$hasInternet          = true;
+$wwwRoot              = '/var/www/html/' . $argv[1];
+$db                   = array_key_exists(3, $argv) ? $argv[3] : 'mysql';
+$force                = array_key_exists(4, $argv) ? (bool)$argv[4] : false;
+$joomla_major_version = array_key_exists(5, $argv) ? $argv[5] : substr($argv[1], -1);
+$binary               = '/home/docker/vendor/bin/joomla';
 
 if (is_dir($wwwRoot) && !$force) {
 	return;
@@ -31,8 +32,8 @@ if (!is_dir($wwwRoot) || $force) {
 	shell_exec('rm -rf ' . $wwwRoot);
 	shell_exec('cp -r /var/www/html/cache ' . $wwwRoot);
 
-	if (substr($argv[1], -1) == 4 && $hasInternet) {
-		// Checkout latest stable release
+	if ($joomla_major_version == '4' && $hasInternet) {
+			// Checkout latest stable release
 		shell_exec('git --work-tree=' . $wwwRoot . ' --git-dir=' . $wwwRoot . '/.git checkout tags/4.0.0-beta5 2>&1 > /dev/null');
 		echo 'Using version 4.0.0-beta5 on ' . $wwwRoot . PHP_EOL;
 	} else if ($hasInternet) {
@@ -56,6 +57,8 @@ echo shell_exec('/var/www/html/Projects/DPDocker/webserver/scripts/install-jooml
 if (!$argv[2]) {
 	return;
 }
+
+shell_exec('cp -r "/var/www/html/Projects/DPDocker/build/dist/"*.zip ' . $wwwRoot);
 
 $folders = explode(',', $argv[2]);
 if ($argv[2] == 'all') {

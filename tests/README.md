@@ -11,11 +11,11 @@ If you  have some install tasks which should be executed before every test, then
 ## Execute
 To run the extension tests, execute the following command:
 
-`./run-system-tests.sh extension [test]`
+`./run-system-tests.sh --EXTENSION extension [--TEST test]`
 
 Example
 
-`./run-system-tests.sh Foo tests/acceptance/views/ArticleViewCest.php:canSeeUploadFormInArticle`
+`./run-system-tests.sh --EXTENSION Foo --TEST tests/acceptance/views/ArticleViewCest.php:canSeeUploadFormInArticle`
 
 The test attribute is optional. If it is set then only this test is executed, otherwise the whole extension.
 

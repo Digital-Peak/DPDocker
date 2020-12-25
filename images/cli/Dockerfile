@@ -1,3 +1,7 @@
+ARG PHP_VERSION=7.4
+ARG GLOBAL_VERSION=4
+ARG NODE_VERSION=12
+
 FROM thecodingmachine/php:${PHP_VERSION}-v${GLOBAL_VERSION}-cli-node${NODE_VERSION}
 
 # Enable extensions

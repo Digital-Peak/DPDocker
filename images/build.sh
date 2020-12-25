@@ -16,7 +16,7 @@ while [ $# -gt 0 ]; do
   shift
 done
 
-if [ $REBUILD == 'true'* || $REBUILD == 'rebuild'* ]; then
+if [[ $REBUILD == 'true' || $REBUILD == 'rebuild' ]]; then
   docker rm $(docker ps -a -q) -f
   docker rmi $(docker images -a -q) -f
 fi

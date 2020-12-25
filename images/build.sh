@@ -22,5 +22,5 @@ if [ $REBUILD == 'true'* || $REBUILD == 'rebuild'* ]; then
 fi
 
 # Build the images
-#docker build $(dirname $0)/cli -t dpdocker-cli --build-arg PHP_VERSION=${PHP_VERSION} --build-arg GLOBAL_VERSION=${GLOBAL_VERSION} --build-arg NODE_VERSION=${NODE_VERSION}
-#docker build $(dirname $0)/web -t dpdocker-web --build-arg PHP_VERSION=${PHP_VERSION} --build-arg GLOBAL_VERSION=${GLOBAL_VERSION} --build-arg NODE_VERSION=${NODE_VERSION}
+docker build $(dirname $0)/cli -t dpdocker-cli --build-arg PHP_VERSION=${PHP_VERSION} --build-arg GLOBAL_VERSION=${GLOBAL_VERSION} --build-arg NODE_VERSION=${NODE_VERSION}
+docker build $(dirname $0)/web -t dpdocker-web --build-arg PHP_VERSION=${PHP_VERSION} --build-arg GLOBAL_VERSION=${GLOBAL_VERSION} --build-arg NODE_VERSION=${NODE_VERSION}

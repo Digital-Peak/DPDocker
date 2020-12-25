@@ -7,11 +7,15 @@ Nothing special.
 ## Execute
 To run a build, execute the following command:
 
+`./build.sh [--PHP_VERSION php-version] [--GLOBAL_VERSION global-version] [--NODE_VERSION node-version] [--REBUILD rebuild]`
+
+Examples
+
 `./build.sh`
 
-Example
+- `./build.sh --PHP_VERSION 7.4 --GLOBAL_VERSION 3 --NODE_VERSION 12 --REBUILD rebuild`
 
-`./build.sh`
+- `./build.sh --PHP_VERSION 8.0 --GLOBAL_VERSION 4 --NODE_VERSION 14 --REBUILD rebuild`
 
 ## Internals
 The images are built normally with docker. Every image contains a DOCKERFILE which defines the image. All images are built from [thecodingmachine PHP docker project](https://github.com/thecodingmachine/docker-images-php). These images are already configured the way that file permission issues and other problems you normally face with docker are already solved.

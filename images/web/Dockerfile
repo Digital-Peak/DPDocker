@@ -1,4 +1,4 @@
-FROM thecodingmachine/php:7.4-v3-apache-node12
+FROM thecodingmachine/php:${PHP_VERSION}-v${GLOBAL_VERSION}-apache-node${NODE_VERSION}
 
 # Enable extensions
 ENV PHP_EXTENSION_XDEBUG=1

@@ -17,7 +17,7 @@ Example
 
 `./run-system-tests.sh --EXTENSION Foo --TEST tests/acceptance/views/ArticleViewCest.php:canSeeUploadFormInArticle --JOOMLA_MAJOR_VERSION 4`
 
-The `test`, `rebuild` and `joomla_major_version` attributes are optional.  
+The `test`, `rebuild` and `joomla_major_version` attributes are optional:    
 - If `test` is set then only this test is executed, otherwise the whole extension.  
 - If `rebuild` is not set then it defaults to false. 
 - If `joomla_major_version` is _not_ set then version `3` is used. You have to set it to `4` if you need Joomla version 4.
@@ -28,6 +28,8 @@ Running the system tests is a rather complex setup. Due some startup issues we n
 During a test PHPMyAdmin is available under _localhost:8081_ and the mailcatcher on _localhost:8082_.
 
 Every suite needs an install folder which contains some setup tasks during installation of the extension. The order of the other tests is randomly to prevent execution order issues as every tests need to be isolated.
+
+If you like to test an installation, please run run [`./build/run.sh extension [version]`](https://github.com/Digital-Peak/DPDocker/tree/master/build). All in this task created Zip files will be copied before starting the tests to the root of the webserver. So you are able to use them in a test.  
 
 ### Mailcatcher usage
 Mailcatcher has a simple REST interface where you can interact with the mails. To access mailcatcher in codeception use the host mailcatcher-test:1080. The following code snippet is an example how to test if a mail contains a string:

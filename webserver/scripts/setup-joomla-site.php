@@ -33,7 +33,7 @@ if (!is_dir($wwwRoot) || $force) {
 	shell_exec('cp -r /var/www/html/cache ' . $wwwRoot);
 
 	if ($joomla_major_version == '4' && $hasInternet) {
-			// Checkout latest stable release
+		// Checkout latest stable release
 		shell_exec('git --work-tree=' . $wwwRoot . ' --git-dir=' . $wwwRoot . '/.git checkout tags/4.0.0-beta5 2>&1 > /dev/null');
 		echo 'Using version 4.0.0-beta5 on ' . $wwwRoot . PHP_EOL;
 	} else if ($hasInternet) {

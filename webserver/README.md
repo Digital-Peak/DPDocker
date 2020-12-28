@@ -13,7 +13,7 @@ To start the web server, execute the following command:
 
 `./run.sh [--DB db-type] [--MYSQL_DBVERSION mysql-db-version] [--POSTGRES_DBVERSION postgres-db-version] [--REBUILD rebuild]`
 
-ExampleS
+Examples
 
 - `./run.sh --DB mysql --MYSQL_DBVERSION 5.6`
 

@@ -22,7 +22,7 @@ services:
   web-test:
     image: dpdocker-web
     environment:
-      STARTUP_COMMAND_1: php /var/www/html/Projects/DPDocker/webserver/scripts/setup-joomla-site.php joomla ${EXTENSION} mysql-test ${REBUILD}
+      STARTUP_COMMAND_1: php /var/www/html/Projects/DPDocker/webserver/scripts/setup-joomla-site.php joomla ${EXTENSION} mysql-test ${JOOMLA}
       # Some defaults
       STARTUP_COMMAND_2: sudo sed -i "s/debug = '1'/debug = 0/g" /var/www/html/joomla/configuration.php
       STARTUP_COMMAND_3: sudo sed -i "s/sef = '1'/sef = 0/g" /var/www/html/joomla/configuration.php

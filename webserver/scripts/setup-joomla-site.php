@@ -5,10 +5,11 @@
  * @license   http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
  */
 
-$hasInternet = true;
-$wwwRoot     = '/var/www/html/' . $argv[1];
-$db          = array_key_exists(3, $argv) ? $argv[3] : 'mysql';
-$force       = array_key_exists(4, $argv) ? (bool)$argv[4] : false;
+$hasInternet   = true;
+$wwwRoot       = '/var/www/html/' . $argv[1];
+$db            = array_key_exists(3, $argv) ? $argv[3] : 'mysql';
+$joomlaVersion = array_key_exists(4, $argv) ? $argv[4] : (substr($argv[1], -1) == 4 ? 4 : 3);
+$force         = array_key_exists(5, $argv) ? (bool)$argv[5] : false;
 
 if (is_dir($wwwRoot) && !$force) {
 	return;
@@ -30,7 +31,7 @@ if (!is_dir($wwwRoot) || $force) {
 	shell_exec('rm -rf ' . $wwwRoot);
 	shell_exec('cp -r /var/www/html/cache ' . $wwwRoot);
 
-	if (substr($argv[1], -1) == 4 && $hasInternet) {
+	if ($joomlaVersion == 4 && $hasInternet) {
 		// Checkout latest stable release
 		shell_exec('git --work-tree=' . $wwwRoot . ' --git-dir=' . $wwwRoot . '/.git checkout tags/4.0.0-beta5 2>&1 > /dev/null');
 		echo 'Using version 4.0.0-beta5 on ' . $wwwRoot . PHP_EOL;

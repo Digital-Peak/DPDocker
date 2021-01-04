@@ -45,6 +45,7 @@ modules:
       sample data: 'Default English (GB) Sample Data'    # Default Sample Data
       admin email: 'admin@example.com'      # email Id of the Admin
       language: 'English (United Kingdom)'   # Language in which you want the Application to be Installed
+      timeout: 10
     Helper\JoomlaDb:
       dsn: 'mysql:host=mysql-test;dbname=sites_joomla'
       user: 'root'

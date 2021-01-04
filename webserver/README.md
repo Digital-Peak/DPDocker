@@ -28,12 +28,12 @@ All attributes are optional.
 ## Internals
 When starting the web server, there are six docker containers executed. An Apache web server, a MySQL server, a phpMyAdmin server, a postgres server, a pgAdmin server and a Mailcatcher. All of them are out of the box ready to use.
 
-To manage the joomla sites and link extensions the great [joomla console project](https://github.com/joomlatools/joomlatools-console) from the joomlatools guys is used.
+To install Joomla, link the extensions and discover them we use a mix of PHP and shell scripts. All these scripts can be found in the scripts folder.
 
 ### Extension linking
 Extensions in the same directory as this project will automatically being linked when they follow the directory structure as described in the [main document](https://github.com/Digital-Peak/DPDocker#structure) or the [Weblinks for Joomla! Repository](https://github.com/joomla-extensions/weblinks). 
 
-After linking they are mostly installed as well. In all cases you can dicover them manually.
+After linking they are mostly installed as well. In all cases you can discover them manually.
 
 ## Result
 When the web server is successfully started then are the following sites available:

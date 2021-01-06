@@ -24,8 +24,8 @@ cp -r $(dirname $0)/../config/j$2/* .
 vendor/bin/codecept build
 cp -f $(dirname $0)/../tmp/_support/_generated/AcceptanceTesterActions.php $(dirname $0)/../../../$1/tests/_support/_generated/AcceptanceTesterActions.php
 
-# Check if there is a directory with tests to run
-if [[ $3 != *".php"* ]]; then
+# Check if there are multiple tests to run
+if [[ $3 != *".php:"* ]]; then
   vendor/bin/codecept run --env desktop ${3#"tests/"}
   exit 1
 fi

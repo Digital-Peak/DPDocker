@@ -13,9 +13,14 @@ To run the extension tests, execute the following command:
 
 `./run-system-tests.sh extension [test] [jooma version]`
 
-Example
+Examples
 
-`./run-system-tests.sh Foo tests/acceptance/views/ArticleViewCest.php:canSeeUploadFormInArticle 4`
+`./run-system-tests.sh Foo`
+`./run-system-tests.sh Foo '' 3`
+`./run-system-tests.sh Foo tests/acceptance/views`
+`./run-system-tests.sh Foo tests/acceptance/views 4`
+`./run-system-tests.sh Foo tests/acceptance/views/ArticleViewCest.php:canSeeArticle`
+`./run-system-tests.sh Foo tests/acceptance/views/ArticleViewCest.php:canSeeArticle 4`
 
 - The test attribute is optional. If it is set then only this test is executed, otherwise the whole extension.
 - The Joomla version is optional. If it is not set, tests will be run on Joomla 3 and 4.

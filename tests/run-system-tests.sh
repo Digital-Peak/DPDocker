@@ -9,7 +9,7 @@ if [[ ! $(command -v curl) ]]; then
 fi
 
 # Clear mysql data when running all tests
-if [ -z "$2" ]; then
+if [ -z $2 ]; then
   # Remove the containers
   docker container rm -f $(docker container ls -q --filter name=tests_*) > /dev/null 2>&1
 
@@ -19,20 +19,23 @@ if [ -z "$2" ]; then
   if [ ! -d $(dirname $0)/www ]; then
     mkdir $(dirname $0)/www
   fi
-  if [ -d $(dirname $0)/www/joomla ]; then
-    sudo rm -rf $(dirname $0)/www/joomla
+  if [ -d $(dirname $0)/www/joomla3 ]; then
+    sudo rm -rf $(dirname $0)/www/joomla3
+  fi
+  if [ -d $(dirname $0)/www/joomla4 ]; then
+    sudo rm -rf $(dirname $0)/www/joomla4
   fi
 
   # We start mysql early to rebuild the database
-  EXTENSION=$1 TEST=$2 JOOMLA=$3 REBUILD= docker-compose -f $(dirname $0)/docker-compose.yml up -d mysql-test
+  EXTENSION=$1 TEST=$2 JOOMLA= REBUILD= docker-compose -f $(dirname $0)/docker-compose.yml up -d mysql-test
   sleep 5
 fi
 
 # Run containers in detached mode so when the system tests command ends, we can stop them afterwards
-EXTENSION=$1 TEST=$2 JOOMLA=$3 REBUILD= docker-compose -f $(dirname $0)/docker-compose.yml up -d phpmyadmin-test
-EXTENSION=$1 TEST=$2 JOOMLA=$3 REBUILD= docker-compose -f $(dirname $0)/docker-compose.yml up -d mailcatcher-test
-EXTENSION=$1 TEST=$2 JOOMLA=$3 REBUILD= docker-compose -f $(dirname $0)/docker-compose.yml up -d web-test
-EXTENSION=$1 TEST=$2 JOOMLA=$3 REBUILD= docker-compose -f $(dirname $0)/docker-compose.yml up -d selenium-test
+EXTENSION=$1 TEST=$2 JOOMLA= REBUILD= docker-compose -f $(dirname $0)/docker-compose.yml up -d phpmyadmin-test
+EXTENSION=$1 TEST=$2 JOOMLA= REBUILD= docker-compose -f $(dirname $0)/docker-compose.yml up -d mailcatcher-test
+EXTENSION=$1 TEST=$2 JOOMLA= REBUILD= docker-compose -f $(dirname $0)/docker-compose.yml up -d web-test
+EXTENSION=$1 TEST=$2 JOOMLA= REBUILD= docker-compose -f $(dirname $0)/docker-compose.yml up -d selenium-test
 
 # Waiting for web server
 while ! curl http://localhost:8080 > /dev/null 2>&1; do
@@ -52,9 +55,14 @@ if [[ $(command -v vinagre) ]]; then
 fi
 
 # Run the tests
-EXTENSION=$1 TEST=$2 JOOMLA=$3 REBUILD= docker-compose -f $(dirname $0)/docker-compose.yml run system-tests
+if [ -z $3 ]; then
+  EXTENSION=$1 TEST=$2 JOOMLA=3 REBUILD= docker-compose -f $(dirname $0)/docker-compose.yml run system-tests
+  EXTENSION=$1 TEST=$2 JOOMLA=4 REBUILD= docker-compose -f $(dirname $0)/docker-compose.yml run system-tests
+else
+  EXTENSION=$1 TEST=$2 JOOMLA=$3 REBUILD= docker-compose -f $(dirname $0)/docker-compose.yml run system-tests
+fi
 
 # Stop the containers
-if [ -z "$2" ]; then
+if [ -z $2 ]; then
   docker container stop $(docker container ls -q --filter name=tests_*) > /dev/null 2>&1
 fi

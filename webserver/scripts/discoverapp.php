@@ -23,14 +23,14 @@ class DPDockerExtensionDiscover extends Joomla\CMS\Application\CliApplication
 	public function doExecute()
 	{
 		if (Joomla\CMS\Version::MAJOR_VERSION == 4) {
-			\Joomla\CMS\Factory::getContainer()->alias('session', 'session.cli')
+			Joomla\CMS\Factory::getContainer()->alias('session', 'session.cli')
 				->alias('JSession', 'session.cli')
-				->alias(\Joomla\CMS\Session\Session::class, 'session.cli')
-				->alias(\Joomla\Session\Session::class, 'session.cli')
-				->alias(\Joomla\Session\SessionInterface::class, 'session.cli');
+				->alias(Joomla\CMS\Session\Session::class, 'session.cli')
+				->alias(Joomla\Session\Session::class, 'session.cli')
+				->alias(Joomla\Session\SessionInterface::class, 'session.cli');
 
 			JLoader::register('JNamespacePsr4Map', JPATH_LIBRARIES . '/namespacemap.php');
-			$extensionPsr4Loader = new \JNamespacePsr4Map;
+			$extensionPsr4Loader = new JNamespacePsr4Map;
 			$extensionPsr4Loader->load();
 
 			$this->setDispatcher(new Joomla\Event\Dispatcher());

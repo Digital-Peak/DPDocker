@@ -3,6 +3,8 @@
 # @copyright Copyright (C) 2020 Digital Peak GmbH. <https://www.digital-peak.com>
 # @license   http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
 
+echo "Running Tests on Joomla $2"
+
 # Setup download dir with correct permissions
 sudo rm -rf /tmp/tests/*
 sudo chmod 777 /tmp/tests
@@ -16,15 +18,15 @@ rm -rf $(dirname $0)/../tmp
 mkdir $(dirname $0)/../tmp
 cd $(dirname $0)/../tmp
 cp -r $(dirname $0)/../../../$1/tests/* .
-cp -r $(dirname $0)/../config/* .
+cp -r $(dirname $0)/../config/j$2/* .
 
 # Build the actions class and copy it back
 vendor/bin/codecept build
 cp -f $(dirname $0)/../tmp/_support/_generated/AcceptanceTesterActions.php $(dirname $0)/../../../$1/tests/_support/_generated/AcceptanceTesterActions.php
 
 # Build the command
-if [ ! -z "$2" ]; then
-  vendor/bin/codecept run --debug --steps --env desktop ${2#"tests/"}
+if [ ! -z $3 ]; then
+  vendor/bin/codecept run --debug --steps --env desktop ${3#"tests/"}
   exit 1
 fi
 

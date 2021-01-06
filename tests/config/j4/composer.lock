@@ -1356,12 +1356,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/joomla-projects/joomla-browser.git",
-                "reference": "679c0cef9cfdb2e71edfae96706f54b8a98a1872"
+                "reference": "ec652951978b62ec1890144a5cd19199b1c7cf1f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/joomla-projects/joomla-browser/zipball/679c0cef9cfdb2e71edfae96706f54b8a98a1872",
-                "reference": "679c0cef9cfdb2e71edfae96706f54b8a98a1872",
+                "url": "https://api.github.com/repos/joomla-projects/joomla-browser/zipball/ec652951978b62ec1890144a5cd19199b1c7cf1f",
+                "reference": "ec652951978b62ec1890144a5cd19199b1c7cf1f",
                 "shasum": ""
             },
             "require": {
@@ -1399,7 +1399,7 @@
                 "acceptance testing",
                 "joomla"
             ],
-            "time": "2020-12-17T13:00:38+00:00"
+            "time": "2021-01-04T17:04:56+00:00"
         },
         {
             "name": "myclabs/deep-copy",

@@ -23,7 +23,7 @@ modules:
     JoomlaBrowser:
       host: 'selenium-test'
       port: 4444
-      url: 'http://web-test/joomla'     # the url that points to the joomla installation at /tests/system/joomla-cms
+      url: 'http://web-test/joomla3'     # the url that points to the joomla installation at /tests/system/joomla-cms
       browser: 'chrome'
       restart: true
       clear_cookies: true
@@ -38,23 +38,22 @@ modules:
       database host: 'mysql-test'             # place where the Application is Hosted #server Address
       database user: 'root'                  # MySQL Server user ID, usually root
       database password: 'root'                  # MySQL Server password, usually empty or root
-      database name: 'sites_joomla'         # DB Name, at the Server
+      database name: 'sites_joomla3'         # DB Name, at the Server
       database type: 'mysqli'                # type in lowercase one of the options: MySQL\MySQLi\PDO
       database prefix: 'j_'                # DB Prefix for tables
       install sample data: 'no'              # Do you want to Download the Sample Data Along with Joomla Installation, then keep it Yes
       sample data: 'Default English (GB) Sample Data'    # Default Sample Data
       admin email: 'admin@example.com'      # email Id of the Admin
       language: 'English (United Kingdom)'   # Language in which you want the Application to be Installed
-      timeout: 10
     Helper\JoomlaDb:
-      dsn: 'mysql:host=mysql-test;dbname=sites_joomla'
+      dsn: 'mysql:host=mysql-test;dbname=sites_joomla3'
       user: 'root'
       password: 'root'
       prefix: 'j_'
     Helper\Acceptance:
       downloads: "/tmp/tests"
       repo_folder: '' # Path to the Extension repository. To be used by tests to install via Install from folder
-      url: 'http://localhost/joomla' # the url that points to the joomla installation at /tests/system/joomla-cms - we need it twice here
+      url: 'http://localhost/joomla3' # the url that points to the joomla installation at /tests/system/joomla-cms - we need it twice here
 error_level: "E_ALL & ~E_STRICT & ~E_DEPRECATED"
 env:
   desktop: ~

@@ -28,9 +28,6 @@ RUN sudo apt-get install -y build-essential
 RUN sudo apt-get install -y rsync
 RUN sudo apt-get install -y php-pear
 
-# Install joomla tools to a specific directory to not clash with global composer console dependency
-RUN composer require joomlatools/console -d /home/docker
-
 # Install webgrind
 RUN git clone https://github.com/jokkedk/webgrind /var/www/html/wg
 

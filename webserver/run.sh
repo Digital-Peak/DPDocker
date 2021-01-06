@@ -2,6 +2,7 @@
 # @package   DPDocker
 # @copyright Copyright (C) 2020 Digital Peak GmbH. <https://www.digital-peak.com>
 # @license   http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
+
 DB=${DB:-mysql}
 POSTGRES_DBVERSION=${POSTGRES_DBVERSION:-latest}
 MYSQL_DBVERSION=${MYSQL_DBVERSION:-latest}

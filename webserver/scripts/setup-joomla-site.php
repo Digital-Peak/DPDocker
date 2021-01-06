@@ -9,7 +9,6 @@ $hasInternet = true;
 $wwwRoot     = '/var/www/html/' . $argv[1];
 $db          = array_key_exists(3, $argv) ? $argv[3] : 'mysql';
 $force       = array_key_exists(4, $argv) ? (bool)$argv[4] : false;
-$binary      = '/home/docker/vendor/bin/joomla';
 
 if (is_dir($wwwRoot) && !$force) {
 	return;
@@ -23,7 +22,7 @@ if (!is_dir($wwwRoot) || $force) {
 	} else if (is_dir('/var/www/html/Projects/DPDocker/webserver/www/cache')) {
 		shell_exec('cp -r /var/www/html/Projects/DPDocker/webserver/www/cache /var/www/html/cache');
 	} else {
-		echo 'Can not setup Joomla!!!!';
+		echo 'Can not setup Joomla!!!!' . PHP_EOL;
 
 		return;
 	}
@@ -87,7 +86,9 @@ foreach ($folders as $project) {
 	createLinks('/var/www/html/Projects/' . $project . '/', $wwwRoot);
 }
 echo 'Discovering extensions on ' . $wwwRoot . PHP_EOL;
-shell_exec($binary . ' extension:install ' . $argv[1] . ' all --www=/var/www/html');
+copy('/var/www/html/Projects/DPDocker/webserver/scripts/discoverapp.php', $wwwRoot . '/discoverapp.php');
+shell_exec('php ' . $wwwRoot . '/discoverapp.php');
+unlink($wwwRoot . '/discoverapp.php');
 
 function createLinks($folderRoot, $wwwRoot)
 {

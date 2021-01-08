@@ -1,5 +1,5 @@
 # Tests task
-This task runs the system tests of an extension. System tests are browser tests performed by selenium and written in PHP with [codeception](https://codeception.com).
+This task runs the system tests of an extension on joomla 3 and 4. System tests are browser tests performed by selenium and written in PHP with [codeception](https://codeception.com).
 
 Through a VNC viewer you can actually see what is executed inside a container in the browser.
 
@@ -11,20 +11,30 @@ If you  have some install tasks which should be executed before every test, then
 ## Execute
 To run the extension tests, execute the following command:
 
-`./run-system-tests.sh extension [test]`
+`./run-system-tests.sh extension [test] [jooma version]`
 
-Example
+Examples
 
-`./run-system-tests.sh Foo tests/acceptance/views/ArticleViewCest.php:canSeeUploadFormInArticle`
+```
+./run-system-tests.sh Foo #All tests on Joomla 3 and 4
+./run-system-tests.sh Foo '' 3 #All tests only on Joomla 3
+./run-system-tests.sh Foo tests/acceptance/views #Test in folder tests/acceptance/views on Joomla 3 and 4
+./run-system-tests.sh Foo tests/acceptance/views 4 #Tests in folder tests/acceptance/views on Joomla 4
+./run-system-tests.sh Foo tests/acceptance/views/ArticleViewCest.php:canSeeArticle #Test tests/acceptance/views/ArticleViewCest.php:canSeeArticle on Joomla 3 and 4
+./run-system-tests.sh Foo tests/acceptance/views/ArticleViewCest.php:canSeeArticle 4 #Test tests/acceptance/views/ArticleViewCest.php:canSeeArticle on Joomla 4
+```
 
-The test attribute is optional. If it is set then only this test is executed, otherwise the whole extension.
+- The test attribute is optional. If it is set then only this test is executed, otherwise the whole extension.
+- The Joomla version is optional. If it is not set, tests will be run on Joomla 3 and 4.
 
 ## Internals
-Running the system tests is a rather complex setup. Due some startup issues we need to start every container manually. Five containers are started actually. First the mySQL container. Then the web server which is accessible on the url _localhost:8080/joomla_ and selenium. If all are up, then the actual system tests are executed.
+Running the system tests is a rather complex setup. Due some startup issues we need to start every container in sequence. In total are five containers created. First the MySQL container. Then the web server which is accessible on the url _localhost:8080/joomla{joomla version}_ and selenium. If all are up, then the actual system tests are executed.
 
 During a test PHPMyAdmin is available under _localhost:8081_ and the mailcatcher on _localhost:8082_.
 
-Every suite needs an install folder which contains some setup tasks during installation of the extension. The order of the other tests is randomly to prevent execution order issues as every tests need to be isolated.
+Every suite can provide an install folder which will be executed first to do some setup tasks after installation of the extension. The order of the other tests is randomly to prevent execution order issues as every test need to be isolated.
+
+Tests on Joomla 3 are executed on the url /joomla3 and for Joomla 4 on /joomla4.
 
 ### Mailcatcher usage
 Mailcatcher has a simple REST interface where you can interact with the mails. To access mailcatcher in codeception use the host mailcatcher-test:1080. The following code snippet is an example how to test if a mail contains a string:
@@ -47,4 +57,4 @@ public function seeInEmails($needle)
 ```
 
 ## Result
-You will see directly the output of the tests in the console where the system tests are started. If some do fail, then detailed reports are printed.
+You will see directly the output of the tests in the console where the system tests are started. If some do fail, then detailed reports are printed. Additionally you can find screenshots and the HTML pages of the failing tests in the folder tmp/_output of your docker project.

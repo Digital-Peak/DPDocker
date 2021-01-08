@@ -1,0 +1,13 @@
+{
+  "require": {
+    "codeception/codeception": "~4.1",
+    "codeception/module-webdriver": "^1.0.6",
+    "codeception/module-db": "^1.0",
+    "codeception/module-filesystem": "^1.0",
+    "codeception/module-asserts": "^1.1",
+    "codeception/codeception-progress-reporter": "^4.0.2",
+    "guzzlehttp/guzzle": "^7.2.0",
+    "hoa/console": "^3.17",
+    "joomla-projects/joomla-browser": "v4.0.0.x-dev"
+  }
+}

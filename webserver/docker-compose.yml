@@ -5,12 +5,12 @@ services:
     image: dpdocker-web
     environment:
       STARTUP_COMMAND_1: cp /var/www/html/Projects/DPDocker/webserver/scripts/index.php /var/www/html
-      STARTUP_COMMAND_2: php /var/www/html/Projects/DPDocker/webserver/scripts/setup-joomla-site.php j3 all ${DB} ${REBUILD}
-      STARTUP_COMMAND_3: php /var/www/html/Projects/DPDocker/webserver/scripts/setup-joomla-site.php j4 all ${DB} ${REBUILD}
-      STARTUP_COMMAND_4: php /var/www/html/Projects/DPDocker/webserver/scripts/setup-joomla-site.php dev3 all ${DB} ${REBUILD}
-      STARTUP_COMMAND_5: php /var/www/html/Projects/DPDocker/webserver/scripts/setup-joomla-site.php dev4 all ${DB} ${REBUILD}
-      STARTUP_COMMAND_6: php /var/www/html/Projects/DPDocker/webserver/scripts/setup-joomla-site.php play3 '' ${DB} ${REBUILD}
-      STARTUP_COMMAND_7: php /var/www/html/Projects/DPDocker/webserver/scripts/setup-joomla-site.php play4 '' ${DB} ${REBUILD}
+      STARTUP_COMMAND_2: php /var/www/html/Projects/DPDocker/webserver/scripts/setup-joomla-site.php j3 all ${DB} 3 ${REBUILD}
+      STARTUP_COMMAND_3: php /var/www/html/Projects/DPDocker/webserver/scripts/setup-joomla-site.php j4 all ${DB} 4 ${REBUILD}
+      STARTUP_COMMAND_4: php /var/www/html/Projects/DPDocker/webserver/scripts/setup-joomla-site.php dev3 all ${DB} 3 ${REBUILD}
+      STARTUP_COMMAND_5: php /var/www/html/Projects/DPDocker/webserver/scripts/setup-joomla-site.php dev4 all ${DB} 4 ${REBUILD}
+      STARTUP_COMMAND_6: php /var/www/html/Projects/DPDocker/webserver/scripts/setup-joomla-site.php play3 '' ${DB} 3 ${REBUILD}
+      STARTUP_COMMAND_7: php /var/www/html/Projects/DPDocker/webserver/scripts/setup-joomla-site.php play4 '' ${DB} 4 ${REBUILD}
       STARTUP_COMMAND_8: /var/www/html/Projects/DPDocker/webserver/scripts/setup-joomla-core.sh cms3 ${DB} ${REBUILD}
       STARTUP_COMMAND_9: /var/www/html/Projects/DPDocker/webserver/scripts/setup-joomla-core.sh cms4 ${DB} ${REBUILD}
     links:

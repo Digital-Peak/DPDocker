@@ -26,11 +26,11 @@ Examples
 - The Joomla version is optional. If it is not set, tests will be run on Joomla 3 and 4.
 
 ## Internals
-Running the system tests is a rather complex setup. Due some startup issues we need to start every container manually. Five containers are started actually. First the mySQL container. Then the web server which is accessible on the url _localhost:8080/joomla_ and selenium. If all are up, then the actual system tests are executed.
+Running the system tests is a rather complex setup. Due some startup issues we need to start every container in sequence. In total are five containers created. First the MySQL container. Then the web server which is accessible on the url _localhost:8080/joomla{joomla version}_ and selenium. If all are up, then the actual system tests are executed.
 
 During a test PHPMyAdmin is available under _localhost:8081_ and the mailcatcher on _localhost:8082_.
 
-Every suite needs an install folder which contains some setup tasks during installation of the extension. The order of the other tests is randomly to prevent execution order issues as every tests need to be isolated.
+Every suite can provide an install folder which will be executed first to do some setup tasks after installation of the extension. The order of the other tests is randomly to prevent execution order issues as every test need to be isolated.
 
 Tests on Joomla 3 are executed on the url /joomla3 and for Joomla 4 on /joomla4.
 
@@ -55,4 +55,4 @@ public function seeInEmails($needle)
 ```
 
 ## Result
-You will see directly the output of the tests in the console where the system tests are started. If some do fail, then detailed reports are printed.
+You will see directly the output of the tests in the console where the system tests are started. If some do fail, then detailed reports are printed. Additionally you can find screenshots and the HTML pages of the failing tests in the folder tmp/_output of your docker project.

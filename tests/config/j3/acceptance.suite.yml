@@ -55,6 +55,7 @@ modules:
       repo_folder: '' # Path to the Extension repository. To be used by tests to install via Install from folder
       url: 'http://localhost/joomla3' # the url that points to the joomla installation at /tests/system/joomla-cms - we need it twice here
       home_dir: '/usr/src/Projects/DPDocker/tests/www/joomla3'
+      joomla_version: 3
 error_level: "E_ALL & ~E_STRICT & ~E_DEPRECATED"
 env:
   desktop: ~

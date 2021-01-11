@@ -99,7 +99,7 @@ function buildAssets(root, assets, includeVendor)
 			}
 
 			// Append to the existing file
-			fs.appendFileSync(root + '/' + asset.dest, content);
+			fs.appendFileSync(root + '/' + asset.dest, '\n' + content);
 		});
 
 		// If defined, replace in the asset copy some content
@@ -123,7 +123,7 @@ function buildAssets(root, assets, includeVendor)
 			// Loop over the assets replace array
 			asset.append.forEach(def => {
 				// Append to the existing file
-				fs.appendFileSync(root + '/' + asset.dest, def);
+				fs.appendFileSync(root + '/' + asset.dest, '\n' + def);
 			});
 		}
 
@@ -132,7 +132,7 @@ function buildAssets(root, assets, includeVendor)
 			const data = fs.readFileSync(root + '/' + asset.dest, 'utf8');
 			fs.writeFileSync(
 				root + '/' + asset.dest,
-				data.split('\n').filter(line => !/^.*# sourceMappingURL=(.*\.map).*/.test(line)).join('\n').trim(),
+				data.replace(/\/\/# sourceMappingURL=(.+?\.map)/g, ''),
 				'utf8'
 			);
 			return;

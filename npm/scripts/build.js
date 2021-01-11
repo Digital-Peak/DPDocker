@@ -85,7 +85,7 @@ function buildAssets(root, assets, includeVendor)
 				fs.copyFileSync(file, root + '/' + asset.dest);
 				return;
 			}
-			
+
 			if (index == 0) {
 				copyFolderRecursiveSync(file, root + '/' + asset.dest);
 				return;
@@ -95,7 +95,7 @@ function buildAssets(root, assets, includeVendor)
 			if (source.indexOf('https://') === 0) {
 				content = '' + request('GET', source).getBody();
 			} else {
-				content = fs.readFileSync(file);
+				content = fs.readFileSync(file, 'utf8');
 			}
 
 			// Append to the existing file
@@ -158,7 +158,7 @@ function copyFileSync(source, target)
 		targetFile = path.join(target, path.basename(source));
 	}
 
-	fs.writeFileSync(targetFile, fs.readFileSync(source));
+	fs.writeFileSync(targetFile, fs.readFileSync(source, 'utf8'));
 }
 
 function copyFolderRecursiveSync(source, target)

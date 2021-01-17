@@ -10,7 +10,9 @@ sudo rm -rf /tmp/tests/*
 sudo chmod 777 /tmp/tests
 
 # Make sure the dependencies are correct
-cd $(dirname $0)/../config
+cd $(dirname $0)/../config/j3
+composer install --quiet
+cd $(dirname $0)/../config/j4
 composer install --quiet
 
 # Change to the tests folder as working directory
@@ -22,6 +24,7 @@ cp -r $(dirname $0)/../config/j$2/* .
 
 # Build the actions class and copy it back
 vendor/bin/codecept build
+mkdir -p $(dirname $0)/../../../$1/tests/_support/_generated
 cp -f $(dirname $0)/../tmp/_support/_generated/AcceptanceTesterActions.php $(dirname $0)/../../../$1/tests/_support/_generated/AcceptanceTesterActions.php
 
 # Check if there are multiple tests to run

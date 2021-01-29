@@ -4,9 +4,9 @@ This task runs the system tests of an extension on joomla 3 and 4. System tests 
 Through a VNC viewer you can actually see what is executed inside a container in the browser.
 
 ## Prerequisites
-The extension needs a tests folder with an acceptance folder which contains the tests.
+The extension needs a tests folder with an acceptance folder in it, this is the location for your tests. Additionally, you need a "_bootstrap.php" file in the tests folder and in the tests/acceptance folder. There you can do some setup stuff which will be executed before codeception is running the tests. Like including some base classes or defining some global variables like a timeout.
 
-If you  have some install tasks which should be executed before every test, then put them into the acceptance/install folder. Additionally add the group annotation @install, because DPDocker is skipping this group on the main codeception install run. [Here](https://codeception.com/docs/07-AdvancedUsage#Groups) you can find more information about codeception groups.
+If you  have some install tasks which should be executed before every test, then put them into the acceptance/install folder.
 
 ## Execute
 To run the extension tests, execute the following command:

@@ -3,10 +3,11 @@
 # @copyright Copyright (C) 2020 Digital Peak GmbH. <https://www.digital-peak.com>
 # @license   http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
 
-DB=${DB:-mysql}
-POSTGRES_DBVERSION=${POSTGRES_DBVERSION:-latest}
-MYSQL_DBVERSION=${MYSQL_DBVERSION:-latest}
-REBUILD=${REBUILD:-}
+db=${db:-mysql}
+pg=${pg:-latest}
+my=${my:-latest}
+php=${php:-latest}
+r=${r:-}
 
 while [ $# -gt 0 ]; do
    if [[ $1 == *"--"* ]]; then
@@ -22,4 +23,4 @@ if [ ! -d $(dirname $0)/www ]; then
 fi
 
 # Start the dev server
-DB=$DB REBUILD=$REBUILD MYSQL_DBVERSION=$MYSQL_DBVERSION POSTGRES_DBVERSION=$POSTGRES_DBVERSION docker-compose -f $(dirname $0)/docker-compose.yml up
+DB=$db REBUILD=$r MYSQL_DBVERSION=$my POSTGRES_DBVERSION=$pg PHP_VERSION=$php docker-compose -f $(dirname $0)/docker-compose.yml up

@@ -51,7 +51,7 @@ if [ ! -f $root/.htaccess ]; then
 fi
 
 # Setup configuration file
-cp $(dirname $0)/configuration.php $root/configuration.php
+sudo cp $(dirname $0)/configuration.php $root/configuration.php
 sed -i "s/{SITE}/$site/g" $root/configuration.php
 sed -i "s/{DBHOST}/$dbHost/g" $root/configuration.php
 sed -i "s/{DBNAME}/$dbName/g" $root/configuration.php

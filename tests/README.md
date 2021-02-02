@@ -11,21 +11,22 @@ If you  have some install tasks which should be executed before every test, then
 ## Execute
 To run the extension tests, execute the following command:
 
-`./run-system-tests.sh extension [test] [jooma version]`
+`./run-system-tests.sh extension [test] [Jooma version] [PHP version]`
 
 Examples
 
 ```
-./run-system-tests.sh Foo #All tests on Joomla 3 and 4
-./run-system-tests.sh Foo '' 3 #All tests only on Joomla 3
-./run-system-tests.sh Foo tests/acceptance/views #Test in folder tests/acceptance/views on Joomla 3 and 4
-./run-system-tests.sh Foo tests/acceptance/views 4 #Tests in folder tests/acceptance/views on Joomla 4
-./run-system-tests.sh Foo tests/acceptance/views/ArticleViewCest.php:canSeeArticle #Test tests/acceptance/views/ArticleViewCest.php:canSeeArticle on Joomla 3 and 4
-./run-system-tests.sh Foo tests/acceptance/views/ArticleViewCest.php:canSeeArticle 4 #Test tests/acceptance/views/ArticleViewCest.php:canSeeArticle on Joomla 4
+./run-system-tests.sh Foo #All tests on Joomla 3 and 4 on the latest PHP version
+./run-system-tests.sh Foo '' 3 7.3 #All tests only on Joomla 3 on PHP 7.3
+./run-system-tests.sh Foo tests/acceptance/views '' 8.0 #Test in folder tests/acceptance/views on Joomla 3 and 4 on PHP 8.0
+./run-system-tests.sh Foo tests/acceptance/views 4 #Tests in folder tests/acceptance/views on Joomla 4 on the latest PHP version
+./run-system-tests.sh Foo tests/acceptance/views/ArticleViewCest.php:canSeeArticle #Test tests/acceptance/views/ArticleViewCest.php:canSeeArticle on Joomla 3 and 4 on the latest PHP version
+./run-system-tests.sh Foo tests/acceptance/views/ArticleViewCest.php:canSeeArticle 4 7.4 #Test tests/acceptance/views/ArticleViewCest.php:canSeeArticle on Joomla 4 on PHP 7.4
 ```
 
 - The test attribute is optional. If it is set then only this test is executed, otherwise the whole extension.
 - The Joomla version is optional. If it is not set, tests will be run on Joomla 3 and 4.
+- The PHP version is optional. If it is not set, tests will be run on the latest PHP version.
 
 ## Internals
 Running the system tests is a rather complex setup. Due some startup issues we need to start every container in sequence. In total are five containers created. First the MySQL container. Then the web server which is accessible on the url _localhost:8080/joomla{joomla version}_ and selenium. If all are up, then the actual system tests are executed.

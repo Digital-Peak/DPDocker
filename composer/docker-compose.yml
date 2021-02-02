@@ -2,25 +2,25 @@ version: '3.5'
 
 services:
   install:
-    image: dpdocker-cli
+    image: dpdocker-cli:7.4
     command: /usr/src/Projects/DPDocker/composer/scripts/exec-install.sh ${EXTENSION} ${EXTENSION_FOLDER}
     volumes:
       - ../..:/usr/src/Projects
 
   update:
-    image: dpdocker-cli
+    image: dpdocker-cli:7.4
     command: /usr/src/Projects/DPDocker/composer/scripts/exec-update.sh ${EXTENSION} ${EXTENSION_FOLDER}
     volumes:
       - ../..:/usr/src/Projects
 
   dep-tree:
-    image: dpdocker-cli
+    image: dpdocker-cli:7.4
     command: /usr/src/Projects/DPDocker/composer/scripts/exec-dep-tree.sh ${EXTENSION} ${EXTENSION_FOLDER}
     volumes:
       - ../..:/usr/src/Projects
 
   list:
-    image: dpdocker-cli
+    image: dpdocker-cli:7.4
     command: /usr/src/Projects/DPDocker/composer/scripts/exec-list.sh ${EXTENSION} ${EXTENSION_FOLDER}
     volumes:
       - ../..:/usr/src/Projects

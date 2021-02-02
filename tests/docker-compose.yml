@@ -2,7 +2,7 @@ version: '3.5'
 
 services:
   system-tests:
-    image: dpdocker-cli
+    image: dpdocker-cli:7.4
     command: /usr/src/Projects/DPDocker/tests/scripts/exec-system-tests.sh ${EXTENSION} ${JOOMLA} ${TEST}
     links:
       - mailcatcher-test

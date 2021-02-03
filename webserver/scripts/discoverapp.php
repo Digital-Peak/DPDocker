@@ -22,20 +22,6 @@ class DPDockerExtensionDiscover extends Joomla\CMS\Application\CliApplication
 {
 	public function doExecute()
 	{
-		if (Joomla\CMS\Version::MAJOR_VERSION == 4) {
-			Joomla\CMS\Factory::getContainer()->alias('session', 'session.cli')
-				->alias('JSession', 'session.cli')
-				->alias(Joomla\CMS\Session\Session::class, 'session.cli')
-				->alias(Joomla\Session\Session::class, 'session.cli')
-				->alias(Joomla\Session\SessionInterface::class, 'session.cli');
-
-			JLoader::register('JNamespacePsr4Map', JPATH_LIBRARIES . '/namespacemap.php');
-			$extensionPsr4Loader = new JNamespacePsr4Map;
-			$extensionPsr4Loader->load();
-
-			$this->setDispatcher(new Joomla\Event\Dispatcher());
-		}
-
 		// Refresh the cache of discovered extensions
 		Joomla\CMS\MVC\Model\BaseDatabaseModel::addIncludePath(JPATH_ADMINISTRATOR . '/components/com_installer/models');
 		$model = Joomla\CMS\MVC\Model\BaseDatabaseModel::getInstance('Discover', 'InstallerModel');

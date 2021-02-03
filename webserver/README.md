@@ -11,28 +11,28 @@ Nothing special, the extensions do need to follow the directory structure mentio
 ## Execute
 To start the web server, execute the following command:
 
-`./run.sh [--php php-version] [--db db-type] [--my mysql-db-version] [--pg postgres-db-version] [--r rebuild]`
+`./run.sh [-php php-version] [-db db-type] [-my mysql-db-version] [-pg postgres-db-version] [-r rebuild]`
 
 Examples
 
-- `./run.sh --php 7.4 --db mysql --my 5.6`
+- `./run.sh -php 7.4 -db mysql -my 5.6`
 
-- `./run.sh --php 8.0 --db postgres --pg 13 --r rebuild`
+- `./run.sh -php 8.0 -db postgres -pg 13 -r rebuild`
 
 All attributes are optional.
 
-- --php  
+- -php  
   The PHP version to load the web server with. Supported are:  
   - 7.3
   - 7.4
   - 8.0
-- --db  
+- -db  
   You can use either _mysql_ or _postgres_ as value. If set then the Joomla installations will be installed with the respective driver. _mysql_ is loaded by default.
-- --my  
+- -my  
   The MySQL database version. You can use supported tags on [hub.docker.com](https://hub.docker.com/_/mysql). If set then the Joomla installations will be installed with the respective driver. _latest_ is loaded by default.
-- --pg  
+- -pg  
   The Postgres database version. You can use supported tags on [hub.docker.com](https://hub.docker.com/_/postgres). If set then the Joomla installations will be installed with the respective driver. _latest_ is loaded by default.
-- --r  
+- -r  
   If set then the whole web server is rebuild and you have a clean setup as when you started it for the first time.
 
 ## Internals

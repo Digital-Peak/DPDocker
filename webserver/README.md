@@ -20,7 +20,6 @@ Examples
 - `./run.sh -php 8.0 -db postgres -pg 13 -r rebuild`
 
 All attributes are optional.
-
 - -php  
   The PHP version to load the web server with. Supported are:  
   - 7.3

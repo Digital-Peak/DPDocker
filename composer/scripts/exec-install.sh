@@ -42,6 +42,12 @@ for fname in $(find $root/$1/$2 -path ./vendor -prune -o -name "composer.json" 2
     sudo rm -rf "$projectDirectory/vendor"
   fi
 
+  # Make simple update for DPDocker
+  if [ $1 == "DPDocker" ]; then
+    composer update
+    continue
+  fi
+
   # Install the dependencies
   composer install -o --no-dev --prefer-dist --quiet
 

@@ -12,4 +12,4 @@ if [ -f $(dirname $0)/../../../$1/package/phpcs/rules.xml ]; then
   standard=$standard,$(dirname $0)/../../../$1/package/rules/phpcs.xml
 fi
 
-$(dirname $0)/../config/vendor/bin/phploc -vvv --exclude vendor --exclude node_modules --exclude tests --exclude docs --exclude media $(dirname $0)/../../../$1/$2
+$(dirname $0)/../config/vendor/bin/phploc --exclude vendor --exclude node_modules --exclude tests --exclude docs --exclude media $(dirname $0)/../../../$1/$2

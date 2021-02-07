@@ -1,9 +1,9 @@
 # Webserver task
-This task starts a web server on localhost with port 80. The latest PHP version is used and as web server is apache running. There are different joomla sites built during startup, either with Joomla 3 or 4. Some are for patch release development and some for feature release development where extensions are linked into them. Additionally there are other sites and tools available which are documented below.
+This task starts an apache web server on localhost with port 80. There are different joomla sites built during startup, either with Joomla 3 or 4. Some are for patch release development and some for feature release development where extensions are linked into them. Additionally there are other sites and tools available which are documented below.
 
 Optionally if you have checked out the joomla core repository then they are linked as well.
 
-Also keep in mind that you should **NOT USE THIS IN PRODUCTION**!! The initial load takes a while because compiling the assets is a very long running task and this must be executed when seting up Joomla 4.
+Also keep in mind that you should **NOT USE THIS IN PRODUCTION**!! The initial load takes a while because compiling the assets is a very long running task and this must be executed when setting up Joomla 4.
 
 ## Prerequisites
 Nothing special, the extensions do need to follow the directory structure mentioned in the [main document](..).
@@ -11,22 +11,31 @@ Nothing special, the extensions do need to follow the directory structure mentio
 ## Execute
 To start the web server, execute the following command:
 
-`./run.sh [--DB db-type] [--MYSQL_DBVERSION mysql-db-version] [--POSTGRES_DBVERSION postgres-db-version] [--REBUILD rebuild]`
+`./run.sh [-php php-version] [-db db-type] [-my mysql-db-version] [-pg postgres-db-version] [-r rebuild]`
 
 Examples
 
-- `./run.sh --DB mysql --MYSQL_DBVERSION 5.6`
+- `./run.sh -php 7.4 -db mysql -my 5.6`
 
-- `./run.sh --DB postgres --POSTGRES_DBVERSION 13 --REBUILD rebuild`
+- `./run.sh -php 8.0 -db postgres -pg 13 -r rebuild`
 
 All attributes are optional.
-
-- `db-type`: You can use either _mysql_ or _postgres_. If set then the Joomla installations will be installed with the respective driver. _mysql_ is loaded by default.
-- `*-db-version`: You can use supported tags on hub.docker:  [_mysql_](https://hub.docker.com/_/mysql) or [_postgres_](https://hub.docker.com/_/postgres). If set then the Joomla installations will be installed with the respective driver. _latest_ is loaded by default.
-- `rebuild`; If set then the whole web server is rebuild and you have a clean setup as when you started it for the first time. The option must be selected if the database changes.
+- -php  
+  The PHP version to load the web server with. Supported are:  
+  - 7.3
+  - 7.4
+  - 8.0
+- -db  
+  You can use either _mysql_ or _postgres_ as value. If set then the Joomla installations will be installed with the respective driver. _mysql_ is loaded by default.
+- -my  
+  The MySQL database version. You can use supported tags on [hub.docker.com](https://hub.docker.com/_/mysql). If set then the Joomla installations will be installed with the respective driver. _latest_ is loaded by default.
+- -pg  
+  The Postgres database version. You can use supported tags on [hub.docker.com](https://hub.docker.com/_/postgres). If set then the Joomla installations will be installed with the respective driver. _latest_ is loaded by default.
+- -r  
+  If set then the whole web server is rebuild and you have a clean setup as when you started it for the first time.
 
 ## Internals
-When starting the web server, there are six docker containers executed. An Apache web server, a MySQL server, a phpMyAdmin server, a postgres server, a pgAdmin server and a Mailcatcher. All of them are out of the box ready to use.
+When starting the web server, there are six docker containers started. An Apache web server, a MySQL server, a phpMyAdmin server, a postgres server, a pgAdmin server and a Mailcatcher. All of them are out of the box ready to use.
 
 To install Joomla, link the extensions and discover them we use a mix of PHP and shell scripts. All these scripts can be found in the scripts folder.
 

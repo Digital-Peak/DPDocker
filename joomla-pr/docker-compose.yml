@@ -2,7 +2,7 @@ version: '3.5'
 
 services:
   joomla-pr:
-    image: dpdocker-web
+    image: dpdocker-web:${PHP_VERSION}
     environment:
       STARTUP_COMMAND_1: /var/www/html/Projects/DPDocker/joomla-pr/scripts/exec-joomla-pr-webserver.sh ${PR} ${DB} ${REBUILD}
       JOOMLA_INSTALLATION_DISABLE_LOCALHOST_CHECK: 1
@@ -19,14 +19,14 @@ services:
       - ../..:/var/www/html/Projects
 
   mysql-pr:
-    image: mysql:5.6
+    image: mysql:${MYSQL_DBVERSION}
     environment:
       MYSQL_ROOT_PASSWORD: root
     volumes:
       - ./mysql_data:/var/lib/mysql
 
   postgres-pr:
-    image: postgres
+    image: postgres:${POSTGRES_DBVERSION}
     environment:
       POSTGRES_PASSWORD: root
       POSTGRES_USER: root

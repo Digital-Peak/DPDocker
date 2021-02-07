@@ -2,7 +2,7 @@ version: '3.5'
 
 services:
   web:
-    image: dpdocker-web
+    image: dpdocker-web:${PHP_VERSION}
     environment:
       STARTUP_COMMAND_1: cp /var/www/html/Projects/DPDocker/webserver/scripts/index.php /var/www/html
       STARTUP_COMMAND_2: php /var/www/html/Projects/DPDocker/webserver/scripts/setup-joomla-site.php j3 all ${DB} 3 ${REBUILD}
@@ -13,6 +13,7 @@ services:
       STARTUP_COMMAND_7: php /var/www/html/Projects/DPDocker/webserver/scripts/setup-joomla-site.php play4 '' ${DB} 4 ${REBUILD}
       STARTUP_COMMAND_8: /var/www/html/Projects/DPDocker/webserver/scripts/setup-joomla-core.sh cms3 ${DB} ${REBUILD}
       STARTUP_COMMAND_9: /var/www/html/Projects/DPDocker/webserver/scripts/setup-joomla-core.sh cms4 ${DB} ${REBUILD}
+      PHP_INI_XDEBUG__DISCOVER_CLIENT_HOST: 1
     links:
       - mysql:mysql
       - postgres:postgres

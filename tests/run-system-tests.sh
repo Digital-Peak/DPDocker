@@ -27,15 +27,20 @@ if [ -z $2 ]; then
   fi
 
   # We start mysql early to rebuild the database
-  EXTENSION=$1 TEST=$2 JOOMLA= REBUILD= docker-compose -f $(dirname $0)/docker-compose.yml up -d mysql-test
+  EXTENSION=$1 TEST=$2 JOOMLA= REBUILD= PHP_VERSION= docker-compose -f $(dirname $0)/docker-compose.yml up -d mysql-test
   sleep 5
 fi
 
+PHP_VERSION=$4
+if [ -z $PHP_VERSION ]; then
+  PHP_VERSION=latest
+fi
+
 # Run containers in detached mode so when the system tests command ends, we can stop them afterwards
-EXTENSION=$1 TEST=$2 JOOMLA= REBUILD= docker-compose -f $(dirname $0)/docker-compose.yml up -d phpmyadmin-test
-EXTENSION=$1 TEST=$2 JOOMLA= REBUILD= docker-compose -f $(dirname $0)/docker-compose.yml up -d mailcatcher-test
-EXTENSION=$1 TEST=$2 JOOMLA= REBUILD= docker-compose -f $(dirname $0)/docker-compose.yml up -d web-test
-EXTENSION=$1 TEST=$2 JOOMLA= REBUILD= docker-compose -f $(dirname $0)/docker-compose.yml up -d selenium-test
+EXTENSION=$1 TEST=$2 JOOMLA= REBUILD= PHP_VERSION= docker-compose -f $(dirname $0)/docker-compose.yml up -d phpmyadmin-test
+EXTENSION=$1 TEST=$2 JOOMLA= REBUILD= PHP_VERSION= docker-compose -f $(dirname $0)/docker-compose.yml up -d mailcatcher-test
+EXTENSION=$1 TEST=$2 JOOMLA= REBUILD= PHP_VERSION=$PHP_VERSION docker-compose -f $(dirname $0)/docker-compose.yml up -d web-test
+EXTENSION=$1 TEST=$2 JOOMLA= REBUILD= PHP_VERSION= docker-compose -f $(dirname $0)/docker-compose.yml up -d selenium-test
 
 # Waiting for web server
 while ! curl http://localhost:8080 > /dev/null 2>&1; do
@@ -56,10 +61,10 @@ fi
 
 # Run the tests
 if [ -z $3 ]; then
-  EXTENSION=$1 TEST=$2 JOOMLA=3 REBUILD= docker-compose -f $(dirname $0)/docker-compose.yml run system-tests
-  EXTENSION=$1 TEST=$2 JOOMLA=4 REBUILD= docker-compose -f $(dirname $0)/docker-compose.yml run system-tests
+  EXTENSION=$1 TEST=$2 JOOMLA=3 REBUILD= PHP_VERSION= docker-compose -f $(dirname $0)/docker-compose.yml run system-tests
+  EXTENSION=$1 TEST=$2 JOOMLA=4 REBUILD= PHP_VERSION= docker-compose -f $(dirname $0)/docker-compose.yml run system-tests
 else
-  EXTENSION=$1 TEST=$2 JOOMLA=$3 REBUILD= docker-compose -f $(dirname $0)/docker-compose.yml run system-tests
+  EXTENSION=$1 TEST=$2 JOOMLA=$3 REBUILD= PHP_VERSION= docker-compose -f $(dirname $0)/docker-compose.yml run system-tests
 fi
 
 # Stop the containers

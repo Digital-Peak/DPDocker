@@ -80,7 +80,7 @@ function transpile(source, destination, isVendor, config)
 					if (config.docBlock) {
 						let content = strip(fs.readFileSync(destination, 'utf8'), null, {comments: 'none', sourcemap: true});
 						fs.writeFileSync(destination, config.docBlock + "\n" + content.code);
-						fs.writeFileSync(destination + '.map', content.map);
+						fs.writeFileSync(destination + '.map', content.map.mappings);
 					}
 
 					babelify(destination, false);

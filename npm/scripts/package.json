@@ -6,10 +6,10 @@
   "devDependencies": {
     "@babel/core": "^7.8.7",
     "@babel/preset-env": "^7.8.7",
+    "js-cleanup": "^1.2.0",
     "node-sass": "^4.14.1",
     "node-watch": "^0.6.4",
     "rollup": "^2.29.0",
-    "js-cleanup": "^1.2.0",
     "sync-request": "^6.1.0",
     "terser": "^5.3.8"
   }

@@ -2,7 +2,7 @@ version: '3.5'
 
 services:
   system-tests:
-    image: dpdocker-cli:7.4
+    image: digitpeak/dpdocker-cli:7.4
     command: /usr/src/Projects/DPDocker/tests/scripts/exec-system-tests.sh ${EXTENSION} ${JOOMLA} ${TEST}
     links:
       - mailcatcher-test
@@ -20,7 +20,7 @@ services:
       - /tmp/tests:/tmp/tests
 
   web-test:
-    image: dpdocker-web:${PHP_VERSION}
+    image: digitpeak/dpdocker-web:${PHP_VERSION}
     environment:
       STARTUP_COMMAND_1: php /var/www/html/Projects/DPDocker/webserver/scripts/setup-joomla-site.php joomla3 ${EXTENSION} mysql-test 3
       STARTUP_COMMAND_2: php /var/www/html/Projects/DPDocker/webserver/scripts/setup-joomla-site.php joomla4 ${EXTENSION} mysql-test 4

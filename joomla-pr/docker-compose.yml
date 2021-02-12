@@ -2,7 +2,7 @@ version: '3.5'
 
 services:
   joomla-pr:
-    image: dpdocker-web:${PHP_VERSION}
+    image: digitpeak/dpdocker-web:${PHP_VERSION}
     environment:
       STARTUP_COMMAND_1: /var/www/html/Projects/DPDocker/joomla-pr/scripts/exec-joomla-pr-webserver.sh ${PR} ${DB} ${REBUILD}
       JOOMLA_INSTALLATION_DISABLE_LOCALHOST_CHECK: 1

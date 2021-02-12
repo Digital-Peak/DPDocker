@@ -1,11 +1,15 @@
 # Base images
-This here is not a task, it contains the base images for the containers in the tasks.
+This here is not a task, it contains the base images for most of the containers used in the tasks.
+
+DPDocker needs some common standard images like mysql or selenium. But for most tasks it needs some self made images. They have the name `digitpeak/dpdocker-cli` and `digitpeak/dpdocker-web`. These images are available in the [global docker hub](https://hub.docker.com/u/digitpeak). 
+
+Sometimes there is a need to modify the images. So you can edit the `Dockerfile`'s in the respective subfolders. After that you have to build the images again, how to do that can be found in the _Execute_ chapter.
 
 ## Prerequisites
 Nothing special.
 
 ## Execute
-To run a build, execute the following command:
+To build the images, execute the following command:
 
 `./build.sh`
 

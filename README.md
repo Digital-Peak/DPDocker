@@ -16,10 +16,6 @@ Clone this repository:
 
 `git clone https://github.com/Digital-Peak/DPDocker.git`
 
-Build the images for the different tasks:
-
-`bash images/build.sh`
-
 ## Tasks
 The following tasks are supported to help developing your extension:
 
@@ -60,3 +56,6 @@ The plugins.
 The templates.
 - tests  
 The folder with the acceptance tests.
+
+## DPDocker images
+If you want to build the images by your own, then head on to the [images folder](images), where you will find more information about our images. 

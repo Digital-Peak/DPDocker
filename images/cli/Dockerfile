@@ -23,4 +23,6 @@ RUN sudo apt-get install -y postgresql-client
 RUN sudo apt-get install -y graphviz python
 RUN sudo apt-get install -y build-essential
 RUN sudo apt-get install -y rsync
+RUN sudo apt-get install -y zip
+RUN sudo apt-get install -y unzip
 RUN sudo apt-get install -y php-pear

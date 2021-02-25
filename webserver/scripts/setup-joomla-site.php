@@ -33,9 +33,8 @@ if (!is_dir($wwwRoot) || $force) {
 
 	if ($joomlaVersion == 4 && $hasInternet) {
 		// Checkout latest stable release
-		shell_exec('git --work-tree=' . $wwwRoot . ' --git-dir=' . $wwwRoot . '/.git fetch origin pull/32146/head:pr-32146 2>&1 > /dev/null');
-		shell_exec('git --work-tree=' . $wwwRoot . ' --git-dir=' . $wwwRoot . '/.git checkout pr-32146 2>&1 > /dev/null');
-		echo 'Using version 4.0.0-beta7 on ' . $wwwRoot . PHP_EOL;
+		shell_exec('git --work-tree=' . $wwwRoot . ' --git-dir=' . $wwwRoot . '/.git checkout 4.0-dev 2>&1 > /dev/null');
+		echo 'Using 4.0-dev branch on ' . $wwwRoot . PHP_EOL;
 	} else if ($hasInternet) {
 		$versions = json_decode(file_get_contents('https://downloads.joomla.org/api/v1/latest/cms'));
 		foreach ($versions->branches as $branch) {

@@ -3,7 +3,7 @@ version: '3.5'
 services:
   system-tests:
     image: digitpeak/dpdocker-cli:7.4
-    command: /usr/src/Projects/DPDocker/tests/scripts/exec-system-tests.sh ${EXTENSION} ${JOOMLA} ${TEST}
+    command: /usr/src/Projects/DPDocker/tests/scripts/exec-system-tests.sh ${EXTENSION} ${JOOMLA} ${BROWSER} ${TEST}
     links:
       - mailcatcher-test
     volumes:
@@ -11,13 +11,14 @@ services:
       - /tmp/tests:/tmp/tests
 
   selenium-test:
-    image: selenium/standalone-chrome-debug
+    image: selenium/standalone-${BROWSER}${DEBUG}:3.141.59-20210128
     ports:
       - 4444:4444
       - 5900:5900
     volumes:
       - /dev/shm:/dev/shm
       - /tmp/tests:/tmp/tests
+      - ../..:/usr/src/Projects
 
   web-test:
     image: digitpeak/dpdocker-web:${PHP_VERSION}
@@ -42,7 +43,7 @@ services:
       - ../..:/usr/src/Projects
 
   mysql-test:
-    image: mysql:5.6
+    image: mysql:${MYSQL_DBVERSION}
     environment:
       MYSQL_ROOT_PASSWORD: root
     volumes:

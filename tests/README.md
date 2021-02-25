@@ -11,22 +11,33 @@ If you  have some install tasks which should be executed before every test, then
 ## Execute
 To run the extension tests, execute the following command:
 
-`./run-system-tests.sh extension [test] [Jooma version] [PHP version]`
+`./run-system-tests.sh -e extension [-t test] [-j jooma-version] [-p php-version]`
 
 Examples
 
 ```
-./run-system-tests.sh Foo #All tests on Joomla 3 and 4 on the latest PHP version
-./run-system-tests.sh Foo '' 3 7.3 #All tests only on Joomla 3 on PHP 7.3
-./run-system-tests.sh Foo tests/acceptance/views '' 8.0 #Test in folder tests/acceptance/views on Joomla 3 and 4 on PHP 8.0
-./run-system-tests.sh Foo tests/acceptance/views 4 #Tests in folder tests/acceptance/views on Joomla 4 on the latest PHP version
-./run-system-tests.sh Foo tests/acceptance/views/ArticleViewCest.php:canSeeArticle #Test tests/acceptance/views/ArticleViewCest.php:canSeeArticle on Joomla 3 and 4 on the latest PHP version
-./run-system-tests.sh Foo tests/acceptance/views/ArticleViewCest.php:canSeeArticle 4 7.4 #Test tests/acceptance/views/ArticleViewCest.php:canSeeArticle on Joomla 4 on PHP 7.4
+./run-system-tests.sh -e Foo #All tests on Joomla 3 and 4 on the latest PHP version on chrome
+./run-system-tests.sh -e Foo -b firefox #All tests on Joomla 3 and 4 on the latest PHP version on firefox
+./run-system-tests.sh -e Foo -j 3 -php 7.3 #All tests only on Joomla 3 and PHP 7.3 on chrome
+./run-system-tests.sh -e Foo -t tests/acceptance/views -php 8.0 #Test in folder tests/acceptance/views on Joomla 3 and 4 on PHP 8.0 on chrome
+./run-system-tests.sh -e Foo -t tests/acceptance/views -j 4 #Tests in folder tests/acceptance/views on Joomla 4 on the latest PHP version on chrome
+./run-system-tests.sh -e Foo -t tests/acceptance/views/ArticleViewCest.php:canSeeArticle #Test tests/acceptance/views/ArticleViewCest.php:canSeeArticle on Joomla 3 and 4 on the latest PHP version on chrome
+./run-system-tests.sh -e Foo -t tests/acceptance/views/ArticleViewCest.php:canSeeArticle -j 4 -php 7.4 #Test tests/acceptance/views/ArticleViewCest.php:canSeeArticle on Joomla 4 on PHP 7.4 on chrome
+./run-system-tests.sh -e Foo -d '' #All tests on Joomla 3 and 4 on the latest PHP version on firefox but not in debug mode
 ```
 
-- The test attribute is optional. If it is set then only this test is executed, otherwise the whole extension.
-- The Joomla version is optional. If it is not set, tests will be run on Joomla 3 and 4.
-- The PHP version is optional. If it is not set, tests will be run on the latest PHP version.
+- -e  
+  The extension to test.
+- -t  
+  The test attribute is optional. If it is set then only this test is executed, otherwise the whole extension.
+- -j  
+  The Joomla version is optional. If it is not set, tests will be run on Joomla 3 and 4.
+- -php  
+  The PHP version is optional. If it is not set, tests will be run on the latest PHP version.
+- -b  
+  The browser is optional. If it is not set, tests will be run on the chrome. available are `chrome` and `firefox`.
+- -d  
+  The debug parameter is optional. If it is not set, it starts in debug mode where a VCN viewer can be connected to.
 
 ## Internals
 Running the system tests is a rather complex setup. Due some startup issues we need to start every container in sequence. In total are five containers created. First the MySQL container. Then the web server which is accessible on the url _localhost:8080/joomla{joomla version}_ and selenium. If all are up, then the actual system tests are executed.

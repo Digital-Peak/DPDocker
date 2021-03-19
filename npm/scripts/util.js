@@ -52,7 +52,11 @@ function transpile(source, destination, isVendor, config)
 					fs.writeFileSync(destination + '.map', JSON.stringify(result.map));
 				}
 
-				let minified = await terser.minify(result.code, {output: {comments: config.docBlock ? 'all' : 'none'}});
+				const minifyConfig = {};
+				if (config.docBlock) {
+					minifyConfig.output = {comments: 'all'};
+				}
+				let minified = await terser.minify(result.code, minifyConfig);
 				if (minified.error) {
 					console.log(minified.error);
 					return

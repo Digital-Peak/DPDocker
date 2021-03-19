@@ -78,7 +78,7 @@ The vendor property can contain an array of Javascript dependencies from the nod
 A docblock which is added to the top of the generated JS files. All the other ones are then stripped out of the file.
 
 ### Browser compatibility
-The default browser where the assets are compiled to is  that it must have a usage of over 0.25% and maintained and ie11 should be supported. When you want change the compatibility then you can define a compatibility property in the config part. Supported are the compatibility definitions from [babel preset env](https://babeljs.io/docs/en/babel-preset-env#targetsbrowsers), which is based on the [browserlist project](https://github.com/browserslist/browserslist).
+The default browsers definition where the assets are compiled to, is that they must have a usage of over 0.25% and maintained or iOS/Safari 8 compatible while Internet Explorer is not supported anymore. When you want change the compatibility then you can define a compatibility property in the config part. Supported are the compatibility definitions from [babel preset env](https://babeljs.io/docs/en/babel-preset-env#targetsbrowsers), which is based on the [browserlist project](https://github.com/browserslist/browserslist).
 
 ### Example
 Example of assets.json file in com_foo/resources:
@@ -112,8 +112,7 @@ Example of assets.json file in com_foo/resources:
     "docBlock": "/**\n * @package   Foo\n * @copyright My inc. <https://www.example.com>\n * @license   http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL\n */",
     "compatibility": [
       ",> 0.25%, not dead",
-      "not ie 11",
-      "not op_mini all"
+      "ie 11"
     ]
   }
 }

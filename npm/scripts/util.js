@@ -29,6 +29,10 @@ function transpile(source, destination, isVendor, config)
 		fs.mkdirSync(path.dirname(destination), {recursive: true});
 	}
 
+	if (!config.compatibility) {
+		config.compatibility = [',> 0.25%, not dead', 'safari >= 8', 'ios >= 8', 'not ie 11', 'not op_mini all'];
+	}
+
 	// Transpile the files
 	switch (path.extname(source).replace('.', '')) {
 		case 'js':
@@ -37,10 +41,7 @@ function transpile(source, destination, isVendor, config)
 				let result = babel.transformSync(fs.readFileSync(file, 'utf8'), {
 					sourceMaps: true,
 					compact: false,
-					presets: [['@babel/preset-env', {
-						'targets': {'browsers': config.compatibility ? config.compatibility : ['> 0.25%, not dead', 'ie 11']},
-						'modules': false
-					}]]
+					presets: [['@babel/preset-env', {'targets': {'browsers': config.compatibility}, 'modules': false}]]
 				});
 
 				if (full) {

@@ -10,23 +10,20 @@ const path = require('path');
 const request = require('sync-request');
 const util = require('./util');
 
-// Global variables
-const root = path.resolve(process.argv[2]);
+util.findFilesRecursiveSync(path.resolve(process.argv[2]), 'assets.json').forEach(file => {
+	// Loading the assets from the assets file of the extension
+	console.log('Started building assets from config ' + file);
+	const assets = JSON.parse(fs.readFileSync(file, 'utf8'));
+	if (!assets.config) {
+		assets.config = {};
+	}
+	assets.config.moduleRoot = path.dirname(file);
+	buildAssets(path.dirname(file), assets, 3 in process.argv).then(() => console.log('Finished building assets from config ' + file));
+});
 
-if (!fs.existsSync(root + '/package/assets.json')) {
-	console.log('Nothing to build as ' + root + '/package/assets.json not found');
-	return;
-}
-
-// Loading the assets from the assets file of the extension
-const assets = JSON.parse(fs.readFileSync(root + '/package/assets.json', 'utf8'));
-
-buildAssets(root, assets, 3 in process.argv);
-
-function buildAssets(root, assets, includeVendor)
+async function buildAssets(root, assets, includeVendor)
 {
 	// Looping over the assets
-	console.log('Started to build the assets for ' + root);
 	assets.local.forEach(asset => {
 		if (!fs.existsSync(root + '/' + asset.src)) {
 			return;
@@ -59,7 +56,6 @@ function buildAssets(root, assets, includeVendor)
 	}
 
 	// Loop over the vendor assets
-	console.log('Started to build the vendor assets for ' + root);
 	assets.vendor.forEach(asset => {
 		// Make sure that the destination folder exists
 		let dir = path.dirname(root + '/' + asset.dest);
@@ -75,7 +71,7 @@ function buildAssets(root, assets, includeVendor)
 		// Loop over the source assets and combine them into a single file
 		asset.src.forEach((source, index) => {
 			// Determine file name
-			let file = root + '/package/node_modules/' + source;
+			let file = root + '/node_modules/' + source;
 			if (!fs.existsSync(file)) {
 				file = root + '/' + source;
 			}
@@ -91,12 +87,7 @@ function buildAssets(root, assets, includeVendor)
 				return;
 			}
 
-			let content = '';
-			if (source.indexOf('https://') === 0) {
-				content = '' + request('GET', source).getBody();
-			} else {
-				content = fs.readFileSync(file, 'utf8');
-			}
+			const content = source.indexOf('https://') === 0 ? '' + request('GET', source).getBody() : fs.readFileSync(file, 'utf8');
 
 			// Append to the existing file
 			fs.appendFileSync(root + '/' + asset.dest, '\n' + content);

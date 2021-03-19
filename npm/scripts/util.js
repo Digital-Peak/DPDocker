@@ -12,6 +12,7 @@ const sass = require('node-sass');
 const babel = require('@babel/core');
 const rollup = require('rollup');
 const strip = require('js-cleanup');
+const resolve = require('@rollup/plugin-node-resolve');
 
 /**
  * Transpile function which can handle Javascript, SASS and CSS files.
@@ -23,10 +24,6 @@ const strip = require('js-cleanup');
  */
 function transpile(source, destination, isVendor, config)
 {
-	if (config === undefined || config === null) {
-		config = {};
-	}
-
 	// Ensure that the target directory exists
 	if (!fs.existsSync(path.dirname(destination))) {
 		fs.mkdirSync(path.dirname(destination), {recursive: true});
@@ -72,7 +69,10 @@ function transpile(source, destination, isVendor, config)
 				}
 
 				try {
-					const bundle = await rollup.rollup({input: source});
+					const bundle = await rollup.rollup({
+						input: source,
+						plugins: [resolve.nodeResolve({moduleDirectories: [config.moduleRoot + '/node_modules']})]
+					});
 
 					// Generate code
 					await bundle.write({file: destination, format: 'iife', sourcemap: true});
@@ -173,8 +173,40 @@ function deleteDirectory(path)
 	fs.rmdirSync(path);
 }
 
+/**
+ * Search for files with the given name recursive in the base.
+ *
+ * @param base
+ * @param name
+ * @param files
+ * @param result
+ *
+ * @returns {*[]}
+ */
+function findFilesRecursiveSync(base, name, files, result)
+{
+	files = files || fs.readdirSync(base);
+	result = result || [];
+
+	files.forEach(
+		(file) => {
+			const newbase = path.join(base, file);
+			if (fs.statSync(newbase).isDirectory()) {
+				result = findFilesRecursiveSync(newbase, name, fs.readdirSync(newbase), result);
+				return;
+			}
+
+			if (file.indexOf(name) > -1) {
+				result.push(newbase);
+			}
+		}
+	);
+	return result;
+}
+
 module.exports = {
 	transpile: transpile,
 	getFiles: getFiles,
-	deleteDirectory: deleteDirectory
+	deleteDirectory: deleteDirectory,
+	findFilesRecursiveSync: findFilesRecursiveSync
 }

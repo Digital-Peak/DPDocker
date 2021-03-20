@@ -30,7 +30,7 @@ function transpile(source, destination, isVendor, config)
 	}
 
 	if (!config.compatibility) {
-		config.compatibility = [',> 0.25%, not dead', 'safari >= 8', 'ios >= 8', 'not ie 11', 'not op_mini all'];
+		config.compatibility = [',> 0.25%, not dead', 'safari >= 9', 'ios >= 9', 'not ie 11', 'not op_mini all'];
 	}
 
 	// Transpile the files

@@ -72,19 +72,21 @@ async function buildAssets(root, assets, includeVendor)
 		asset.src.forEach((source, index) => {
 			// Determine file name
 			let file = root + '/node_modules/' + source;
-			if (!fs.existsSync(file)) {
-				file = root + '/' + source;
-			}
+			if (source.indexOf('https://') === -1) {
+				if (!fs.existsSync(file)) {
+					file = root + '/' + source;
+				}
 
-			// On the first entry write the file
-			if (index == 0 && fs.statSync(file).isFile()) {
-				fs.copyFileSync(file, root + '/' + asset.dest);
-				return;
-			}
+				// On the first entry write the file
+				if (index == 0 && fs.statSync(file).isFile()) {
+					fs.copyFileSync(file, root + '/' + asset.dest);
+					return;
+				}
 
-			if (index == 0) {
-				copyFolderRecursiveSync(file, root + '/' + asset.dest);
-				return;
+				if (index == 0) {
+					copyFolderRecursiveSync(file, root + '/' + asset.dest);
+					return;
+				}
 			}
 
 			const content = source.indexOf('https://') === 0 ? '' + request('GET', source).getBody() : fs.readFileSync(file, 'utf8');

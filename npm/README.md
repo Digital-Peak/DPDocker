@@ -72,7 +72,7 @@ The local property contains an array of _src_ and _dest_ properties. They can be
 This is a helper property which can contain an array of file paths relative to the top level folder of the extension. It is used in the watch script as it can be the case that you have ES6 modules or SASS files in different locations and when changes do happen there that the whole extension should be built, to correctly regenerate all dependencies.
 
 ### vendor
-The vendor property can contain an array of Javascript dependencies from the node_modules folder. Every entry has a _src_ and _dest_ property. where the _src_ property is the relative location (file or folder) in the node_modules folder and the _dest_ the relative one from the top level root folder. _src_ can also be an array, so multiple files are concatenated together. This is handy when you have a library which is split into multiple files and you want to use only the ones you actually need.
+The vendor property can contain an array of web dependencies like Javascript, CSS or icon files from the node_modules folder. Every entry has a _src_ and _dest_ property. where the _src_ property is the relative location (file or folder) in the node_modules folder and the _dest_ the relative one from the top level root folder. _src_ can also be an array, so multiple files are concatenated together except when the destination folder is a directory. This is handy when you have a library which is split into multiple files and you want to use only the ones you actually need.
 
 ### docBlock
 A docblock which is added to the top of the generated JS files. All the other ones are then stripped out of the file.

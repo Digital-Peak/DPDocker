@@ -58,7 +58,7 @@ async function buildAssets(root, assets, includeVendor)
 	// Loop over the vendor assets
 	assets.vendor.forEach(asset => {
 		// Make sure that the destination folder exists
-		let dir = path.dirname(root + '/' + asset.dest);
+		let dir = path.extname(asset.dest) ? path.dirname(root + '/' + asset.dest) : root + '/' + asset.dest;
 		if (!fs.existsSync(dir)) {
 			fs.mkdirSync(dir, {recursive: true});
 		}
@@ -79,7 +79,7 @@ async function buildAssets(root, assets, includeVendor)
 
 				// On the first entry write the file
 				if (index == 0 && fs.statSync(file).isFile()) {
-					fs.copyFileSync(file, root + '/' + asset.dest);
+					copyFileSync(file, root + '/' + asset.dest);
 					return;
 				}
 
@@ -87,6 +87,12 @@ async function buildAssets(root, assets, includeVendor)
 					copyFolderRecursiveSync(file, root + '/' + asset.dest);
 					return;
 				}
+			}
+
+			// If the destination is a folder just copy the file there
+			if (!path.extname(asset.dest)) {
+				copyFileSync(file, root + '/' + asset.dest);
+				return;
 			}
 
 			const content = source.indexOf('https://') === 0 ? '' + request('GET', source).getBody() : fs.readFileSync(file, 'utf8');

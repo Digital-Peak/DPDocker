@@ -157,7 +157,7 @@ function copyFileSync(source, target)
 		targetFile = path.join(target, path.basename(source));
 	}
 
-	fs.writeFileSync(targetFile, fs.readFileSync(source, 'utf8'));
+	fs.copyFileSync(source, targetFile);
 }
 
 function copyFolderRecursiveSync(source, target)

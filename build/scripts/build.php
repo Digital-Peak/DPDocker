@@ -44,14 +44,15 @@ class DPDockerReleaseBuild
 			// Iterate over the files in the manifest
 			foreach ($manifest->files->file as $file) {
 				$extension = null;
-				$id = "";
+				$id        = (string)$file->attributes()->id;
 
-				// Look for an override in the build config
-				foreach ($package->extensions as $ex) {
-					$id = (string)$file->attributes()->id;
-					if ($ex->name == $id) {
-						$extension = $ex;
-						break;
+				if (!empty($package->extensions)) {
+					// Look for an override in the build config
+					foreach ($package->extensions as $ex) {
+						if ($ex->name == $id) {
+							$extension = $ex;
+							break;
+						}
 					}
 				}
 

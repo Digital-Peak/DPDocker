@@ -6,4 +6,5 @@
 **/node_modules/
 build/dist
 code/config/joomla
+.vscode
 .history

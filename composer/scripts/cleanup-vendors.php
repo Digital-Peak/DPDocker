@@ -13,7 +13,7 @@ $toDelete = [
 	'docs/',
 	'examples',
 	'phpunit',
-	'git',
+	'.git',
 	'build/',
 	'composer.json',
 	'composer.lock',

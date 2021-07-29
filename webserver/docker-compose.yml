@@ -70,3 +70,16 @@ services:
     image: schickling/mailcatcher
     ports:
       - 83:1080
+
+  ftpserver:
+    image: stilliard/pure-ftpd
+    environment:
+      PUBLICHOST: localhost
+      FTP_USER_NAME: ftp
+      FTP_USER_PASS: ftp
+      FTP_USER_HOME: /home/ftp
+    ports:
+      - 21:21
+      - 30000-30009:30000-30009
+    volumes:
+      - ./www:/home/ftp

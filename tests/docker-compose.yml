@@ -35,6 +35,7 @@ services:
     links:
       - mysql-test
       - mailcatcher-test
+      - ftpserver-test
     ports:
       - 8080:80
     volumes:
@@ -64,3 +65,13 @@ services:
     image: schickling/mailcatcher
     ports:
       - 8082:1080
+
+  ftpserver-test:
+    image: stilliard/pure-ftpd
+    environment:
+      PUBLICHOST: localhost
+      FTP_USER_NAME: ftp
+      FTP_USER_PASS: ftp
+      FTP_USER_HOME: /home/ftp
+    volumes:
+      - /tmp/tests:/home/ftp

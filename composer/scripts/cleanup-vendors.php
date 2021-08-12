@@ -29,6 +29,7 @@ $toDelete = [
 	'.sh',
 	'.dist',
 	'.php_cs',
+	'.php-cs-fixer.php',
 	'scrutinizer',
 	'phpstan-baseline.neon',
 	'psalm.xml',

@@ -31,24 +31,23 @@ if (!is_dir($wwwRoot) || $force) {
 	shell_exec('rm -rf ' . $wwwRoot);
 	shell_exec('cp -r /var/www/html/cache ' . $wwwRoot);
 
-	if ($joomlaVersion == 4 && $hasInternet) {
-		// Checkout latest stable release
-		shell_exec('git --work-tree=' . $wwwRoot . ' --git-dir=' . $wwwRoot . '/.git checkout 4.0-dev 2>&1 > /dev/null');
-		echo 'Using 4.0-dev branch on ' . $wwwRoot . PHP_EOL;
-	} else if ($hasInternet) {
+	if ($hasInternet) {
 		$versions = json_decode(file_get_contents('https://downloads.joomla.org/api/v1/latest/cms'));
 		foreach ($versions->branches as $branch) {
-			if ($branch->branch !== 'Joomla! 3') {
+			if ($branch->branch !== 'Joomla! ' . $joomlaVersion) {
 				continue;
 			}
 			// Checkout latest stable release
 			shell_exec('git --work-tree=' . $wwwRoot . ' --git-dir=' . $wwwRoot . '/.git checkout tags/' . $branch->version . ' 2>&1 > /dev/null');
-			rename($wwwRoot . '/installation', $wwwRoot . '/_installation');
 			echo 'Using version ' . $branch->version . ' on ' . $wwwRoot . PHP_EOL;
 		}
-	} else {
-		rename($wwwRoot . '/installation', $wwwRoot . '/_installation');
 	}
+
+	// Put joomla in dev state so we don't have to delete the installation directory
+	file_put_contents(
+		$wwwRoot . '/libraries/src/Version.php',
+		str_replace("const DEV_STATUS = 'Stable';", "const DEV_STATUS = 'Development';", file_get_contents($wwwRoot . '/libraries/src/Version.php'))
+	);
 }
 echo shell_exec('/var/www/html/Projects/DPDocker/webserver/scripts/install-joomla.sh ' . $wwwRoot . ' ' . $db . ' sites_' . $argv[1] . ' "Joomla ' . $argv[1] . '" mailcatcher');
 

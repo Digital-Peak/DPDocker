@@ -21,8 +21,7 @@ util.findFilesRecursiveSync(path.resolve(process.argv[2]), 'assets.json').forEac
 	buildAssets(path.dirname(file), assets, 3 in process.argv).then(() => console.log('Finished building assets from config ' + file));
 });
 
-async function buildAssets(root, assets, includeVendor)
-{
+async function buildAssets(root, assets, includeVendor) {
 	// Looping over the assets
 	assets.local.forEach(asset => {
 		if (!fs.existsSync(root + '/' + asset.src)) {
@@ -60,7 +59,7 @@ async function buildAssets(root, assets, includeVendor)
 		// Make sure that the destination folder exists
 		let dir = path.extname(asset.dest) ? path.dirname(root + '/' + asset.dest) : root + '/' + asset.dest;
 		if (!fs.existsSync(dir)) {
-			fs.mkdirSync(dir, {recursive: true});
+			fs.mkdirSync(dir, { recursive: true });
 		}
 
 		// Ensure that the source assets is an array
@@ -95,10 +94,32 @@ async function buildAssets(root, assets, includeVendor)
 				return;
 			}
 
-			const content = source.indexOf('https://') === 0 ? '' + request('GET', source).getBody() : fs.readFileSync(file, 'utf8');
+			if (asset.binary === undefined) {
+				asset.binary = false;
+			}
+
+			let content = '';
+			if (source.indexOf('https://') === 0 && !asset.binary) {
+				content = request('GET', source).getBody('utf-8');
+			}
+			if (source.indexOf('https://') === 0 && asset.binary) {
+				content = request('GET', source).getBody();
+			}
+
+			if (source.indexOf('https://') !== 0 && !asset.binary) {
+				content = '\n' + fs.readFileSync(file, 'utf8');
+			}
+			if (source.indexOf('https://') !== 0 && asset.binary) {
+				content = fs.readFileSync(file, 'utf8');
+			}
+
+			if (index == 0) {
+				fs.writeFileSync(root + '/' + asset.dest, content);
+				return;
+			}
 
 			// Append to the existing file
-			fs.appendFileSync(root + '/' + asset.dest, '\n' + content);
+			fs.appendFileSync(root + '/' + asset.dest, content);
 		});
 
 		// If defined, replace in the asset copy some content
@@ -148,8 +169,7 @@ async function buildAssets(root, assets, includeVendor)
 	});
 }
 
-function copyFileSync(source, target)
-{
+function copyFileSync(source, target) {
 	let targetFile = target;
 
 	// If target is a directory, a new file with the same name will be created
@@ -160,8 +180,7 @@ function copyFileSync(source, target)
 	fs.copyFileSync(source, targetFile);
 }
 
-function copyFolderRecursiveSync(source, target)
-{
+function copyFolderRecursiveSync(source, target) {
 	// Check if folder needs to be created or integrated
 	const targetFolder = path.join(target, path.basename(source));
 	if (!fs.existsSync(targetFolder)) {

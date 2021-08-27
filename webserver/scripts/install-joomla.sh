@@ -35,6 +35,7 @@ if [ -f $root/package.json ]; then
   fi
   if [ ! -d $root/media/vendor ]; then
     echo "Installing the assets (takes a while!)"
+	mkdir -p $root/media/vendor
     npm ci &>/dev/null
   fi
 fi

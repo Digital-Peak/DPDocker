@@ -199,6 +199,10 @@ function createLinks($folderRoot, $wwwRoot)
 		}
 		if (strpos($filename, 'lib_') === 0) {
 			createLink($folderRoot . $filename, $wwwRoot . '/libraries/' . $filename);
+
+			if (file_exists($folderRoot . $filename . '/media')) {
+				createLink($folderRoot . $filename . '/media', $wwwRoot . '/media/' . $filename);
+			}
 		}
 	}
 	echo 'Finished to create the links for ' . $folderRoot . PHP_EOL;

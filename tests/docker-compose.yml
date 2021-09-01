@@ -7,7 +7,6 @@ services:
     links:
       - mailcatcher-test
     volumes:
-      - ./www:/usr/src/web
       - ../..:/usr/src/Projects
       - /tmp/tests:/tmp/tests
 

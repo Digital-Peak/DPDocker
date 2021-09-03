@@ -162,6 +162,10 @@ function createLinks($folderRoot, $wwwRoot)
 			createLink($folderRoot . $filename . '/admin', $wwwRoot . '/administrator/components/' . $filename);
 			createLink($folderRoot . $filename . '/site', $wwwRoot . '/components/' . $filename);
 			createLink($folderRoot . $filename . '/media', $wwwRoot . '/media/' . $filename);
+
+			if (file_exists($folderRoot . $filename . '/api')) {
+				createLink($folderRoot . $filename . '/api', $wwwRoot . '/api/components/' . $filename);
+			}
 		}
 		if (strpos($filename, 'mod_') === 0) {
 			createLink($folderRoot . $filename, $wwwRoot . '/modules/' . $filename);

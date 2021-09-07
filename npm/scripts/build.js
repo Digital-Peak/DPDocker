@@ -181,10 +181,8 @@ function copyFileSync(source, target) {
 }
 
 function copyFolderRecursiveSync(source, target) {
-	// Check if folder needs to be created or integrated
-	const targetFolder = path.join(target, path.basename(source));
-	if (!fs.existsSync(targetFolder)) {
-		fs.mkdirSync(targetFolder);
+	if (!fs.existsSync(target)) {
+		fs.mkdirSync(target);
 	}
 
 	// Copy
@@ -192,15 +190,14 @@ function copyFolderRecursiveSync(source, target) {
 		return;
 	}
 
-	const files = fs.readdirSync(source);
-	files.forEach((file) => {
-		const curSource = path.join(source, file);
-		if (fs.lstatSync(curSource).isDirectory()) {
-			copyFolderRecursiveSync(curSource, targetFolder);
+	fs.readdirSync(source).forEach((file) => {
+		const currentSource = path.join(source, file);
+		if (fs.lstatSync(currentSource).isDirectory()) {
+			copyFolderRecursiveSync(currentSource, path.join(target, file));
 			return;
 		}
 
-		copyFileSync(curSource, targetFolder);
+		copyFileSync(currentSource, target);
 	});
 }
 

@@ -125,23 +125,32 @@ async function buildAssets(root, assets, includeVendor) {
 		// If defined, replace in the asset copy some content
 		if (asset.replace) {
 			// Loop over the assets replace array
-			asset.replace.forEach(def => {
-				// The file content
-				let content = fs.readFileSync(root + '/' + asset.dest, 'utf8');
+			asset.replace.forEach((def) => {
+				const replace = (def, file) => {
+					// The file content
+					let content = fs.readFileSync(file, 'utf8');
 
-				// Perform the search and replace
-				content = content.replace(def.search, def.replace);
-				content = content.replace(new RegExp(def.search, 'g'), def.replace);
+					// Perform the search and replace
+					content = content.replace(def.search, def.replace);
+					content = content.replace(new RegExp(def.search, 'g'), def.replace);
 
-				// Write back the replaced code
-				fs.writeFileSync(root + '/' + asset.dest, content, 'utf8');
+					// Write back the replaced code
+					fs.writeFileSync(file, content, 'utf8');
+				};
+
+				if (fs.lstatSync(root + '/' + asset.dest).isDirectory()) {
+					fs.readdirSync(root + '/' + asset.dest).forEach((file) => replace(def, root + '/' + asset.dest + '/' + file));
+					return;
+				}
+
+				replace(def, root + '/' + asset.dest);
 			});
 		}
 
 		// If defined, append in the asset copy
 		if (asset.append) {
 			// Loop over the assets replace array
-			asset.append.forEach(def => {
+			asset.append.forEach((def) => {
 				// Append to the existing file
 				fs.appendFileSync(root + '/' + asset.dest, '\n' + def);
 			});

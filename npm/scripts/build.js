@@ -82,7 +82,7 @@ async function buildAssets(root, assets, includeVendor) {
 					return;
 				}
 
-				if (index == 0) {
+				if (index === 0) {
 					copyFolderRecursiveSync(file, root + '/' + asset.dest);
 					return;
 				}

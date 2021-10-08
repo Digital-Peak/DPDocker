@@ -14,13 +14,14 @@
 class_name: AcceptanceTester
 modules:
   enabled:
-    - JoomlaBrowser
+    - Joomla\Browser\JoomlaBrowser
     - Helper\Acceptance
     - Helper\JoomlaDb
     - Filesystem
     - Asserts
+    - REST
   config:
-    JoomlaBrowser:
+    Joomla\Browser\JoomlaBrowser:
       host: 'selenium-test'
       port: 4444
       url: 'http://web-test/joomla4'
@@ -57,4 +58,8 @@ modules:
       url: 'http://localhost/joomla4'
       home_dir: '/usr/src/Projects/DPDocker/tests/www/joomla4'
       joomla_version: 4
+    REST:
+      url: 'http://web-test/joomla4/api/index.php/v1'
+      depends: PhpBrowser
+      part: Json
 error_level: 'E_ALL & ~E_STRICT & ~E_DEPRECATED'

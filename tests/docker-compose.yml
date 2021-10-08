@@ -10,8 +10,17 @@ services:
       - ../..:/usr/src/Projects
       - /tmp/tests:/tmp/tests
 
+  joomla-system-tests:
+    image: digitpeak/dpdocker-cli:7.4
+    command: /usr/src/Projects/DPDocker/tests/scripts/exec-joomla-system-tests.sh ${JOOMLA} ${TEST}
+    links:
+      - mailcatcher-test
+    volumes:
+      - ../..:/usr/src/Projects
+      - /tmp/tests:/tmp/tests
+
   selenium-test:
-    image: selenium/standalone-${BROWSER}${DEBUG}:3.141.59-20210128
+    image: selenium/standalone-${BROWSER}${DEBUG}:3.141.59-20210929
     ports:
       - 4444:4444
       - 5900:5900
@@ -36,6 +45,19 @@ services:
       - mysql-test
       - mailcatcher-test
       - ftpserver-test
+    ports:
+      - 8080:80
+    volumes:
+      - ./www:/var/www/html
+      - ../..:/var/www/html/Projects
+      - ../..:/usr/src/Projects
+
+  joomla-web-test:
+    image: digitpeak/dpdocker-web:${PHP_VERSION}
+    environment:
+      JOOMLA_INSTALLATION_DISABLE_LOCALHOST_CHECK: 1
+    links:
+      - mysql-test
     ports:
       - 8080:80
     volumes:

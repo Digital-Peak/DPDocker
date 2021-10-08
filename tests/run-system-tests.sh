@@ -15,7 +15,7 @@ php=${php:-latest}
 e=${e:-}
 t=${t:-}
 j=${j:-}
-d=${j:--debug}
+d=${d:--debug}
 b=${b:-chrome}
 
 while [ $# -gt 0 ]; do

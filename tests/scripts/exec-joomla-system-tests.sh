@@ -15,10 +15,12 @@ fi
 
 # Setup configuration
 cp -f $(dirname $0)/../config/cms/acceptance.suite.yml tests/Codeception
+cp -f $(dirname $0)/../config/cms/api.suite.yml tests/Codeception
 cp -f $(dirname $0)/../config/cms/configuration.php .
 
 # Define the site propperly
 sed -i "s/{SITE}/$1/g" tests/Codeception/acceptance.suite.yml
+sed -i "s/{SITE}/$1/g" tests/Codeception/api.suite.yml
 sed -i "s/{SITE}/$1/g" configuration.php
 
 # Build the helpers
@@ -30,7 +32,10 @@ if [ -z $2 ]; then
   mysql -u root -proot -h mysql-test -e "create database joomla_$1"
 
   # Run the tests
-  libraries/vendor/bin/codecept run --env mysql tests/Codeception/acceptance/
+  libraries/vendor/bin/codecept run --env mysql tests/Codeception/acceptance
+
+  sed -i "/\$secret/c\	public \$secret = 'tEstValue';" configuration.php
+  libraries/vendor/bin/codecept run --env mysql tests/Codeception/api
 else
   libraries/vendor/bin/codecept run --debug --steps --env mysql $2
 fi

@@ -25,6 +25,8 @@ services:
       - ./www:/var/www/html
       - ../..:/var/www/html/Projects
       - ../..:/usr/src/Projects
+    extra_hosts:
+      - host.docker.internal:host-gateway
 
   mysql:
     image: mysql:${MYSQL_DBVERSION}

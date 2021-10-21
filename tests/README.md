@@ -1,14 +1,17 @@
 # Tests task
-This task runs the system tests of an extension on joomla 3 and 4. System tests are browser tests performed by selenium and written in PHP with [codeception](https://codeception.com).
+This task runs the system tests of an extension on joomla 3 and 4 or a core joomla clone. System tests are browser tests performed by selenium and written in PHP with [codeception](https://codeception.com).
 
 Through a VNC viewer you can actually see what is executed inside a container in the browser.
 
-## Prerequisites
+## Prerequisites extension
 The extension needs a tests folder with an acceptance folder in it, this is the location for your tests. Additionally, you need a "_bootstrap.php" file in the tests folder and in the tests/acceptance folder. There you can do some setup stuff which will be executed before codeception is running the tests. Like including some base classes or defining some global variables like a timeout.
 
 If you  have some install tasks which should be executed before every test, then put them into the acceptance/install folder.
 
-## Execute
+## Prerequisites joomla
+If you want to test the core system tests, then you need to have a clone of the repo in the same folder where DPDocker is located so that they are on the same level. The JS and PHP dependencies must be installed and the assets must be built. 
+
+## Execute extension tests
 To run the extension tests, execute the following command:
 
 `./run-system-tests.sh -e extension [-t test] [-j jooma-version] [-p php-version]`
@@ -34,19 +37,39 @@ Examples
   The Joomla version is optional. If it is not set, tests will be run on Joomla 3 and 4.
 - -php  
   The PHP version is optional. If it is not set, tests will be run on the latest PHP version.
-- -b  
-  The browser is optional. If it is not set, tests will be run on the chrome. available are `chrome` and `firefox`.
+- -d  
+  The debug parameter is optional. If it is not set, it starts in debug mode where a VCN viewer can be connected to.
+
+## Execute joomla tests
+To run the joomla tests, execute the following command:
+
+`./run-joomla-system-tests.sh -j joomla_folder [-t test] [-p php-version]`
+
+Examples
+
+```
+./run-system-tests.sh -j cms4 #All tests including the installation test on the latest PHP where joomla is cloned into the folder cms4
+./run-system-tests.sh -j joomla-cms -php 7.3 #All tests including the installation test on PHP 7.3 where joomla is cloned into the folder joomla-cms
+./run-system-tests.sh -j joomla-cms -t  tests/Codeception/acceptance/administrator/components/com_menu/MenuCest.php #Test MenuCest.php on the latest PHP where joomla is cloned into the folder joomla-cms
+```
+
+- -j  
+  The folder where joomla is cloned into.
+- -t  
+  The test attribute is optional. If it is set then only this test is executed, otherwise all system tests.
+- -php  
+  The PHP version is optional. If it is not set, tests will be run on the latest PHP version.
 - -d  
   The debug parameter is optional. If it is not set, it starts in debug mode where a VCN viewer can be connected to.
 
 ## Internals
-Running the system tests is a rather complex setup. Due some startup issues we need to start every container in sequence. In total are five containers created. First the MySQL container. Then the web server which is accessible on the url _localhost:8080/joomla{joomla version}_ and selenium. If all are up, then the actual system tests are executed.
+Running the system tests is a rather complex setup. Due some startup issues we need to start every container in sequence. In total are five containers created. First the MySQL container. Then the web server which is accessible on the url _localhost:8080/joomla{joomla version}_ or _localhost:8080/{joomla}_ and selenium. If all are up, then the actual system tests are executed.
 
 During a test PHPMyAdmin is available under _localhost:8081_ and the mailcatcher on _localhost:8082_.
 
 Every suite can provide an install folder which will be executed first to do some setup tasks after installation of the extension. The order of the other tests is randomly to prevent execution order issues as every test need to be isolated.
 
-Tests on Joomla 3 are executed on the url /joomla3 and for Joomla 4 on /joomla4.
+Tests for extension on Joomla 3 are executed on the url /joomla3 and for Joomla 4 on /joomla4. When the joomla core system tests are executed then joomla is available in the same folder as defined like /joomla-cms.
 
 ### Mailcatcher usage
 Mailcatcher has a simple REST interface where you can interact with the mails. To access mailcatcher in codeception use the host mailcatcher-test:1080. The following code snippet is an example how to test if a mail contains a string:

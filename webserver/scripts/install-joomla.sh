@@ -15,12 +15,12 @@ rebuild=$6
 cd $root
 echo "Doing setup on $root"
 
-if [ -f $root/libraries/autoload_psr4.php ]; then
-	rm -f $root/libraries/autoload_psr4.php
+if [ -f $root/administrator/cache/autoload_psr4.php ]; then
+	rm -f $root/administrator/cache/autoload_psr4.php
 fi
 
 if [[ ! -d $root/libraries/vendor || ! -z $rebuild ]]; then
-  echo "Installing PHP dependencies"
+	echo "Installing PHP dependencies"
 	rm -rf $root/libraries/vendor
 	composer install --quiet
 fi

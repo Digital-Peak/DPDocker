@@ -6,7 +6,7 @@ services:
     environment:
       STARTUP_COMMAND_1: /var/www/html/Projects/DPDocker/joomla-pr/scripts/exec-joomla-pr-webserver.sh ${PR} ${DB} ${REBUILD}
       JOOMLA_INSTALLATION_DISABLE_LOCALHOST_CHECK: 1
-    links:
+    depends_on:
       - mysql-pr
       - postgres-pr
       - phpmyadmin-pr
@@ -39,7 +39,7 @@ services:
       PMA_HOST: mysql-pr
       PMA_USER: root
       PMA_PASSWORD: root
-    links:
+    depends_on:
       - mysql-pr
     ports:
       - 8091:80
@@ -49,7 +49,7 @@ services:
     environment:
       PGADMIN_DEFAULT_EMAIL: admin@example.com
       PGADMIN_DEFAULT_PASSWORD: root
-    links:
+    depends_on:
       - postgres-pr
     ports:
       - 8092:80

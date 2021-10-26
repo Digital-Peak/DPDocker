@@ -14,10 +14,10 @@ services:
       STARTUP_COMMAND_8: /var/www/html/Projects/DPDocker/webserver/scripts/setup-joomla-core.sh cms3 ${DB} ${REBUILD}
       STARTUP_COMMAND_9: /var/www/html/Projects/DPDocker/webserver/scripts/setup-joomla-core.sh cms4 ${DB} ${REBUILD}
       PHP_INI_XDEBUG__DISCOVER_CLIENT_HOST: 1
-    links:
-      - mysql:mysql
-      - postgres:postgres
-      - mailcatcher:mailcatcher
+    depends_on:
+      - mysql
+      - postgres
+      - mailcatcher
     ports:
       - 80:80
       - 443:443
@@ -53,7 +53,7 @@ services:
       PMA_PORT: 3306
       PMA_USER: root
       PMA_PASSWORD: root
-    links:
+    depends_on:
       - mysql
     ports:
       - 81:80
@@ -63,7 +63,7 @@ services:
     environment:
       PGADMIN_DEFAULT_EMAIL: admin@example.com
       PGADMIN_DEFAULT_PASSWORD: root
-    links:
+    depends_on:
       - postgres
     ports:
       - 82:80

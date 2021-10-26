@@ -4,7 +4,7 @@ services:
   system-tests:
     image: digitpeak/dpdocker-cli:7.4
     command: /usr/src/Projects/DPDocker/tests/scripts/exec-system-tests.sh ${EXTENSION} ${JOOMLA} ${BROWSER} ${TEST}
-    links:
+    depends_on:
       - mailcatcher-test
     volumes:
       - ../..:/usr/src/Projects
@@ -13,7 +13,7 @@ services:
   joomla-system-tests:
     image: digitpeak/dpdocker-cli:7.4
     command: /usr/src/Projects/DPDocker/tests/scripts/exec-joomla-system-tests.sh ${JOOMLA} ${TEST}
-    links:
+    depends_on:
       - mailcatcher-test
     volumes:
       - ../..:/usr/src/Projects
@@ -41,7 +41,7 @@ services:
       STARTUP_COMMAND_6: sudo sed -i "s/debug = '1'/debug = 0/g" /var/www/html/joomla4/configuration.php
       STARTUP_COMMAND_7: sudo sed -i "s/sef = '1'/sef = 0/g" /var/www/html/joomla4/configuration.php
       STARTUP_COMMAND_8: sudo sed -i "s/smtphost = 'mailcatcher'/smtphost = 'mailcatcher-test'/g" /var/www/html/joomla4/configuration.php
-    links:
+    depends_on:
       - mysql-test
       - mailcatcher-test
       - ftpserver-test
@@ -56,7 +56,7 @@ services:
     image: digitpeak/dpdocker-web:${PHP_VERSION}
     environment:
       JOOMLA_INSTALLATION_DISABLE_LOCALHOST_CHECK: 1
-    links:
+    depends_on:
       - mysql-test
     ports:
       - 8080:80
@@ -78,7 +78,7 @@ services:
       PMA_HOST: mysql-test
       PMA_USER: root
       PMA_PASSWORD: root
-    links:
+    depends_on:
       - mysql-test
     ports:
       - 8081:80

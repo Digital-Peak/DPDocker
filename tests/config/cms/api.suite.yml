@@ -14,4 +14,4 @@ modules:
             password: 'root'
             prefix: 'jos_'
         Helper\Api:
-            cmsPath: '/usr/src/Projects/cms4'
+            cmsPath: '/usr/src/Projects/{SITE}'

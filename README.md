@@ -30,7 +30,7 @@ Does start a web server with a joomla pr.
 - [Npm](npm)  
 Some npm tasks to install or update the Javascript dependencies. Additionally there is a task to build the assets or do watch the extension for changes and do direct builds.
 - [Tests](tests)  
-Runs the system tests inside different containers of an extension.
+Runs the system tests inside different containers of an extension or joomla core.
 - [Webserver](webserver)  
 A dev server which set's up a Joomla instance and installs some extensions out of the box.
 

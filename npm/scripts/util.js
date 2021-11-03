@@ -13,6 +13,7 @@ const babel = require('@babel/core');
 const rollup = require('rollup');
 const strip = require('js-cleanup');
 const resolve = require('@rollup/plugin-node-resolve');
+const svg = require('rollup-plugin-svg');
 
 /**
  * Transpile function which can handle Javascript, SASS and CSS files.
@@ -22,11 +23,10 @@ const resolve = require('@rollup/plugin-node-resolve');
  * @param string isVendor If the file is a vendor file and doesn't need some extra bundling
  * @param object config Some configuration options
  */
-function transpile(source, destination, isVendor, config)
-{
+function transpile(source, destination, isVendor, config) {
 	// Ensure that the target directory exists
 	if (!fs.existsSync(path.dirname(destination))) {
-		fs.mkdirSync(path.dirname(destination), {recursive: true});
+		fs.mkdirSync(path.dirname(destination), { recursive: true });
 	}
 
 	if (!config.compatibility) {
@@ -41,7 +41,7 @@ function transpile(source, destination, isVendor, config)
 				let result = babel.transformSync(fs.readFileSync(file, 'utf8'), {
 					sourceMaps: true,
 					compact: false,
-					presets: [['@babel/preset-env', {'targets': {'browsers': config.compatibility}, 'modules': false}]]
+					presets: [['@babel/preset-env', { 'targets': { 'browsers': config.compatibility }, 'modules': false }]]
 				});
 
 				if (full) {
@@ -72,14 +72,17 @@ function transpile(source, destination, isVendor, config)
 				try {
 					const bundle = await rollup.rollup({
 						input: source,
-						plugins: [resolve.nodeResolve({moduleDirectories: [config.moduleRoot + '/node_modules']})]
+						plugins: [
+							resolve.nodeResolve({ moduleDirectories: [config.moduleRoot + '/node_modules'] }),
+							svg()
+						]
 					});
 
 					// Generate code
-					await bundle.write({file: destination, format: 'iife', sourcemap: true});
+					await bundle.write({ file: destination, format: 'iife', sourcemap: true });
 
 					if (config.docBlock) {
-						let content = strip(fs.readFileSync(destination, 'utf8'), null, {comments: 'none', sourcemap: true});
+						let content = strip(fs.readFileSync(destination, 'utf8'), null, { comments: 'none', sourcemap: true });
 						fs.writeFileSync(destination, config.docBlock + "\n" + content.code);
 						fs.writeFileSync(destination + '.map', content.map.mappings);
 					}
@@ -111,7 +114,7 @@ function transpile(source, destination, isVendor, config)
 			// Write the minified content to the destination file
 			fs.writeFileSync(
 				destination.replace('.css', '.min.css'),
-				sass.renderSync({data: result.css.toString(), outputStyle: 'compressed'}).css.toString()
+				sass.renderSync({ data: result.css.toString(), outputStyle: 'compressed' }).css.toString()
 			);
 	}
 }
@@ -122,8 +125,7 @@ function transpile(source, destination, isVendor, config)
  * @param string dir The directory to traverse
  * @returns {Array}
  */
-function getFiles(dir)
-{
+function getFiles(dir) {
 	// The results array
 	let results = [];
 
@@ -150,8 +152,7 @@ function getFiles(dir)
  *
  * @param string path The path to delete
  */
-function deleteDirectory(path)
-{
+function deleteDirectory(path) {
 	// Check if the direcory exists
 	if (!fs.existsSync(path)) {
 		return;
@@ -184,8 +185,7 @@ function deleteDirectory(path)
  *
  * @returns {*[]}
  */
-function findFilesRecursiveSync(base, name, files, result)
-{
+function findFilesRecursiveSync(base, name, files, result) {
 	files = files || fs.readdirSync(base);
 	result = result || [];
 

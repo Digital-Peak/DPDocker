@@ -62,6 +62,11 @@ Examples
 - -d  
   The debug parameter is optional. If it is not set, it starts in debug mode where a VCN viewer can be connected to.
 
+## Observe test progress
+Test progress is printed on the console. When running all tests, then a progress bar is shown with stats about success and failed tests. When running a whole folder or script (using the -t parameter) then ever executed test is displayed with it's status. If only a function (using the -t parameter with : and a function name) of a test is executed, then the whole output is displayed.
+
+DPDocker starts selenium in debug mode as default. So you can connect any VNC viewer to localhost on port 5900. In the app you will see what exactly the browser is doing. This is helpfully when a test fails and you are pausing the test (`$I->pause();`) to see what is wrong. Depending on the VNC viewer you can even interact with the browser window.
+
 ## Internals
 Running the system tests is a rather complex setup. Due some startup issues we need to start every container in sequence. In total are five containers created. First the MySQL container. Then the web server which is accessible on the url _localhost:8080/joomla{joomla version}_ or _localhost:8080/{joomla}_ and selenium. If all are up, then the actual system tests are executed.
 

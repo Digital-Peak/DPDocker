@@ -53,6 +53,7 @@ services:
       PMA_PORT: 3306
       PMA_USER: root
       PMA_PASSWORD: root
+      UPLOAD_LIMIT: 999M
     depends_on:
       - mysql
     ports:

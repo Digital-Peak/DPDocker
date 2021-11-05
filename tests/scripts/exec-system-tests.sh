@@ -30,22 +30,22 @@ cp -f $(dirname $0)/../tmp/_support/_generated/AcceptanceTesterActions.php $(dir
 
 # Check if there are multiple tests to run
 if [[ ! -z $4 && $4 != *".php:"* ]]; then
-  vendor/bin/codecept run --env desktop ${4#"tests/"}
-  exit 1
+	vendor/bin/codecept run --env desktop ${4#"tests/"}
+	exit 1
 fi
 
 # Check if there is a single test to run
 if [ ! -z $4 ]; then
-  vendor/bin/codecept run --debug --steps --env desktop ${4#"tests/"}
-  exit 1
+	vendor/bin/codecept run --debug --steps --env desktop ${4#"tests/"}
+	exit 1
 fi
 
 if [ -d acceptance/install ]; then
-  # Run the install task first
-  vendor/bin/codecept run --env desktop acceptance/install
+	# Run the install task first
+	vendor/bin/codecept run --env desktop acceptance/install
 
-  # Remove the install tests, so they wont be executed again
-  rm -rf acceptance/install
+	# Remove the install tests, so they wont be executed again
+	rm -rf acceptance/install
 fi
 
 # Run the tests

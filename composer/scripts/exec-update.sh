@@ -5,14 +5,14 @@
 
 root=$3
 if [ -z $root ]; then
-  root=$(realpath $(dirname $0)/../../..)
+	root=$(realpath $(dirname $0)/../../..)
 fi
 
 # Link host directory as composer dir for caching
 rm -rf /home/docker/.composer
 
 if [ ! -d /usr/src/Projects/DPDocker/composer/tmp ]; then
-  mkdir /usr/src/Projects/DPDocker/composer/tmp
+	mkdir /usr/src/Projects/DPDocker/composer/tmp
 fi
 
 ln -s /usr/src/Projects/DPDocker/composer/tmp /home/docker/.composer
@@ -21,46 +21,46 @@ echo "Started to update the PHP dependencies on $root/$1!"
 
 # Loop over composer files
 for fname in $(find $root/$1/$2 -path ./vendor -prune -o -name "composer.json" 2>/dev/null); do
-  # Exclude the files in vendor, www or tmp directories
-  if [[ $fname == *"vendor"* || $fname == *"www"* || $fname == *"tmp"* ]]; then
-    continue
-  fi
+	# Exclude the files in vendor, www or tmp directories
+	if [[ $fname == *"vendor"* || $fname == *"www"* || $fname == *"tmp"* ]]; then
+		continue
+	fi
 
-  # Exclude tests and docs files when not explicit requested
-  if [[ -z "$2" && ( $fname == *"docs"* || $fname == *"tests"* ) ]]; then
-    continue
-  fi
+	# Exclude tests and docs files when not explicit requested
+	if [[ -z "$2" && ( $fname == *"docs"* || $fname == *"tests"* ) ]]; then
+		continue
+	fi
 
-  projectDirectory=$(dirname $fname)
+	projectDirectory=$(dirname $fname)
 
-  cd $projectDirectory
+	cd $projectDirectory
 
-  echo "Updating $(dirname ${fname#"$root/"})!"
+	echo "Updating $(dirname ${fname#"$root/"})!"
 
-  # Remove the vendors directory
-  if [ -d "$projectDirectory/vendor" ]; then
-    sudo rm -rf "$projectDirectory/vendor"
-  fi
+	# Remove the vendors directory
+	if [ -d "$projectDirectory/vendor" ]; then
+		sudo rm -rf "$projectDirectory/vendor"
+	fi
 
-  # Make simple update for DPDocker
-  if [ $1 == "DPDocker" ]; then
-    composer update
-    continue
-  fi
+	# Make simple update for DPDocker
+	if [ $1 == "DPDocker" ]; then
+		composer update
+		continue
+	fi
 
-  # Install the dependencies
-  composer update -o --no-dev --prefer-dist
+	# Install the dependencies
+	composer update -o --no-dev --prefer-dist
 
-  if [ -z $3 ]; then
-    echo "Outdated packages"
-    composer outdated
-  fi
+	if [ -z $3 ]; then
+		echo "Outdated packages"
+		composer outdated
+	fi
 
-  # Cleanup the directory when we are in an extension directory
-  if [[ "$2" != *"docs"* && "$2" != *"tests"* ]]; then
-    echo "Cleaning up files in vendor"
-    php $(dirname $0)/cleanup-vendors.php $projectDirectory > /dev/null
-  fi
+	# Cleanup the directory when we are in an extension directory
+	if [[ "$2" != *"docs"* && "$2" != *"tests"* ]]; then
+		echo "Cleaning up files in vendor"
+		php $(dirname $0)/cleanup-vendors.php $projectDirectory > /dev/null
+	fi
 
-  echo "Finished updating $(dirname ${fname#"$root/"})!"
+	echo "Finished updating $(dirname ${fname#"$root/"})!"
 done

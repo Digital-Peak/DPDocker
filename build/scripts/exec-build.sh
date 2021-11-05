@@ -7,7 +7,7 @@ extension=$1
 version=$2
 root=$3
 if [ -z $root ]; then
-  root=$(realpath $(dirname $0)/../../../$extension)
+	root=$(realpath $(dirname $0)/../../../$extension)
 fi
 
 workingDir=$(realpath "$(dirname $0)/../tmp")
@@ -29,9 +29,9 @@ echo "Building assets"
 $(dirname $0)/../../npm/scripts/exec-npm-install.sh $extension '' $workingDir
 
 if [ ! -z "$version" ]; then
-  echo "Define version number in manifest files"
-  find $workingDir/$extension -type f -name "*.xml" -exec sed -i "s/DP_DEPLOY_VERSION/$version/g" {} +
-  find $workingDir/$extension -type f -name "*.xml" -exec sed -i "s/DP_DEPLOY_DATE/$(LANG=en_us_88591; date "+%-d %b %Y")/g" {} +
+	echo "Define version number in manifest files"
+	find $workingDir/$extension -type f -name "*.xml" -exec sed -i "s/DP_DEPLOY_VERSION/$version/g" {} +
+	find $workingDir/$extension -type f -name "*.xml" -exec sed -i "s/DP_DEPLOY_DATE/$(LANG=en_us_88591; date "+%-d %b %Y")/g" {} +
 fi
 
 echo "Clearing comments from ini files"

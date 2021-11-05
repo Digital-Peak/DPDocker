@@ -7,7 +7,7 @@
 cd $(dirname $0)
 
 if [ ! -d node_modules ]; then
-  npm install
+	npm install
 fi
 
 # Execute build

@@ -23,6 +23,17 @@ sed -i "s/{SITE}/$1/g" tests/Codeception/acceptance.suite.yml
 sed -i "s/{SITE}/$1/g" tests/Codeception/api.suite.yml
 sed -i "s/{SITE}/$1/g" configuration.php
 
+if [ ! -d libraries/vendor ]; then
+	echo "Installing PHP dependencies"
+	rm -rf libraries/vendor
+	composer install --quiet
+fi
+if [ ! -d media/vendor ]; then
+	echo "Installing the assets (takes a while!)"
+	mkdir -p media/vendor
+	npm ci &>/dev/null
+fi
+
 # Build the helpers
 libraries/vendor/bin/codecept build
 

@@ -14,4 +14,6 @@ modules:
             password: 'root'
             prefix: 'jos_'
         Helper\Api:
+            url: 'http://joomla-web-test/{SITE}'
             cmsPath: '/usr/src/Projects/{SITE}'
+            localUser: ''

@@ -53,9 +53,7 @@ if [ -z $dbHost ]; then
 	dbHost="mysql"
 fi
 
-dbName="$1" | sed -r 's/[.-]+/_/g'
-
-/var/www/html/Projects/DPDocker/webserver/scripts/install-joomla.sh $root $dbHost-pr prorbranch_$dbName "Joomla PR or Branch $1" mailcatcher-pr $3
+/var/www/html/Projects/DPDocker/webserver/scripts/install-joomla.sh $root $dbHost-pr prorbranch_${1//[.-]/_} "Joomla PR or Branch $1" mailcatcher-pr $3
 
 echo -e "\e[32mPR $1 is checked out and ready to test on http://localhost:8090/pr/$1/administrator!"
 echo -e "\e[32mYou can log in with admin/admin!"

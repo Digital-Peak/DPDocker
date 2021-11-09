@@ -1,7 +1,7 @@
 # Tests task
 This task runs the system tests of an extension on joomla 3 and 4 or a core joomla clone. System tests are browser tests performed by selenium and written in PHP with [codeception](https://codeception.com).
 
-Through a VNC viewer you can actually see what is executed inside a container in the browser.
+Through a VNC viewer you can actually see what is executed inside a container in the browser, more information can be found in the "Observe" chapter.
 
 ## Prerequisites extension
 The extension needs a tests folder with an acceptance folder in it, this is the location for your tests. Additionally, you need a "_bootstrap.php" file in the tests folder and in the tests/acceptance folder. There you can do some setup stuff which will be executed before codeception is running the tests. Like including some base classes or defining some global variables like a timeout.
@@ -19,14 +19,13 @@ To run the extension tests, execute the following command:
 Examples
 
 ```
-./run-system-tests.sh -e Foo #All tests on Joomla 3 and 4 on the latest PHP version on chrome
-./run-system-tests.sh -e Foo -b firefox #All tests on Joomla 3 and 4 on the latest PHP version on firefox
-./run-system-tests.sh -e Foo -j 3 -php 7.3 #All tests only on Joomla 3 and PHP 7.3 on chrome
-./run-system-tests.sh -e Foo -t tests/acceptance/views -php 8.0 #Test in folder tests/acceptance/views on Joomla 3 and 4 on PHP 8.0 on chrome
-./run-system-tests.sh -e Foo -t tests/acceptance/views -j 4 #Tests in folder tests/acceptance/views on Joomla 4 on the latest PHP version on chrome
-./run-system-tests.sh -e Foo -t tests/acceptance/views/ArticleViewCest.php:canSeeArticle #Test tests/acceptance/views/ArticleViewCest.php:canSeeArticle on Joomla 3 and 4 on the latest PHP version on chrome
-./run-system-tests.sh -e Foo -t tests/acceptance/views/ArticleViewCest.php:canSeeArticle -j 4 -php 7.4 #Test tests/acceptance/views/ArticleViewCest.php:canSeeArticle on Joomla 4 on PHP 7.4 on chrome
-./run-system-tests.sh -e Foo -d '' #All tests on Joomla 3 and 4 on the latest PHP version on firefox but not in debug mode
+./run-system-tests.sh -e Foo # All tests on Joomla 3 and 4 on the latest PHP version on chrome
+./run-system-tests.sh -e Foo -b firefox # All tests on Joomla 3 and 4 on the latest PHP version on firefox
+./run-system-tests.sh -e Foo -j 3 -php 7.3 # All tests only on Joomla 3 and PHP 7.3 on chrome
+./run-system-tests.sh -e Foo -t tests/acceptance/views -php 8.0 # Test in folder tests/acceptance/views on Joomla 3 and 4 on PHP 8.0 on chrome
+./run-system-tests.sh -e Foo -t tests/acceptance/views -j 4 # Tests in folder tests/acceptance/views on Joomla 4 on the latest PHP version on chrome
+./run-system-tests.sh -e Foo -t tests/acceptance/views/ArticleViewCest.php:canSeeArticle # Test tests/acceptance/views/ArticleViewCest.php:canSeeArticle on Joomla 3 and 4 on the latest PHP version on chrome
+./run-system-tests.sh -e Foo -t tests/acceptance/views/ArticleViewCest.php:canSeeArticle -j 4 -php 7.4 # Test tests/acceptance/views/ArticleViewCest.php:canSeeArticle on Joomla 4 on PHP 7.4 on chrome
 ```
 
 - -e  
@@ -37,8 +36,6 @@ Examples
   The Joomla version is optional. If it is not set, tests will be run on Joomla 3 and 4.
 - -php  
   The PHP version is optional. If it is not set, tests will be run on the latest PHP version.
-- -d  
-  The debug parameter is optional. If it is not set, it starts in debug mode where a VCN viewer can be connected to.
 
 ## Execute joomla tests
 To run the joomla tests, execute the following command:
@@ -59,13 +56,11 @@ Examples
   The test attribute is optional. If it is set then only this test is executed, otherwise all system tests.
 - -php  
   The PHP version is optional. If it is not set, tests will be run on the latest PHP version.
-- -d  
-  The debug parameter is optional. If it is not set, it starts in debug mode where a VCN viewer can be connected to.
 
 ## Observe test progress
 Test progress is printed on the console. When running all tests, then a progress bar is shown with stats about success and failed tests. When running a whole folder or script (using the -t parameter) then ever executed test is displayed with it's status. If only a function (using the -t parameter with : and a function name) of a test is executed, then the whole output is displayed.
 
-DPDocker starts selenium in debug mode as default. So you can connect any VNC viewer to localhost on port 5900. In the app you will see what exactly the browser is doing. This is helpfully when a test fails and you are pausing the test (`$I->pause();`) to see what is wrong. Depending on the VNC viewer you can even interact with the browser window.
+DPDocker starts selenium which offers a [VNC endpoint](https://github.com/SeleniumHQ/docker-selenium#quick-start). So you can connect any VNC viewer to localhost on port 5900. In the app you will see what exactly the browser is doing. This is helpfully when a test fails and you are pausing the test (`$I->pause();`) to see what is wrong. Depending on the VNC viewer you can even interact with the browser window.
 
 ## Internals
 Running the system tests is a rather complex setup. Due some startup issues we need to start every container in sequence. In total are five containers created. First the MySQL container. Then the web server which is accessible on the url _localhost:8080/joomla{joomla version}_ or _localhost:8080/{joomla}_ and selenium. If all are up, then the actual system tests are executed.

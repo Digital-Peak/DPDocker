@@ -14,7 +14,6 @@ my=${my:-5.6}
 php=${php:-latest}
 j=${j:-}
 t=${t:-}
-d=${d:--debug}
 b=${b:-chrome}
 
 while [ $# -gt 0 ]; do
@@ -39,15 +38,15 @@ if [ -z $t ]; then
 	sudo rm -rf $(dirname $0)/mysql_data
 
 	# We start mysql early to rebuild the database
-	EXTENSION= TEST=$t JOOMLA=$j REBUILD= MYSQL_DBVERSION=$my PHP_VERSION=$php BROWSER= DEBUG=$d docker-compose -f $(dirname $0)/docker-compose.yml up -d mysql-test
+	EXTENSION= TEST=$t JOOMLA=$j REBUILD= MYSQL_DBVERSION=$my PHP_VERSION=$php BROWSER= docker-compose -f $(dirname $0)/docker-compose.yml up -d mysql-test
 	sleep 5
 fi
 
 # Run containers in detached mode so when the system tests command ends, we can stop them afterwards
-EXTENSION= TEST=$t JOOMLA=$j REBUILD= MYSQL_DBVERSION=$my PHP_VERSION=$php BROWSER=$b DEBUG=$d docker-compose -f $(dirname $0)/docker-compose.yml up -d phpmyadmin-test
-EXTENSION= TEST=$t JOOMLA=$j REBUILD= MYSQL_DBVERSION=$my PHP_VERSION=$php BROWSER=$b DEBUG=$d docker-compose -f $(dirname $0)/docker-compose.yml up -d mailcatcher-test
-EXTENSION= TEST=$t JOOMLA=$j REBUILD= MYSQL_DBVERSION=$my PHP_VERSION=$php BROWSER=$b DEBUG=$d docker-compose -f $(dirname $0)/docker-compose.yml up -d joomla-web-test
-EXTENSION= TEST=$t JOOMLA=$j REBUILD= MYSQL_DBVERSION=$my PHP_VERSION=$php BROWSER=$b DEBUG=$d docker-compose -f $(dirname $0)/docker-compose.yml up -d selenium-test
+EXTENSION= TEST=$t JOOMLA=$j REBUILD= MYSQL_DBVERSION=$my PHP_VERSION=$php BROWSER=$b docker-compose -f $(dirname $0)/docker-compose.yml up -d phpmyadmin-test
+EXTENSION= TEST=$t JOOMLA=$j REBUILD= MYSQL_DBVERSION=$my PHP_VERSION=$php BROWSER=$b docker-compose -f $(dirname $0)/docker-compose.yml up -d mailcatcher-test
+EXTENSION= TEST=$t JOOMLA=$j REBUILD= MYSQL_DBVERSION=$my PHP_VERSION=$php BROWSER=$b docker-compose -f $(dirname $0)/docker-compose.yml up -d joomla-web-test
+EXTENSION= TEST=$t JOOMLA=$j REBUILD= MYSQL_DBVERSION=$my PHP_VERSION=$php BROWSER=$b docker-compose -f $(dirname $0)/docker-compose.yml up -d selenium-test
 
 # Waiting for web server
 while ! curl http://localhost:8080 > /dev/null 2>&1; do
@@ -67,7 +66,7 @@ if [[ $(command -v vinagre) ]]; then
 fi
 
 # Run the tests
-EXTENSION= TEST=$t JOOMLA=$j REBUILD= MYSQL_DBVERSION=$my PHP_VERSION=$php BROWSER=$b DEBUG=$d docker-compose -f $(dirname $0)/docker-compose.yml run joomla-system-tests
+EXTENSION= TEST=$t JOOMLA=$j REBUILD= MYSQL_DBVERSION=$my PHP_VERSION=$php BROWSER=$b docker-compose -f $(dirname $0)/docker-compose.yml run joomla-system-tests
 
 # Stop the containers
 if [ -z $t ]; then

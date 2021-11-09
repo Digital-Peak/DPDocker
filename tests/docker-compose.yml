@@ -20,7 +20,7 @@ services:
       - /tmp/tests:/tmp/tests
 
   selenium-test:
-    image: selenium/standalone-${BROWSER}${DEBUG}:3.141.59-20210929
+    image: selenium/standalone-${BROWSER}:4.0.0-20211102
     ports:
       - 4444:4444
       - 5900:5900

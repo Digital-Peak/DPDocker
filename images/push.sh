@@ -7,8 +7,10 @@
 docker push digitpeak/dpdocker-cli:7.3
 docker push digitpeak/dpdocker-cli:7.4
 docker push digitpeak/dpdocker-cli:8.0
-docker push digitpeak/dpdocker-cli
+docker push digitpeak/dpdocker-cli:8.1
+docker push digitpeak/dpdocker-cli:latest
 docker push digitpeak/dpdocker-web:7.3
 docker push digitpeak/dpdocker-web:7.4
 docker push digitpeak/dpdocker-web:8.0
-docker push digitpeak/dpdocker-web
+docker push digitpeak/dpdocker-web:8.1
+docker push digitpeak/dpdocker-web:latest

@@ -35,6 +35,7 @@ if [ ! -d media/vendor ]; then
 fi
 
 # Build the helpers
+libraries/vendor/bin/codecept clean
 libraries/vendor/bin/codecept build
 
 if [ -z $2 ]; then

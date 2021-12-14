@@ -24,7 +24,7 @@ cp -r $(dirname $0)/../config/j$2/* .
 sed -i "s/{BROWSER}/$3/" acceptance.suite.yml
 
 # Build the actions class and copy it back
-libraries/vendor/bin/codecept clean
+vendor/bin/codecept clean
 vendor/bin/codecept build
 
 # Copy generated action tester file back to the extension

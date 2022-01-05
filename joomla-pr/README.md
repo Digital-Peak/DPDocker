@@ -38,7 +38,7 @@ The first argument must always be the pr number or branch, the other ones are op
 ## Internals
 Joomla is cloned from Github and the given pr or branch is checked out. "npm install" and "composer install" is executed after the clone. Then the joomla SQL file is executed with the database driver defined as argument. The proper configuration.php file created. After installation is the website ready to be used.
 
-PHPMyAdmin is available under _localhost:8091_, pgAdmin on _localhost:8092_ and the mailcatcher on _localhost:8093_.
+PHPMyAdmin is available under _localhost:8091_, pgAdmin on _localhost:8092_, the mailcatcher on _localhost:8093_ and FTP on _localhost:8021_.
 
 ## Result
 On localhost:8090/pr/{number/branch} is joomla available with the given pr or branch and ready to use.

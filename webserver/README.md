@@ -35,7 +35,7 @@ All attributes are optional.
   If set then the whole web server is rebuild and you have a clean setup as when you started it for the first time.
 
 ## Internals
-When starting the web server, there are six docker containers started. An Apache web server, a MySQL server, a phpMyAdmin server, a postgres server, a pgAdmin server and a Mailcatcher. All of them are out of the box ready to use.
+When starting the web server, there are seven docker containers started. An Apache web server, a MySQL server, a phpMyAdmin server, a postgres server, a pgAdmin server, a Mailcatcher server and an FTP server. All of them are out of the box ready to use.
 
 To install Joomla, link the extensions and discover them we use a mix of PHP and shell scripts. All these scripts can be found in the scripts folder.
 
@@ -67,3 +67,5 @@ With the url _localhost:81_ you get access to a phpMyAdmin instance.
 With the url _localhost:82_ you get access to a pgAdmin instance.
 - **MailCatcher**  
 With the url _localhost:83_ you get access to a MailCatcher instance. [Mailcatcher](https://mailcatcher.me/) is a simple web front end to read mails. All sites are configured the way that mails are not sent to the real recipient but do land instead in the mailcatcher. This is handy when yo have to deal with mails.
+- **FTP server**  
+With the url _localhost:21_ you get access to a FTP server instance. You can log in with ftp/ftp. Please use none secure connections.

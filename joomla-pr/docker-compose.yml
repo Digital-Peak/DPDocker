@@ -68,7 +68,6 @@ services:
       FTP_USER_PASS: ftp
       FTP_USER_HOME: /home/ftp
     ports:
-      - 21:21
-      - 30000-30009:30000-30009
+      - 121:21
     volumes:
       - ./www:/home/ftp

@@ -83,7 +83,7 @@ function delete($target)
 		return;
 	}
 
-	shell_exec('rm -rf ' . $target);
+	shell_exec('rm -rf ' . escapeshellarg($target));
 }
 
 function isInIndex($fileName, $index)

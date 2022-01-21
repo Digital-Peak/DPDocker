@@ -23,7 +23,7 @@ modules:
             name: 'jane doe'                       # Name for the Administrator
             username: 'admin'                   # UserName for the Administrator
             password: 'adminadminadmin'            # Password for the Administrator
-            database host: 'mysql-test'                 # place where the Application is Hosted #server Address
+            database host: '{DB}-test'                 # place where the Application is Hosted #server Address
             database user: 'root'                  # MySQL Server user ID, usually root
             database password: 'root'         # MySQL Server password, usually empty or root
             database name: 'joomla_{SITE}'           # DB Name, at the Server
@@ -35,13 +35,15 @@ modules:
             language: 'English (United Kingdom)'   # Language in which you want the Application to be Installed
             timeout: 90                            # or 90000 the same result
             log_js_errors: true
+            cmsPath: '/var/www/html/{SITE}'        # ; If you want to setup your test website (document root) in a different folder, you can do that here.
+            localUser: 'www-data'
         Helper\JoomlaDb:
-            dsn: 'mysql:host=mysql-test;dbname=joomla_{SITE}'
+            dsn: 'mysql:host={DB}-test;dbname=joomla_{SITE}'
             user: 'root'
             password: 'root'
             prefix: 'jos_'
         Helper\Acceptance:
-            url: 'http://web-test/{SITE}'   # the url that points to the joomla installation at /tests/system/joomla-cms - we need it twice here
+            url: 'http://joomla-web-test/{SITE}'   # the url that points to the joomla installation at /tests/system/joomla-cms - we need it twice here
             MicrosoftEdgeInsiders: false           # set this to true, if you are on Windows Insiders
             cmsPath: '/var/www/html/{SITE}'                # ; If you want to setup your test website (document root) in a different folder, you can do that here.
             localUser: 'www-data'                          # (Linux / Mac only) If you want to set a different owner for the CMS test folder
@@ -53,14 +55,8 @@ env:
         modules:
             config:
                 Joomla\Browser\JoomlaBrowser:
-                    database host: 'postgres'
+                    database host: '{DB}-test'
                     database type: 'pgsql'
                 Helper\JoomlaDb:
-                    dsn: 'pgsql:host=postgres-test;dbname=joomla_{SITE}'
-    mysql8:
-        modules:
-            config:
-                Joomla\Browser\JoomlaBrowser:
-                    database host: 'mysql8'
+                    dsn: 'pgsql:host={DB}-test;dbname=joomla_{SITE}'
     mysql:
-    # Nothing to change

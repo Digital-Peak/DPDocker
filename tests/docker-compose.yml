@@ -12,7 +12,7 @@ services:
 
   joomla-system-tests:
     image: digitpeak/dpdocker-cli:7.4
-    command: /usr/src/Projects/DPDocker/tests/scripts/exec-joomla-system-tests.sh ${JOOMLA} ${TEST}
+    command: /usr/src/Projects/DPDocker/tests/scripts/exec-joomla-system-tests.sh ${JOOMLA} ${DB} ${TEST}
     depends_on:
       - mailcatcher-test
     volumes:
@@ -32,8 +32,8 @@ services:
   web-test:
     image: digitpeak/dpdocker-web:${PHP_VERSION}
     environment:
-      STARTUP_COMMAND_1: php /var/www/html/Projects/DPDocker/webserver/scripts/setup-joomla-site.php joomla3 ${EXTENSION} mysql-test 3
-      STARTUP_COMMAND_2: php /var/www/html/Projects/DPDocker/webserver/scripts/setup-joomla-site.php joomla4 ${EXTENSION} mysql-test 4
+      STARTUP_COMMAND_1: php /var/www/html/Projects/DPDocker/webserver/scripts/setup-joomla-site.php joomla3 ${EXTENSION} ${DB}-test 3
+      STARTUP_COMMAND_2: php /var/www/html/Projects/DPDocker/webserver/scripts/setup-joomla-site.php joomla4 ${EXTENSION} ${DB}-test 4
       # Some defaults
       STARTUP_COMMAND_3: sudo sed -i "s/debug = '1'/debug = 0/g" /var/www/html/joomla3/configuration.php
       STARTUP_COMMAND_4: sudo sed -i "s/sef = '1'/sef = 0/g" /var/www/html/joomla3/configuration.php
@@ -44,6 +44,7 @@ services:
       PHP_INI_XDEBUG__DISCOVER_CLIENT_HOST: 1
     depends_on:
       - mysql-test
+      - postgres-test
       - mailcatcher-test
       - ftpserver-test
     ports:
@@ -57,8 +58,11 @@ services:
     image: digitpeak/dpdocker-web:${PHP_VERSION}
     environment:
       JOOMLA_INSTALLATION_DISABLE_LOCALHOST_CHECK: 1
+      PHP_INI_XDEBUG__DISCOVER_CLIENT_HOST: 1
     depends_on:
       - mysql-test
+      - postgres-test
+      - mailcatcher-test
     ports:
       - 8080:80
     volumes:
@@ -72,6 +76,14 @@ services:
       MYSQL_ROOT_PASSWORD: root
     volumes:
       - ./mysql_data:/var/lib/mysql
+
+  postgres-test:
+    image: postgres:${POSTGRES_DBVERSION}
+    environment:
+      POSTGRES_PASSWORD: root
+      POSTGRES_USER: root
+    volumes:
+      - ./postgres_data:/var/lib/postgresql/data
 
   phpmyadmin-test:
     image: phpmyadmin/phpmyadmin

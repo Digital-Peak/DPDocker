@@ -9,7 +9,7 @@ modules:
              part: Json
     config:
         Helper\JoomlaDb:
-            dsn: 'mysql:host=mysql-test;dbname=joomla_{SITE}'
+            dsn: 'mysql:host={DB}-test;dbname=joomla_{SITE}'
             user: 'root'
             password: 'root'
             prefix: 'jos_'
@@ -17,3 +17,11 @@ modules:
             url: 'http://joomla-web-test/{SITE}'
             cmsPath: '/usr/src/Projects/{SITE}'
             localUser: ''
+
+env:
+    postgres:
+        modules:
+            config:
+                Helper\JoomlaDb:
+                    dsn: 'pgsql:host={DB}-test;dbname=joomla_{SITE}'
+    mysql:

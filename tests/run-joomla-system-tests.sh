@@ -37,17 +37,19 @@ if [ -z $t ]; then
 
 	# Cleanup data dirs
 	sudo rm -rf $(dirname $0)/mysql_data
+	sudo rm -rf $(dirname $0)/postgres_data
 
 	# We start mysql early to rebuild the database
-	EXTENSION= TEST=$t JOOMLA=$j REBUILD= MYSQL_DBVERSION=$my PHP_VERSION=$php BROWSER= DEBUG=$d docker-compose -f $(dirname $0)/docker-compose.yml up -d mysql-test
+	EXTENSION= TEST=$t JOOMLA=$j REBUILD= DB=$db MYSQL_DBVERSION=$my POSTGRES_DBVERSION=$pg PHP_VERSION=$php BROWSER= DEBUG=$d docker-compose -f $(dirname $0)/docker-compose.yml up -d mysql-test
+	EXTENSION= TEST=$t JOOMLA=$j REBUILD= DB=$db MYSQL_DBVERSION=$my POSTGRES_DBVERSION=$pg PHP_VERSION=$php BROWSER= DEBUG=$d docker-compose -f $(dirname $0)/docker-compose.yml up -d postgres-test
 	sleep 5
 fi
 
 # Run containers in detached mode so when the system tests command ends, we can stop them afterwards
-EXTENSION= TEST=$t JOOMLA=$j REBUILD= MYSQL_DBVERSION=$my PHP_VERSION=$php BROWSER=$b DEBUG=$d docker-compose -f $(dirname $0)/docker-compose.yml up -d phpmyadmin-test
-EXTENSION= TEST=$t JOOMLA=$j REBUILD= MYSQL_DBVERSION=$my PHP_VERSION=$php BROWSER=$b DEBUG=$d docker-compose -f $(dirname $0)/docker-compose.yml up -d mailcatcher-test
-EXTENSION= TEST=$t JOOMLA=$j REBUILD= MYSQL_DBVERSION=$my PHP_VERSION=$php BROWSER=$b DEBUG=$d docker-compose -f $(dirname $0)/docker-compose.yml up -d joomla-web-test
-EXTENSION= TEST=$t JOOMLA=$j REBUILD= MYSQL_DBVERSION=$my PHP_VERSION=$php BROWSER=$b DEBUG=$d docker-compose -f $(dirname $0)/docker-compose.yml up -d selenium-test
+EXTENSION= TEST=$t JOOMLA=$j REBUILD= DB=$db MYSQL_DBVERSION=$my POSTGRES_DBVERSION=$pg PHP_VERSION=$php BROWSER=$b DEBUG=$d docker-compose -f $(dirname $0)/docker-compose.yml up -d phpmyadmin-test
+EXTENSION= TEST=$t JOOMLA=$j REBUILD= DB=$db MYSQL_DBVERSION=$my POSTGRES_DBVERSION=$pg PHP_VERSION=$php BROWSER=$b DEBUG=$d docker-compose -f $(dirname $0)/docker-compose.yml up -d mailcatcher-test
+EXTENSION= TEST=$t JOOMLA=$j REBUILD= DB=$db MYSQL_DBVERSION=$my POSTGRES_DBVERSION=$pg PHP_VERSION=$php BROWSER=$b DEBUG=$d docker-compose -f $(dirname $0)/docker-compose.yml up -d joomla-web-test
+EXTENSION= TEST=$t JOOMLA=$j REBUILD= DB=$db MYSQL_DBVERSION=$my POSTGRES_DBVERSION=$pg PHP_VERSION=$php BROWSER=$b DEBUG=$d docker-compose -f $(dirname $0)/docker-compose.yml up -d selenium-test
 
 # Waiting for web server
 while ! curl http://localhost:8080 > /dev/null 2>&1; do
@@ -67,7 +69,7 @@ if [[ $(command -v vinagre) ]]; then
 fi
 
 # Run the tests
-EXTENSION= TEST=$t JOOMLA=$j REBUILD= MYSQL_DBVERSION=$my PHP_VERSION=$php BROWSER=$b DEBUG=$d docker-compose -f $(dirname $0)/docker-compose.yml run joomla-system-tests
+EXTENSION= TEST=$t JOOMLA=$j REBUILD= DB=$db MYSQL_DBVERSION=$my POSTGRES_DBVERSION=$pg PHP_VERSION=$php BROWSER=$b DEBUG=$d docker-compose -f $(dirname $0)/docker-compose.yml run joomla-system-tests
 
 # Stop the containers
 if [ -z $t ]; then

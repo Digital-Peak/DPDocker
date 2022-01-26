@@ -43,7 +43,7 @@ Examples
 ## Execute joomla tests
 To run the joomla tests, execute the following command:
 
-`./run-joomla-system-tests.sh -j joomla_folder [-t test] [-p php-version]`
+`./run-joomla-system-tests.sh -j joomla_folder [-t test] [-p php-version] [-db db-type] [-my mysql-db-version] [-pg postgres-db-version] `
 
 Examples
 
@@ -59,6 +59,12 @@ Examples
   The test attribute is optional. If it is set then only this test is executed, otherwise all system tests.
 - -php  
   The PHP version is optional. If it is not set, tests will be run on the latest PHP version.
+- -db  
+  You can use either _mysql_ or _postgres_ as value. If set then the Joomla installations will be installed with the respective driver. _mysql_ is loaded by default.
+- -my  
+  The MySQL database version. You can use supported tags on [hub.docker.com](https://hub.docker.com/_/mysql). If set then the Joomla installations will be installed with the respective driver. _latest_ is loaded by default.
+- -pg  
+  The Postgres database version. You can use supported tags on [hub.docker.com](https://hub.docker.com/_/postgres). If set then the Joomla installations will be installed with the respective driver. _latest_ is loaded by default.
 - -d  
   The debug parameter is optional. If it is not set, it starts in debug mode where a VCN viewer can be connected to.
 

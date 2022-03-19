@@ -5,7 +5,7 @@
 
 f=""
 if [ ! -z $1 ]; then
-	f="--no-cache"
+	f="--no-cache --pull"
 fi
 
 # Build the images

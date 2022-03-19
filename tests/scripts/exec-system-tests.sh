@@ -24,7 +24,10 @@ cp -r $(dirname $0)/../config/j$2/* .
 sed -i "s/{BROWSER}/$3/" acceptance.suite.yml
 
 # Build the actions class and copy it back
+vendor/bin/codecept clean
 vendor/bin/codecept build
+
+# Copy generated action tester file back to the extension
 mkdir -p $(dirname $0)/../../../$1/tests/_support/_generated
 cp -f $(dirname $0)/../tmp/_support/_generated/AcceptanceTesterActions.php $(dirname $0)/../../../$1/tests/_support/_generated/AcceptanceTesterActions.php
 

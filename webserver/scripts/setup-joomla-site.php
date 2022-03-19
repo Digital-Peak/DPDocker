@@ -73,7 +73,7 @@ foreach ($folders as $project) {
     }
 
     // Check if it is a Joomla installation
-    if (file_exists('/var/www/html/Projects/' . $project . '/includes')) {
+    if (is_dir('/var/www/html/Projects/' . $project . '/includes')) {
         continue;
     }
 
@@ -162,12 +162,17 @@ function createLinks($folderRoot, $wwwRoot)
     }
 
     foreach (new DirectoryIterator($folderRoot) as $filename) {
+        // Ignore files
+        if (is_file($folderRoot . $filename)) {
+            continue;
+        }
+
         if (strpos($filename, 'com_') === 0) {
             createLink($folderRoot . $filename . '/admin', $wwwRoot . '/administrator/components/' . $filename);
             createLink($folderRoot . $filename . '/site', $wwwRoot . '/components/' . $filename);
             createLink($folderRoot . $filename . '/media', $wwwRoot . '/media/' . $filename);
 
-            if (file_exists($folderRoot . $filename . '/api')) {
+            if (file_exists($folderRoot . $filename . '/api') && file_exists($wwwRoot . '/api/components/')) {
                 createLink($folderRoot . $filename . '/api', $wwwRoot . '/api/components/' . $filename);
             }
         }

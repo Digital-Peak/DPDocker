@@ -12,6 +12,7 @@ services:
       - phpmyadmin-pr
       - pgadmin-pr
       - mailcatcher-pr
+      - ftpserver-pr
     ports:
       - 8090:80
     volumes:
@@ -58,3 +59,15 @@ services:
     image: schickling/mailcatcher
     ports:
       - 8093:1080
+
+  ftpserver-pr:
+    image: stilliard/pure-ftpd
+    environment:
+      PUBLICHOST: localhost
+      FTP_USER_NAME: ftp
+      FTP_USER_PASS: ftp
+      FTP_USER_HOME: /home/ftp
+    ports:
+      - 121:21
+    volumes:
+      - ./www:/home/ftp

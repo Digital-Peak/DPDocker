@@ -55,8 +55,9 @@ fi
 
 /var/www/html/Projects/DPDocker/webserver/scripts/install-joomla.sh $root $dbHost-pr prorbranch_${1//[.-]/_} "Joomla PR or Branch $1" mailcatcher-pr $3
 
-echo -e "\e[32mPR $1 is checked out and ready to test on http://localhost:8090/pr/$1/administrator!"
-echo -e "\e[32mYou can log in with admin/admin!"
-echo -e "\e[32mPHPMyAdmin is available on http://localhost:8091!"
-echo -e "\e[32mpgAdmin is available on http://localhost:8092, credentials are admin@example.com/root!"
-echo -e "\e[32mMailcatcher is available on http://localhost:8093!"
+echo -e "\e[32mPR issue for pr $1 can be found on https://issues.joomla.org/tracker/joomla-cms/$1"
+echo -e "\e[32mPR $1 is checked out and ready to test on http://localhost:8090/pr/$1/administrator"
+echo -e "\e[32mYou can log in with admin/admin"
+echo -e "\e[32mPHPMyAdmin is available on http://localhost:8091"
+echo -e "\e[32mpgAdmin is available on http://localhost:8092, credentials are admin@example.com/root"
+echo -e "\e[32mMailcatcher is available on http://localhost:8093"

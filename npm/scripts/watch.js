@@ -21,8 +21,7 @@ util.findFilesRecursiveSync(path.resolve(process.argv[2]), 'assets.json').forEac
 	watchAssets(path.dirname(file), assets);
 });
 
-function watchAssets(root, assets)
-{
+function watchAssets(root, assets) {
 	console.log('Building index for ' + root);
 
 	let index = [];
@@ -30,7 +29,7 @@ function watchAssets(root, assets)
 
 	// Load extra dev assets when available
 	if (assets.localDev) {
-		assets.localDev.forEach(asset => filesToWatch.push(root + '/' + asset));
+		assets.localDev.forEach((asset) => filesToWatch.push(root + '/' + asset));
 	}
 
 	assets.local.forEach(asset => {
@@ -60,7 +59,7 @@ function watchAssets(root, assets)
 	console.log('Watching ' + root + ' for changes');
 	watch(
 		filesToWatch,
-		{recursive: true},
+		{ recursive: true },
 		(type, file) => {
 			if (type != 'update') {
 				return;

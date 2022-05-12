@@ -22,8 +22,10 @@ define('JPATH_BASE', $path);
 require_once JPATH_BASE . '/includes/defines.php';
 require_once JPATH_BASE . '/includes/framework.php';
 
+// Disable error reporting for Joomla 3
+error_reporting(E_ERROR);
+
 Log::addLogger(['logger' => 'echo'], Log::ERROR);
-Log::addLogger(['logger' => 'echo'], Log::WARNING);
 
 class DPDockerExtensionDiscover extends CliApplication
 {

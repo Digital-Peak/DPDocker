@@ -1,6 +1,6 @@
 ARG PHP_VERSION=8.0
 
-FROM thecodingmachine/php:${PHP_VERSION}-v4-cli-node14
+FROM thecodingmachine/php:${PHP_VERSION}-v4-cli-node16
 
 # Enable extensions
 ENV PHP_EXTENSION_GD=1

@@ -10,6 +10,6 @@
 		"codeception/codeception-progress-reporter": "^4.0",
 		"guzzlehttp/guzzle": "^7.2",
 		"hoa/console": "^3.17",
-		"joomla-projects/joomla-browser": "v4.0.0.x-dev"
+		"joomla-projects/joomla-browser": "^4.0"
 	}
 }

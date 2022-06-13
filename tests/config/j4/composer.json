@@ -1,4 +1,9 @@
 {
+	"config": {
+		"platform": {
+			"php": "7.4.0"
+		}
+	},
 	"require": {
 		"codeception/codeception": "~4.1",
 		"codeception/module-webdriver": "^1.0",

@@ -10,6 +10,6 @@
 		"node-watch": "^0.7",
 		"rollup": "^2.29",
 		"sync-request": "^6.1",
-		"terser": "^5.3"
+		"terser": "^5.14"
 	}
 }

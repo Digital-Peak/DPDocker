@@ -31,6 +31,9 @@ class DPDockerExtensionDiscover extends CliApplication
 {
 	public function doExecute()
 	{
+		// Set the host variable for uri access
+		$_SERVER['HTTP_HOST'] = 'https://example.com';
+
 		// Refresh the cache of discovered extensions
 		BaseDatabaseModel::addIncludePath(JPATH_ADMINISTRATOR . '/components/com_installer/models');
 		$model = BaseDatabaseModel::getInstance('Discover', 'InstallerModel');

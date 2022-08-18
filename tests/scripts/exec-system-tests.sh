@@ -34,13 +34,13 @@ cp -f $(dirname $0)/../tmp/_support/_generated/AcceptanceTesterActions.php $(dir
 # Check if there are multiple tests to run
 if [[ ! -z $4 && $4 != *".php:"* ]]; then
 	vendor/bin/codecept run --env desktop ${4#"tests/"}
-	exit 1
+	exit 0
 fi
 
 # Check if there is a single test to run
 if [ ! -z $4 ]; then
 	vendor/bin/codecept run --debug --steps --env desktop ${4#"tests/"}
-	exit 1
+	exit 0
 fi
 
 if [ -d acceptance/install ]; then

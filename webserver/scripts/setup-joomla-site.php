@@ -37,8 +37,14 @@ if (!is_dir($wwwRoot) || $force) {
             if ($branch->branch !== 'Joomla! ' . $joomlaVersion) {
                 continue;
             }
-            // Checkout latest stable release
-            shell_exec('git --work-tree=' . $wwwRoot . ' --git-dir=' . $wwwRoot . '/.git checkout tags/' . $branch->version . ' 2>&1 > /dev/null');
+
+			if ($joomlaVersion == '4') {
+				shell_exec('git --work-tree=' . $wwwRoot . ' --git-dir=' . $wwwRoot . '/.git checkout 4.2-dev 2>&1 > /dev/null');
+				$branch->version = 'Branch with PHP 8.2 fixes';
+			} else {
+            	// Checkout latest stable release
+            	shell_exec('git --work-tree=' . $wwwRoot . ' --git-dir=' . $wwwRoot . '/.git checkout tags/' . $branch->version . ' 2>&1 > /dev/null');
+			}
             echo 'Using version ' . $branch->version . ' on ' . $wwwRoot . PHP_EOL;
         }
     }

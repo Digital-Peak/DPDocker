@@ -16,4 +16,5 @@ if [ ! -d $(dirname $0)/../config/joomla ]; then
 	git clone -b staging --single-branch --depth 1 https://github.com/joomla/joomla-cms.git $(dirname $0)/../config/joomla
 fi
 
+$(dirname $0)/../config/vendor/bin/php-cs-fixer fix -v --dry-run --config $(dirname $0)/../../../$1/.php-cs-fixer.php
 $(dirname $0)/../config/vendor/bin/phpcs -p --severity=1 --colors --standard=$csStandard $(dirname $0)/../../../$1/$2

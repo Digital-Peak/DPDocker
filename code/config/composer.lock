@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "dd15e47a26d038a3efa7f9af224266f0",
+    "content-hash": "4ca940b9fb7118c17bccbc86be6fdbf7",
     "packages": [
         {
             "name": "phploc/phploc",
@@ -65,6 +65,7 @@
                     "type": "github"
                 }
             ],
+            "abandoned": true,
             "time": "2020-12-07T05:51:20+00:00"
         },
         {

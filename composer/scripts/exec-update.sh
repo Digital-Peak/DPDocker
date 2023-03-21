@@ -49,6 +49,7 @@ for fname in $(find $root/$1/$2 -path ./vendor -prune -o -name "composer.json" 2
 	fi
 
 	# Install the dependencies
+	composer update -o --no-dev --prefer-dist
 	composer bump
 	composer update -o --no-dev --prefer-dist
 

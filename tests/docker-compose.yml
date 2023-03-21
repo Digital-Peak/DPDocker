@@ -11,13 +11,20 @@ services:
       - /tmp/tests:/tmp/tests
 
   joomla-system-tests:
-    image: digitpeak/dpdocker-cli:7.4
-    command: /usr/src/Projects/DPDocker/tests/scripts/exec-joomla-system-tests.sh ${JOOMLA} ${DB} ${TEST}
+    image: cypress/included:12.8.1
+    entrypoint: /usr/src/Projects/DPDocker/tests/scripts/exec-joomla-system-tests.sh ${JOOMLA} ${DB} ${TEST}
     depends_on:
-      - mailcatcher-test
+      - joomla-web-test
+      - phpmyadmin-test
+    environment:
+      CYPRESS_BASE_URL: 'http://joomla-web-test'
+      DISPLAY:
+    working_dir: /e2e
     volumes:
+      - ../../${JOOMLA}:/e2e
       - ../..:/usr/src/Projects
-      - /tmp/tests:/tmp/tests
+      - ~/.Xauthority:/root/.Xauthority:rw
+      - /tmp/.X11-unix:/tmp/.X11-unix
 
   selenium-test:
     image: selenium/standalone-${BROWSER}${DEBUG}:3.141.59-20210929
@@ -58,6 +65,9 @@ services:
   joomla-web-test:
     image: digitpeak/dpdocker-web:${PHP_VERSION}
     environment:
+      STARTUP_COMMAND_1: if [[ -f /var/www/html/configuration.php ]]; then mv /var/www/html/configuration.php /var/www/html/configuration.php.bak; fi
+      STARTUP_COMMAND_2: /usr/src/Projects/DPDocker/webserver/scripts/install-joomla.sh /var/www/html ${DB}-test joomla_${JOOMLA} Cypress mailcatcher-test
+      STARTUP_COMMAND_3: sed -i "/\$$secret/c\ public \$$secret = 'tEstValue';" /var/www/html/configuration.php
       JOOMLA_INSTALLATION_DISABLE_LOCALHOST_CHECK: 1
       PHP_INI_XDEBUG__DISCOVER_CLIENT_HOST: 1
     depends_on:
@@ -67,8 +77,7 @@ services:
     ports:
       - 8080:80
     volumes:
-      - ./www:/var/www/html
-      - ../..:/var/www/html/Projects
+      - ../../${JOOMLA}:/var/www/html
       - ../..:/usr/src/Projects
 
   mysql-test:
@@ -97,10 +106,20 @@ services:
     ports:
       - 8081:80
 
+  pgadmin-test:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@example.com
+      PGADMIN_DEFAULT_PASSWORD: root
+    depends_on:
+      - postgres-test
+    ports:
+      - 8082:80
+
   mailcatcher-test:
     image: schickling/mailcatcher
     ports:
-      - 8082:1080
+      - 8083:1080
 
   ftpserver-test:
     image: stilliard/pure-ftpd

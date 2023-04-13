@@ -82,9 +82,9 @@ services:
 
   mysql-test:
     image: mysql:${MYSQL_DBVERSION}
-    command: --default-authentication-plugin=mysql_native_password
     environment:
       MYSQL_ROOT_PASSWORD: root
+    command: --default-authentication-plugin=mysql_native_password
     volumes:
       - ./mysql_data:/var/lib/mysql
 

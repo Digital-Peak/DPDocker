@@ -10,7 +10,7 @@ fi
 
 db=${db:-mysql}
 pg=${pg:-latest}
-my=${my:-5.6}
+my=${my:-latest}
 php=${php:-latest}
 j=${j:-}
 t=${t:-}
@@ -42,7 +42,7 @@ sudo xhost +
 # We start mysql early to rebuild the database
 EXTENSION= TEST=$t JOOMLA=$j REBUILD= DB=$db MYSQL_DBVERSION=$my POSTGRES_DBVERSION=$pg PHP_VERSION=$php BROWSER= DEBUG=$d docker-compose -f $(dirname $0)/docker-compose.yml up -d mysql-test
 EXTENSION= TEST=$t JOOMLA=$j REBUILD= DB=$db MYSQL_DBVERSION=$my POSTGRES_DBVERSION=$pg PHP_VERSION=$php BROWSER= DEBUG=$d docker-compose -f $(dirname $0)/docker-compose.yml up -d postgres-test
-sleep 10
+sleep 15
 
 # Run containers in detached mode so when the system tests command ends, we can stop them afterwards
 EXTENSION= TEST=$t JOOMLA=$j REBUILD= DB=$db MYSQL_DBVERSION=$my POSTGRES_DBVERSION=$pg PHP_VERSION=$php BROWSER=$b DEBUG=$d docker-compose -f $(dirname $0)/docker-compose.yml up -d phpmyadmin-test

@@ -3,6 +3,7 @@ support_namespace: Support
 suites:
     acceptance:
       actor: AcceptanceTester
+      path: .
       modules:
         enabled:
           - JoomlaBrowser

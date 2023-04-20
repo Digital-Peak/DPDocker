@@ -6,7 +6,7 @@
 pr=$1
 db=${db:-mysql}
 pg=${pg:-latest}
-my=${my:-5.6}
+my=${my:-latest}
 php=${php:-latest}
 r=${r:-}
 

@@ -18,7 +18,7 @@
 </head>
 <body>
 <h1>Welcome to the Joomla extension development web server</h1>
-<p>More information can be found on <a href="https://github.com/Digital-Peak/DPDocker/tree/initial/webserver">Github</a>.</p>
+<p>More information can be found on <a href="https://github.com/Digital-Peak/DPDocker/tree/main/webserver">Github</a>.</p>
 <p>Here is the list of available sites:</p>
 <ul>
 	<li><a href="j3">Patch release Joomla 3 site with local extensions linked</a> <a href="j3/administrator">(admin)</a>.</li>

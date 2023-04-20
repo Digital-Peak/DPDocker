@@ -5,6 +5,13 @@
  * @license   http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
  */
 
+use Joomla\CMS\Application\CliApplication;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Installer\Installer;
+use Joomla\CMS\Log\Log;
+use Joomla\CMS\Log\LogEntry;
+use Joomla\CMS\MVC\Model\BaseDatabaseModel;
+
 $path = dirname(__FILE__);
 if (isset($_SERVER["SCRIPT_FILENAME"])) {
 	$path = dirname($_SERVER["SCRIPT_FILENAME"]);
@@ -15,30 +22,39 @@ define('JPATH_BASE', $path);
 require_once JPATH_BASE . '/includes/defines.php';
 require_once JPATH_BASE . '/includes/framework.php';
 
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
+// Disable error reporting for Joomla 3
+error_reporting(E_ERROR);
 
-class DPDockerExtensionDiscover extends Joomla\CMS\Application\CliApplication
+Log::addLogger(['logger' => 'echo'], Log::ERROR);
+
+class DPDockerExtensionDiscover extends CliApplication
 {
 	public function doExecute()
 	{
+		// Set the host variable for uri access
+		$_SERVER['HTTP_HOST'] = 'https://example.com';
+
 		// Refresh the cache of discovered extensions
-		Joomla\CMS\MVC\Model\BaseDatabaseModel::addIncludePath(JPATH_ADMINISTRATOR . '/components/com_installer/models');
-		$model = Joomla\CMS\MVC\Model\BaseDatabaseModel::getInstance('Discover', 'InstallerModel');
+		BaseDatabaseModel::addIncludePath(JPATH_ADMINISTRATOR . '/components/com_installer/models');
+		$model = BaseDatabaseModel::getInstance('Discover', 'InstallerModel');
 		$model->discover();
 
 		// Get the discovered extensions
-		$db    = Joomla\CMS\Factory::getDbo();
+		$db	= Factory::getDbo();
 		$query = $db->getQuery(true)
 			->select($db->quoteName(['extension_id']))
 			->from($db->quoteName('#__extensions'))
 			->where($db->quoteName('state') . ' = -1');
 		$db->setQuery($query);
 
-		$installer = new Joomla\CMS\Installer\Installer();
+		$installer = new Installer();
 		foreach ($db->loadObjectList() as $extensionToDiscover) {
 			// Install the discovered extension
-			$installer->discover_install($extensionToDiscover->extension_id);
+			if ($installer->discover_install($extensionToDiscover->extension_id)) {
+				continue;
+			}
+
+			echo 'Could not install extension with ID: ' . $extensionToDiscover->extension_id . PHP_EOL;
 		}
 
 		// In joomla 4 have discovered extensions an access level of 0
@@ -65,6 +81,6 @@ class DPDockerExtensionDiscover extends Joomla\CMS\Application\CliApplication
 	}
 }
 
-$app                             = Joomla\CMS\Application\CliApplication::getInstance('DPDockerExtensionDiscover');
-Joomla\CMS\Factory::$application = $app;
+$app				  = CliApplication::getInstance('DPDockerExtensionDiscover');
+Factory::$application = $app;
 $app->execute();

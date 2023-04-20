@@ -44,11 +44,15 @@ for fname in $(find $root/$1/$2 -path ./vendor -prune -o -name "composer.json" 2
 
 	# Make simple update for DPDocker
 	if [ $1 == "DPDocker" ]; then
-		composer update
+		composer update -o --no-dev --prefer-dist
+		composer bump
+		composer update -o --no-dev --prefer-dist
 		continue
 	fi
 
 	# Install the dependencies
+	composer update -o --no-dev --prefer-dist
+	composer bump
 	composer update -o --no-dev --prefer-dist
 
 	if [ -z $3 ]; then

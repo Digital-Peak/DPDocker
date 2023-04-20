@@ -24,20 +24,23 @@ cp -r $(dirname $0)/../config/j$2/* .
 sed -i "s/{BROWSER}/$3/" acceptance.suite.yml
 
 # Build the actions class and copy it back
+vendor/bin/codecept clean
 vendor/bin/codecept build
+
+# Copy generated action tester file back to the extension
 mkdir -p $(dirname $0)/../../../$1/tests/_support/_generated
 cp -f $(dirname $0)/../tmp/_support/_generated/AcceptanceTesterActions.php $(dirname $0)/../../../$1/tests/_support/_generated/AcceptanceTesterActions.php
 
 # Check if there are multiple tests to run
 if [[ ! -z $4 && $4 != *".php:"* ]]; then
 	vendor/bin/codecept run --env desktop ${4#"tests/"}
-	exit 1
+	exit 0
 fi
 
 # Check if there is a single test to run
 if [ ! -z $4 ]; then
 	vendor/bin/codecept run --debug --steps --env desktop ${4#"tests/"}
-	exit 1
+	exit 0
 fi
 
 if [ -d acceptance/install ]; then

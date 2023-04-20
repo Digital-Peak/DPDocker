@@ -11,8 +11,8 @@ services:
       STARTUP_COMMAND_5: php /var/www/html/Projects/DPDocker/webserver/scripts/setup-joomla-site.php dev4 all ${DB} 4 ${REBUILD}
       STARTUP_COMMAND_6: php /var/www/html/Projects/DPDocker/webserver/scripts/setup-joomla-site.php play3 '' ${DB} 3 ${REBUILD}
       STARTUP_COMMAND_7: php /var/www/html/Projects/DPDocker/webserver/scripts/setup-joomla-site.php play4 '' ${DB} 4 ${REBUILD}
-      STARTUP_COMMAND_8: /var/www/html/Projects/DPDocker/webserver/scripts/setup-joomla-core.sh cms3 ${DB} ${REBUILD}
-      STARTUP_COMMAND_9: /var/www/html/Projects/DPDocker/webserver/scripts/setup-joomla-core.sh cms4 ${DB} ${REBUILD}
+      STARTUP_COMMAND_8: /var/www/html/Projects/DPDocker/webserver/scripts/setup-joomla-core.sh cms4 ${DB} ${REBUILD}
+      STARTUP_COMMAND_9: /var/www/html/Projects/DPDocker/webserver/scripts/setup-joomla-core.sh cms5 ${DB} ${REBUILD}
       PHP_INI_XDEBUG__DISCOVER_CLIENT_HOST: 1
     depends_on:
       - mysql

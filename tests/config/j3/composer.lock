@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "de98f8010f84c28086208f6077288206",
+    "content-hash": "27d35d4dd1d7966761e92501c4b81bf0",
     "packages": [
         {
             "name": "behat/gherkin",
@@ -184,44 +184,6 @@
                 }
             ],
             "time": "2023-03-14T07:21:10+00:00"
-        },
-        {
-            "name": "codeception/codeception-progress-reporter",
-            "version": "4.0.5",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/fr05t1k/codeception-progress-reporter.git",
-                "reference": "e1abef288f68cc98cb662e2f3fb5a4fbf32c8e80"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/fr05t1k/codeception-progress-reporter/zipball/e1abef288f68cc98cb662e2f3fb5a4fbf32c8e80",
-                "reference": "e1abef288f68cc98cb662e2f3fb5a4fbf32c8e80",
-                "shasum": ""
-            },
-            "require": {
-                "codeception/codeception": ">=2.3",
-                "php": ">=5.6.0",
-                "symfony/console": ">=2.7 <6.0"
-            },
-            "require-dev": {
-                "codeception/module-asserts": "^1.1"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Codeception\\ProgressReporter\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "support": {
-                "issues": "https://github.com/fr05t1k/codeception-progress-reporter/issues",
-                "source": "https://github.com/fr05t1k/codeception-progress-reporter/tree/4.0.5"
-            },
-            "time": "2022-08-31T19:21:41+00:00"
         },
         {
             "name": "codeception/lib-asserts",

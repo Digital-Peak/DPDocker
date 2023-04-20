@@ -13,7 +13,7 @@
 		"codeception/module-rest": "^1.4.2",
 		"codeception/module-phpbrowser": "^1.0.3",
 		"codeception/codeception-progress-reporter": "^4.0.5",
-		"guzzlehttp/guzzle": "^7.5",
+		"guzzlehttp/guzzle": "^7.5.1",
 		"hoa/console": "^3.17.05.02",
 		"joomla-projects/joomla-browser": "^4.0"
 	}

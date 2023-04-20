@@ -22,6 +22,8 @@ cd $(dirname $0)/../tmp
 cp -r $(dirname $0)/../../../$1/tests .
 cp -r $(dirname $0)/../config/j$2/* .
 sed -i "s/{BROWSER}/$3/" codeception.yml
+
+# Is needed to make JoomlaBrowser 3 compatible with Codeception 5
 sed -i "s/protected \$requiredFields/protected array \$requiredFields/" vendor/joomla-projects/joomla-browser/src/JoomlaBrowser.php
 
 # Build the actions class and copy it back

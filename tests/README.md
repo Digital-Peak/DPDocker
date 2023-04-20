@@ -1,7 +1,7 @@
 # Tests task
 This task runs the system tests of an extension on joomla 3 and 4 or a core joomla clone. System tests are browser tests performed by selenium and written in PHP with [codeception](https://codeception.com). Since Joomla 4.3, the core system tests of the CMS are ported to [cypress](https://www.cypress.io).
 
-Through a VNC viewer you can actually see what is executed inside a container in the browser when the extension system tests are executed.
+Through a VNC viewer you can actually see what is executed inside a container in the browser, when the extension system tests are executed. More information can be found in the "Observe" chapter.
 
 ## Prerequisites extension system tests
 The extension needs a tests folder with an acceptance folder in it, this is the location for your tests. Additionally, you need a "_bootstrap.php" file in the tests folder and in the tests/acceptance folder. There you can do some setup stuff which will be executed before codeception is running the tests. Like including some base classes or defining some global variables like a timeout.
@@ -19,14 +19,13 @@ To run the extension tests, execute the following command:
 Examples
 
 ```
-./run-system-tests.sh -e Foo #All tests on Joomla 3 and 4 on the latest PHP version on chrome
-./run-system-tests.sh -e Foo -b firefox #All tests on Joomla 3 and 4 on the latest PHP version on firefox
-./run-system-tests.sh -e Foo -j 3 -php 7.3 #All tests only on Joomla 3 and PHP 7.3 on chrome
-./run-system-tests.sh -e Foo -t tests/acceptance/views -php 8.0 #Test in folder tests/acceptance/views on Joomla 3 and 4 on PHP 8.0 on chrome
-./run-system-tests.sh -e Foo -t tests/acceptance/views -j 4 #Tests in folder tests/acceptance/views on Joomla 4 on the latest PHP version on chrome
-./run-system-tests.sh -e Foo -t tests/acceptance/views/ArticleViewCest.php:canSeeArticle #Test tests/acceptance/views/ArticleViewCest.php:canSeeArticle on Joomla 3 and 4 on the latest PHP version on chrome
-./run-system-tests.sh -e Foo -t tests/acceptance/views/ArticleViewCest.php:canSeeArticle -j 4 -php 7.4 #Test tests/acceptance/views/ArticleViewCest.php:canSeeArticle on Joomla 4 on PHP 7.4 on chrome
-./run-system-tests.sh -e Foo -d '' #All tests on Joomla 3 and 4 on the latest PHP version on firefox but not in debug mode
+./run-system-tests.sh -e Foo # All tests on Joomla 3 and 4 on the latest PHP version on chrome
+./run-system-tests.sh -e Foo -b firefox # All tests on Joomla 3 and 4 on the latest PHP version on firefox
+./run-system-tests.sh -e Foo -j 3 -php 7.3 # All tests only on Joomla 3 and PHP 7.3 on chrome
+./run-system-tests.sh -e Foo -t tests/acceptance/views -php 8.0 # Test in folder tests/acceptance/views on Joomla 3 and 4 on PHP 8.0 on chrome
+./run-system-tests.sh -e Foo -t tests/acceptance/views -j 4 # Tests in folder tests/acceptance/views on Joomla 4 on the latest PHP version on chrome
+./run-system-tests.sh -e Foo -t tests/acceptance/views/ArticleViewCest.php:canSeeArticle # Test tests/acceptance/views/ArticleViewCest.php:canSeeArticle on Joomla 3 and 4 on the latest PHP version on chrome
+./run-system-tests.sh -e Foo -t tests/acceptance/views/ArticleViewCest.php:canSeeArticle -j 4 -php 7.4 # Test tests/acceptance/views/ArticleViewCest.php:canSeeArticle on Joomla 4 on PHP 7.4 on chrome
 ```
 
 - -e  
@@ -37,8 +36,6 @@ Examples
   The Joomla version is optional. If it is not set, tests will be run on Joomla 3 and 4.
 - -php  
   The PHP version is optional. If it is not set, tests will be run on the latest PHP version.
-- -d  
-  The debug parameter is optional. If it is not set, it starts in debug mode where a VCN viewer can be connected to.
 
 ## Execute joomla tests in cypress
 To run the cypress joomla core CMS tests, execute the following command:
@@ -66,7 +63,7 @@ Examples
 ## Observe codeception test progress
 Test progress is printed on the console. When running all tests, then a progress bar is shown with stats about success and failed tests. When running a whole folder or script (using the -t parameter) then ever executed test is displayed with it's status. If only a function (using the -t parameter with : and a function name) of a test is executed, then the whole output is displayed.
 
-DPDocker starts selenium in debug mode as default. So you can connect any VNC viewer to localhost on port 5900. In the app you will see what exactly the browser is doing. This is helpfully when a test fails and you are pausing the test (`$I->pause();`) to see what is wrong. Depending on the VNC viewer you can even interact with the browser window.
+DPDocker starts selenium which offers a [VNC endpoint](https://github.com/SeleniumHQ/docker-selenium#quick-start). So you can connect any VNC viewer to localhost on port 5900. In the app you will see what exactly the browser is doing. This is helpfully when a test fails and you are pausing the test (`$I->pause();`) to see what is wrong. Depending on the VNC viewer you can even interact with the browser window.
 
 ## Cypress test UI
 When running the cypress tests a UI is opened where all the spec files are listed. It is recommended not to execute the install spec file as when launching the tests, a fresh installation is already done.

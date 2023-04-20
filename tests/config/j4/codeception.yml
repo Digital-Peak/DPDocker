@@ -1,14 +1,71 @@
+namespace: Tests
+support_namespace: Support
+suites:
+    acceptance:
+        actor: AcceptanceTester
+        path: .
+        modules:
+          enabled:
+            - Joomla\Browser\JoomlaBrowser
+            - Tests\Support\Helper\Acceptance
+            - Tests\Support\Helper\JoomlaDb
+            - Filesystem
+            - Asserts
+            - REST
+          config:
+            Joomla\Browser\JoomlaBrowser:
+              host: 'selenium-test'
+              port: 4444
+              url: 'http://web-test/joomla4'
+              browser: '{BROWSER}'
+              restart: true
+              clear_cookies: true
+              window_size: 1024x1024
+              capabilities:
+                unexpectedAlertBehaviour: 'accept'
+                'goog:chromeOptions':
+                  prefs:
+                    download.default_directory: '/tmp/tests'
+              username: 'admin'
+              password: 'admin'
+              database host: 'mysql-test'
+              database user: 'root'
+              database password: 'root'
+              database name: 'sites_joomla4'
+              database type: 'mysqli'
+              database prefix: 'j_'
+              install sample data: 'no'
+              sample data: 'Default English (GB) Sample Data'
+              admin email: 'admin@example.com'
+              language: 'English (United Kingdom)'
+              timeout: 10
+            Tests\Support\Helper\JoomlaDb:
+              dsn: 'mysql:host=mysql-test;dbname=sites_joomla4'
+              user: 'root'
+              password: 'root'
+              prefix: 'j_'
+            Tests\Support\Helper\Acceptance:
+              downloads: '/tmp/tests'
+              repo_folder: ''
+              url: 'http://localhost/joomla4'
+              home_dir: '/usr/src/Projects/DPDocker/tests/www/joomla4'
+              joomla_version: 4
+            REST:
+              url: 'http://web-test/joomla4/api/index.php/v1'
+              depends: PhpBrowser
+              part: Json
+        error_level: 'E_ALL & ~E_STRICT & ~E_DEPRECATED'
+
 paths:
-  tests: .
+  tests: tests
   output: _output
-  data: _data
-  support: _support
-  envs: _envs
+  data: tests/_data
+  support: tests/Support
+  envs: tests/_envs
 actor_suffix: Tester
 extensions:
   enabled:
     - Codeception\Extension\RunFailed
-bootstrap: _bootstrap.php
 settings:
   colors: true
   memory_limit: 1024M

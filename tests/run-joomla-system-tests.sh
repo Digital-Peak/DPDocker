@@ -10,17 +10,16 @@ fi
 
 db=${db:-mysql}
 pg=${pg:-latest}
-my=${my:-5.6}
+my=${my:-latest}
 php=${php:-latest}
 j=${j:-}
 t=${t:-}
-d=${d:--debug}
 b=${b:-chrome}
 
 while [ $# -gt 0 ]; do
 	 if [[ $1 == "-"* ]]; then
-				param="${1/-/}"
-				declare $param="$2"
+		param="${1/-/}"
+		declare $param="$2"
 	 fi
 	shift
 done
@@ -30,26 +29,25 @@ if [ -z $j ]; then
 	exit
 fi
 
-# Clear mysql data when running all tests
-if [ -z $t ]; then
-	# Remove the containers
-	docker container rm -f $(docker container ls -q --filter name=tests_*) > /dev/null 2>&1
+# Remove the containers
+docker container rm -f $(docker container ls -q --filter name=tests_*) > /dev/null 2>&1
 
-	# Cleanup data dirs
-	sudo rm -rf $(dirname $0)/mysql_data
-	sudo rm -rf $(dirname $0)/postgres_data
+# Cleanup data dirs
+sudo rm -rf $(dirname $0)/mysql_data
+sudo rm -rf $(dirname $0)/postgres_data
 
-	# We start mysql early to rebuild the database
-	EXTENSION= TEST=$t JOOMLA=$j REBUILD= DB=$db MYSQL_DBVERSION=$my POSTGRES_DBVERSION=$pg PHP_VERSION=$php BROWSER= DEBUG=$d docker-compose -f $(dirname $0)/docker-compose.yml up -d mysql-test
-	EXTENSION= TEST=$t JOOMLA=$j REBUILD= DB=$db MYSQL_DBVERSION=$my POSTGRES_DBVERSION=$pg PHP_VERSION=$php BROWSER= DEBUG=$d docker-compose -f $(dirname $0)/docker-compose.yml up -d postgres-test
-	sleep 5
-fi
+sudo xhost +
+
+# We start mysql early to rebuild the database
+EXTENSION= TEST=$t JOOMLA=$j REBUILD= DB=$db MYSQL_DBVERSION=$my POSTGRES_DBVERSION=$pg PHP_VERSION=$php BROWSER= docker-compose -f $(dirname $0)/docker-compose.yml up -d mysql-test
+EXTENSION= TEST=$t JOOMLA=$j REBUILD= DB=$db MYSQL_DBVERSION=$my POSTGRES_DBVERSION=$pg PHP_VERSION=$php BROWSER= docker-compose -f $(dirname $0)/docker-compose.yml up -d postgres-test
+sleep 15
 
 # Run containers in detached mode so when the system tests command ends, we can stop them afterwards
-EXTENSION= TEST=$t JOOMLA=$j REBUILD= DB=$db MYSQL_DBVERSION=$my POSTGRES_DBVERSION=$pg PHP_VERSION=$php BROWSER=$b DEBUG=$d docker-compose -f $(dirname $0)/docker-compose.yml up -d phpmyadmin-test
-EXTENSION= TEST=$t JOOMLA=$j REBUILD= DB=$db MYSQL_DBVERSION=$my POSTGRES_DBVERSION=$pg PHP_VERSION=$php BROWSER=$b DEBUG=$d docker-compose -f $(dirname $0)/docker-compose.yml up -d mailcatcher-test
-EXTENSION= TEST=$t JOOMLA=$j REBUILD= DB=$db MYSQL_DBVERSION=$my POSTGRES_DBVERSION=$pg PHP_VERSION=$php BROWSER=$b DEBUG=$d docker-compose -f $(dirname $0)/docker-compose.yml up -d joomla-web-test
-EXTENSION= TEST=$t JOOMLA=$j REBUILD= DB=$db MYSQL_DBVERSION=$my POSTGRES_DBVERSION=$pg PHP_VERSION=$php BROWSER=$b DEBUG=$d docker-compose -f $(dirname $0)/docker-compose.yml up -d selenium-test
+EXTENSION= TEST=$t JOOMLA=$j REBUILD= DB=$db MYSQL_DBVERSION=$my POSTGRES_DBVERSION=$pg PHP_VERSION=$php BROWSER=$b docker-compose -f $(dirname $0)/docker-compose.yml up -d phpmyadmin-test
+EXTENSION= TEST=$t JOOMLA=$j REBUILD= DB=$db MYSQL_DBVERSION=$my POSTGRES_DBVERSION=$pg PHP_VERSION=$php BROWSER=$b docker-compose -f $(dirname $0)/docker-compose.yml up -d pgadmin-test
+EXTENSION= TEST=$t JOOMLA=$j REBUILD= DB=$db MYSQL_DBVERSION=$my POSTGRES_DBVERSION=$pg PHP_VERSION=$php BROWSER=$b docker-compose -f $(dirname $0)/docker-compose.yml up -d mailcatcher-test
+EXTENSION= TEST=$t JOOMLA=$j REBUILD= DB=$db MYSQL_DBVERSION=$my POSTGRES_DBVERSION=$pg PHP_VERSION=$php BROWSER=$b docker-compose -f $(dirname $0)/docker-compose.yml up -d joomla-web-test
 
 # Waiting for web server
 while ! curl http://localhost:8080 > /dev/null 2>&1; do
@@ -57,21 +55,8 @@ while ! curl http://localhost:8080 > /dev/null 2>&1; do
 	sleep 4
 done
 
-# Waiting for selenium server
-while ! curl http://localhost:4444 > /dev/null 2>&1; do
-	echo "$(date) - waiting for selenium server"
-	sleep 4
-done
-
-# Run VNC viewer
-if [[ $(command -v vinagre) ]]; then
-	vinagre localhost > /dev/null 2>&1 &
-fi
-
 # Run the tests
-EXTENSION= TEST=$t JOOMLA=$j REBUILD= DB=$db MYSQL_DBVERSION=$my POSTGRES_DBVERSION=$pg PHP_VERSION=$php BROWSER=$b DEBUG=$d docker-compose -f $(dirname $0)/docker-compose.yml run joomla-system-tests
+EXTENSION= TEST=$t JOOMLA=$j REBUILD= DB=$db MYSQL_DBVERSION=$my POSTGRES_DBVERSION=$pg PHP_VERSION=$php BROWSER=$b docker-compose -f $(dirname $0)/docker-compose.yml run --service-ports joomla-system-tests
 
 # Stop the containers
-if [ -z $t ]; then
-	docker container stop $(docker container ls -q --filter name=tests_*) > /dev/null 2>&1
-fi
+docker container stop $(docker container ls -q --filter name=tests_*) > /dev/null 2>&1

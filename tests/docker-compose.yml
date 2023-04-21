@@ -2,7 +2,7 @@ version: '3.5'
 
 services:
   system-tests:
-    image: digitpeak/dpdocker-cli:7.4
+    image: digitpeak/dpdocker-cli
     command: /usr/src/Projects/DPDocker/tests/scripts/exec-system-tests.sh ${EXTENSION} ${JOOMLA} ${BROWSER} ${TEST}
     depends_on:
       - mailcatcher-test
@@ -11,16 +11,23 @@ services:
       - /tmp/tests:/tmp/tests
 
   joomla-system-tests:
-    image: digitpeak/dpdocker-cli:7.4
-    command: /usr/src/Projects/DPDocker/tests/scripts/exec-joomla-system-tests.sh ${JOOMLA} ${DB} ${TEST}
+    image: cypress/included:12.8.1
+    entrypoint: /usr/src/Projects/DPDocker/tests/scripts/exec-joomla-system-tests.sh ${JOOMLA} ${DB} ${TEST}
     depends_on:
-      - mailcatcher-test
+      - joomla-web-test
+      - phpmyadmin-test
+    environment:
+      CYPRESS_BASE_URL: 'http://joomla-web-test'
+      DISPLAY:
+    working_dir: /e2e
     volumes:
+      - ../../${JOOMLA}:/e2e
       - ../..:/usr/src/Projects
-      - /tmp/tests:/tmp/tests
+      - ~/.Xauthority:/root/.Xauthority:rw
+      - /tmp/.X11-unix:/tmp/.X11-unix
 
   selenium-test:
-    image: selenium/standalone-${BROWSER}${DEBUG}:3.141.59-20210929
+    image: selenium/standalone-${BROWSER}:4.8.3-20230404
     ports:
       - 4444:4444
       - 5900:5900
@@ -36,11 +43,12 @@ services:
       STARTUP_COMMAND_2: php /var/www/html/Projects/DPDocker/webserver/scripts/setup-joomla-site.php joomla4 ${EXTENSION} ${DB}-test 4
       # Some defaults
       STARTUP_COMMAND_3: sudo sed -i "s/debug = '1'/debug = 0/g" /var/www/html/joomla3/configuration.php
-      STARTUP_COMMAND_4: sudo sed -i "s/sef = '1'/sef = 0/g" /var/www/html/joomla3/configuration.php
-      STARTUP_COMMAND_5: sudo sed -i "s/smtphost = 'mailcatcher'/smtphost = 'mailcatcher-test'/g" /var/www/html/joomla3/configuration.php
-      STARTUP_COMMAND_6: sudo sed -i "s/debug = '1'/debug = 0/g" /var/www/html/joomla4/configuration.php
-      STARTUP_COMMAND_7: sudo sed -i "s/sef = '1'/sef = 0/g" /var/www/html/joomla4/configuration.php
-      STARTUP_COMMAND_8: sudo sed -i "s/smtphost = 'mailcatcher'/smtphost = 'mailcatcher-test'/g" /var/www/html/joomla4/configuration.php
+      STARTUP_COMMAND_4: sudo sed -i "s/error_reporting = 'development'/error_reporting = 'simple'/g" /var/www/html/joomla3/configuration.php
+      STARTUP_COMMAND_5: sudo sed -i "s/sef = '1'/sef = 0/g" /var/www/html/joomla3/configuration.php
+      STARTUP_COMMAND_6: sudo sed -i "s/smtphost = 'mailcatcher'/smtphost = 'mailcatcher-test'/g" /var/www/html/joomla3/configuration.php
+      STARTUP_COMMAND_7: sudo sed -i "s/debug = '1'/debug = 0/g" /var/www/html/joomla4/configuration.php
+      STARTUP_COMMAND_8: sudo sed -i "s/sef = '1'/sef = 0/g" /var/www/html/joomla4/configuration.php
+      STARTUP_COMMAND_9: sudo sed -i "s/smtphost = 'mailcatcher'/smtphost = 'mailcatcher-test'/g" /var/www/html/joomla4/configuration.php
       PHP_INI_XDEBUG__DISCOVER_CLIENT_HOST: 1
       PHP_INI_SESSION__COOKIE_LIFETIME: 86400
       PHP_INI_SESSION__GC_MAXLIFETIME: 86400
@@ -59,6 +67,9 @@ services:
   joomla-web-test:
     image: digitpeak/dpdocker-web:${PHP_VERSION}
     environment:
+      STARTUP_COMMAND_1: if [[ -f /var/www/html/configuration.php ]]; then mv /var/www/html/configuration.php /var/www/html/configuration.php.bak; fi
+      STARTUP_COMMAND_2: /usr/src/Projects/DPDocker/webserver/scripts/install-joomla.sh /var/www/html ${DB}-test joomla_${JOOMLA} Cypress mailcatcher-test
+      STARTUP_COMMAND_3: sed -i "/\$$secret/c\ public \$$secret = 'tEstValue';" /var/www/html/configuration.php
       JOOMLA_INSTALLATION_DISABLE_LOCALHOST_CHECK: 1
       PHP_INI_XDEBUG__DISCOVER_CLIENT_HOST: 1
     depends_on:
@@ -68,14 +79,14 @@ services:
     ports:
       - 8080:80
     volumes:
-      - ./www:/var/www/html
-      - ../..:/var/www/html/Projects
+      - ../../${JOOMLA}:/var/www/html
       - ../..:/usr/src/Projects
 
   mysql-test:
     image: mysql:${MYSQL_DBVERSION}
     environment:
       MYSQL_ROOT_PASSWORD: root
+    command: --default-authentication-plugin=mysql_native_password
     volumes:
       - ./mysql_data:/var/lib/mysql
 
@@ -98,10 +109,20 @@ services:
     ports:
       - 8081:80
 
+  pgadmin-test:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@example.com
+      PGADMIN_DEFAULT_PASSWORD: root
+    depends_on:
+      - postgres-test
+    ports:
+      - 8082:80
+
   mailcatcher-test:
     image: schickling/mailcatcher
     ports:
-      - 8082:1080
+      - 8083:1080
 
   ftpserver-test:
     image: stilliard/pure-ftpd

@@ -77,6 +77,11 @@ foreach ($folders as $project) {
         continue;
     }
 
+    // Ignore files
+    if (is_file('/var/www/html/Projects/' . $project)) {
+        continue;
+    }
+
     if ($hasInternet && $argv[2] != 'all') {
         echo 'Building extension ' . $project . PHP_EOL;
         shell_exec('/var/www/html/Projects/DPDocker/composer/scripts/exec-install.sh ' . $project);

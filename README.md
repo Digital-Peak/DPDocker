@@ -9,10 +9,15 @@ That the tasks are actually executed on your code on your local machine, the par
 If you want to do a test run, use the DPAttachments extension. More information can be found in the [repository](https://github.com/Digital-Peak/DPAttachments).
 
 ## Prerequisites
-You only need the `docker` and `docker-compose` binaries installed. For your convenience we come also with some shell scripts which can be executed in a Linux Host OS to start the containers with a single command. If you are using the repo on a none Linux host, then you need to run the tasks manually by hand.
+You only need the `docker` and `docker-compose` binaries installed. For your convenience there are shell scripts available which do some preparation and start the docker containers properly.
+
+### Windows prerequisites
+The easiest way to use DPDocker on Windows is with WSL2, then you work in a Linux environment within Windows. It is the recommended way to use Docker on Windows anyway. First you need to [install your preferred Distro into WSL2](https://docs.microsoft.com/en-us/windows/wsl/install). Then start the WSL Console where you find yourself in a full Linux terminal. Now you can go to the installation step.
+
+Side note: It is recommended to have your project files stored in the WSL system for better performance as DPDocker does a lot of copy operations to start Joomla. More information can be found in the [WSL developer article](https://docs.microsoft.com/en-us/windows/wsl/setup/environment) or on [docker.com](https://docs.docker.com/desktop/windows/wsl/).
 
 ## Installation
-Clone this repository:
+Clone this repository (when on Windows, make sure in a WSL console):
 
 `git clone https://github.com/Digital-Peak/DPDocker.git`
 

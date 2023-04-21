@@ -31,7 +31,7 @@ $(dirname $0)/../../npm/scripts/exec-npm-install.sh $extension '' $workingDir
 if [ ! -z "$version" ]; then
 	echo "Define version number in manifest files"
 	find $workingDir/$extension -type f -name "*.xml" -exec sed -i "s/DP_DEPLOY_VERSION/$version/g" {} +
-	find $workingDir/$extension -type f -name "*.xml" -exec sed -i "s/DP_DEPLOY_DATE/$(LANG=en_us_88591; date "+%-d %b %Y")/g" {} +
+	find $workingDir/$extension -type f -name "*.xml" -exec sed -i "s/DP_DEPLOY_DATE/$(LANG=en_us_88591; date "+%Y-%m")/g" {} +
 fi
 
 echo "Clearing comments from ini files"

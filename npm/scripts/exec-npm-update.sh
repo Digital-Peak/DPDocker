@@ -42,7 +42,7 @@ for fname in $(find $root/$1/$2 -path ./node_modules -prune -o -name "package.js
 	fi
 
 	# Update the dependencies
-	npm update
+	npm update --save
 
 	if [ -z $3 ]; then
 		echo "Outdated packages"

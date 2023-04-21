@@ -23,6 +23,7 @@ services:
     image: mysql:${MYSQL_DBVERSION}
     environment:
       MYSQL_ROOT_PASSWORD: root
+    command: --default-authentication-plugin=mysql_native_password --sql_mode=""
     volumes:
       - ./mysql_data:/var/lib/mysql
 

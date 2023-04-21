@@ -2,7 +2,7 @@ version: '3.5'
 
 services:
   system-tests:
-    image: digitpeak/dpdocker-cli:7.4
+    image: digitpeak/dpdocker-cli
     command: /usr/src/Projects/DPDocker/tests/scripts/exec-system-tests.sh ${EXTENSION} ${JOOMLA} ${BROWSER} ${TEST}
     depends_on:
       - mailcatcher-test

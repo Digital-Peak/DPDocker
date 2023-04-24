@@ -18,6 +18,7 @@ suites:
           port: 4444
           url: 'http://web-test/joomla4'
           browser: '{BROWSER}'
+          restart: false
           clear_cookies: true
           window_size: 1024x1024
           capabilities:

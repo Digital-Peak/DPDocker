@@ -1,0 +1,24 @@
+{
+	"config": {
+		"platform": {
+			"php": "8.2.0"
+		}
+	},
+	"require": {
+		"codeception/codeception": "^5.0.10",
+		"codeception/module-rest": "^3.3.2",
+		"codeception/module-phpbrowser": "^3.0.0",
+		"digital-peak/dpception": "dev-initial"
+	},
+	"repositories": [
+		{
+			"url": "https://github.com/Digital-Peak/DPCeption.git",
+			"type": "git"
+		}
+	],
+	"autoload-dev": {
+		"psr-4": {
+			"Tests\\": "tests/"
+		}
+	}
+}

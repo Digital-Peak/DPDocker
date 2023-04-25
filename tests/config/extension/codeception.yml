@@ -6,14 +6,16 @@ suites:
     path: .
     modules:
       enabled:
-        - Joomla\Browser\JoomlaBrowser
+        - DigitalPeak\Module\DPBrowser
+        - DigitalPeak\Module\DPDb
+        - DigitalPeak\Module\DPFile
+        - DigitalPeak\Module\DPMail
         - Tests\Support\Helper\Acceptance
-        - Tests\Support\Helper\JoomlaDb
         - Filesystem
         - Asserts
         - REST
       config:
-        Joomla\Browser\JoomlaBrowser:
+        DigitalPeak\Module\DPBrowser:
           host: 'selenium-test'
           port: 4444
           url: 'http://web-test/joomla4'
@@ -39,17 +41,19 @@ suites:
           admin email: 'admin@example.com'
           language: 'English (United Kingdom)'
           timeout: 10
-        Tests\Support\Helper\JoomlaDb:
+          downloads: '/tmp/tests'
+          home_dir: '/usr/src/Projects/DPDocker/tests/www/joomla4'
+          joomla_version: {JOOMLA_VERSION}
+        DigitalPeak\Module\DPDb:
           dsn: 'mysql:host=mysql-test;dbname=sites_joomla4'
           user: 'root'
           password: 'root'
           prefix: 'j_'
-        Tests\Support\Helper\Acceptance:
+        DigitalPeak\Module\DPFile:
           downloads: '/tmp/tests'
+        Tests\Support\Helper\Acceptance:
           repo_folder: ''
           url: 'http://localhost/joomla4'
-          home_dir: '/usr/src/Projects/DPDocker/tests/www/joomla4'
-          joomla_version: 4
         REST:
           url: 'http://web-test/joomla4/api/index.php/v1'
           depends: PhpBrowser

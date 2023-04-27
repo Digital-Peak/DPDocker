@@ -50,9 +50,8 @@ suites:
           password: 'root'
           prefix: 'j_'
         DigitalPeak\Module\DPFile:
-          downloads: '/tmp/tests'
+          files_root: '/tmp/tests'
         Tests\Support\Helper\Acceptance:
-          repo_folder: ''
           url: 'http://localhost/joomla{JOOMLA_VERSION}'
         REST:
           url: 'http://web-test/joomla{JOOMLA_VERSION}/api/index.php/v1'

@@ -10,9 +10,7 @@ sudo rm -rf /tmp/tests/*
 sudo chmod 777 /tmp/tests
 
 # Make sure the dependencies are correct
-cd $(dirname $0)/../config/j3
-composer install --quiet
-cd $(dirname $0)/../config/j4
+cd $(dirname $0)/../config/extension
 composer install --quiet
 
 # Change to the tests folder as working directory
@@ -20,11 +18,9 @@ rm -rf $(dirname $0)/../tmp
 mkdir $(dirname $0)/../tmp
 cd $(dirname $0)/../tmp
 cp -r $(dirname $0)/../../../$1/tests .
-cp -r $(dirname $0)/../config/j$2/* .
+cp -r $(dirname $0)/../config/extension/* .
 sed -i "s/{BROWSER}/$3/" codeception.yml
-
-# Is needed to make JoomlaBrowser 3 compatible with Codeception 5
-sed -i "s/protected \$requiredFields/protected array \$requiredFields/" vendor/joomla-projects/joomla-browser/src/JoomlaBrowser.php
+sed -i "s/{JOOMLA_VERSION}/$2/" codeception.yml
 
 # Build the actions class and copy it back
 vendor/bin/codecept clean

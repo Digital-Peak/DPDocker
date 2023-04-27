@@ -1,0 +1,18 @@
+{
+	"config": {
+		"platform": {
+			"php": "8.2.0"
+		}
+	},
+	"require": {
+		"codeception/codeception": "^5.0.10",
+		"codeception/module-rest": "^3.3.2",
+		"codeception/module-phpbrowser": "^3.0.0",
+		"digital-peak/dpception": "0.0.1"
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"Tests\\": "tests/"
+		}
+	}
+}

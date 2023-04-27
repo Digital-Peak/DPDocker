@@ -22,9 +22,6 @@ cp -r $(dirname $0)/../config/extension/* .
 sed -i "s/{BROWSER}/$3/" codeception.yml
 sed -i "s/{JOOMLA_VERSION}/$2/" codeception.yml
 
-# Temporary code when for local development
-cp -rf $(dirname $0)/../../../DPCeption/src/* vendor/digital-peak/dpception/src
-
 # Build the actions class and copy it back
 vendor/bin/codecept clean
 vendor/bin/codecept build

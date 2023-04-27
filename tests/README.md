@@ -1,7 +1,7 @@
 # Tests task
 This task runs the system tests of an extension on joomla 3 and 4 or a core joomla clone. System tests are browser tests performed by selenium and written in PHP with [Codeception](https://codeception.com). Since Joomla 4.3, the core system tests of the CMS are ported to [cypress](https://www.cypress.io).
 
-Through a VNC viewer you can actually see what is executed inside a container in the browser, when the extension system tests are executed. More information can be found in the "Observe" chapter.
+Through a VNC viewer you can actually see what is executed inside a container in the browser, when the extension system tests are executed. More information can be found in the "Observe" chapter. The joomla extension specific Codeception modules are loaded from DPCeption. They offer functionality to test mails, files and do certain Joomla actions. More information can be found in the [DPCeption Github repository](https://github.com/Digital-Peak/DPCeption).
 
 ## Prerequisites extension system tests
 The extension needs a tests folder which is the location for your tests. This folder is used as root for your namespaced tests. Means every test needs to be in the namespace `Tests/`. So it would make sense to put your backend tests into the folder `tests/Acceptance/Administrator/ListViewCest.php`, then the namespace must be `Tests/Acceptance/Administrator`. More information can be found in the [Codeception docs](https://codeception.com/docs/GettingStarted).

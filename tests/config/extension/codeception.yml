@@ -18,7 +18,7 @@ suites:
         DigitalPeak\Module\DPBrowser:
           host: 'selenium-test'
           port: 4444
-          url: 'http://web-test/joomla4'
+          url: 'http://web-test/joomla{JOOMLA_VERSION}'
           browser: '{BROWSER}'
           restart: false
           clear_cookies: true
@@ -33,7 +33,7 @@ suites:
           database host: 'mysql-test'
           database user: 'root'
           database password: 'root'
-          database name: 'sites_joomla4'
+          database name: 'sites_joomla{JOOMLA_VERSION}'
           database type: 'mysqli'
           database prefix: 'j_'
           install sample data: 'no'
@@ -42,10 +42,10 @@ suites:
           language: 'English (United Kingdom)'
           timeout: 10
           downloads: '/tmp/tests'
-          home_dir: '/usr/src/Projects/DPDocker/tests/www/joomla4'
+          home_dir: '/usr/src/Projects/DPDocker/tests/www/joomla{JOOMLA_VERSION}'
           joomla_version: {JOOMLA_VERSION}
         DigitalPeak\Module\DPDb:
-          dsn: 'mysql:host=mysql-test;dbname=sites_joomla4'
+          dsn: 'mysql:host=mysql-test;dbname=sites_joomla{JOOMLA_VERSION}'
           user: 'root'
           password: 'root'
           prefix: 'j_'
@@ -53,9 +53,9 @@ suites:
           downloads: '/tmp/tests'
         Tests\Support\Helper\Acceptance:
           repo_folder: ''
-          url: 'http://localhost/joomla4'
+          url: 'http://localhost/joomla{JOOMLA_VERSION}'
         REST:
-          url: 'http://web-test/joomla4/api/index.php/v1'
+          url: 'http://web-test/joomla{JOOMLA_VERSION}/api/index.php/v1'
           depends: PhpBrowser
           part: Json
     error_level: 'E_ALL & ~E_STRICT & ~E_DEPRECATED'

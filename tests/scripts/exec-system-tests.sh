@@ -27,27 +27,23 @@ vendor/bin/codecept clean
 vendor/bin/codecept build
 
 # Copy generated action tester file back to the extension
-mkdir -p $(dirname $0)/../../../$1/tests/Support/_generated
-cp -f $(dirname $0)/../tmp/tests/Support/_generated/AcceptanceTesterActions.php $(dirname $0)/../../../$1/tests/Support/_generated/AcceptanceTesterActions.php
+mkdir -p $(dirname $0)/../../../$1/tests/src/Support/_generated
+cp -f $(dirname $0)/../tmp/tests/src/Support/_generated/AcceptanceTesterActions.php $(dirname $0)/../../../$1/tests/src/Support/_generated/AcceptanceTesterActions.php
+
+if [[ -d tests/src/Acceptance/Install && -z "$4" ]]; then
+	# Run the install task first
+	vendor/bin/codecept run --env desktop tests/src/Acceptance/Install
+fi
+
+if [ -d tests/src/Acceptance/Install ]; then
+	# Remove the install tests, so they wont be executed again
+	rm -rf tests/src/Acceptance/Install
+fi
 
 # Check if there are multiple tests to run
-if [[ ! -z $4 && $4 != *".php:"* ]]; then
-	vendor/bin/codecept run --env desktop $4
-	exit 0
-fi
-
-# Check if there is a single test to run
-if [ ! -z $4 ]; then
+if [[ ! -z $4 && $4 == *".php:"* ]]; then
 	vendor/bin/codecept run --debug --steps --env desktop $4
 	exit 0
-fi
-
-if [ -d tests/Acceptance/Install ]; then
-	# Run the install task first
-	vendor/bin/codecept run --env desktop tests/Acceptance/Install
-
-	# Remove the install tests, so they wont be executed again
-	rm -rf tests/Acceptance/Install
 fi
 
 # Run the tests

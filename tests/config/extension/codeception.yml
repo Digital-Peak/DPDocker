@@ -25,13 +25,18 @@ suites:
           window_size: 1024x1024
           capabilities:
             unexpectedAlertBehaviour: 'accept'
+            'goog:loggingPrefs':
+              browser: 'ALL'
             'goog:chromeOptions':
+              w3c: false
               prefs:
                 download.default_directory: '/tmp/tests'
           username: 'admin'
           password: 'admin'
           admin email: 'admin@example.com'
           timeout: 10
+          debug_log_entries: 20
+          log_js_errors: true
           downloads: '/tmp/tests'
           home_dir: '/usr/src/Projects/DPDocker/tests/www/joomla{JOOMLA_VERSION}'
           joomla_version: {JOOMLA_VERSION}

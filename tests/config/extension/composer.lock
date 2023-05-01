@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "84f2aa247cc1a2255e838414a9eac8ba",
+    "content-hash": "2ccc41c794f3240f68cf64002a2841fd",
     "packages": [
         {
             "name": "behat/gherkin",
@@ -793,16 +793,16 @@
         },
         {
             "name": "digital-peak/dpception",
-            "version": "0.0.2",
+            "version": "0.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Digital-Peak/DPCeption.git",
-                "reference": "4a2dc9c1517e7a34be63c74303aadc34510135be"
+                "reference": "ffdfdef0bb75fe4eba626626d806d21f5f70f701"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Digital-Peak/DPCeption/zipball/4a2dc9c1517e7a34be63c74303aadc34510135be",
-                "reference": "4a2dc9c1517e7a34be63c74303aadc34510135be",
+                "url": "https://api.github.com/repos/Digital-Peak/DPCeption/zipball/ffdfdef0bb75fe4eba626626d806d21f5f70f701",
+                "reference": "ffdfdef0bb75fe4eba626626d806d21f5f70f701",
                 "shasum": ""
             },
             "require": {
@@ -831,9 +831,9 @@
             "homepage": "https://github.com/Digital-Peak/DPCeption",
             "support": {
                 "issues": "https://github.com/Digital-Peak/DPCeption/issues",
-                "source": "https://github.com/Digital-Peak/DPCeption/tree/0.0.2"
+                "source": "https://github.com/Digital-Peak/DPCeption/tree/0.0.3"
             },
-            "time": "2023-04-29T15:17:41+00:00"
+            "time": "2023-05-01T08:02:02+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",
@@ -2697,16 +2697,16 @@
         },
         {
             "name": "sebastian/diff",
-            "version": "5.0.1",
+            "version": "5.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/diff.git",
-                "reference": "aae9a0a43bff37bd5d8d0311426c87bf36153f02"
+                "reference": "912dc2fbe3e3c1e7873313cc801b100b6c68c87b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/diff/zipball/aae9a0a43bff37bd5d8d0311426c87bf36153f02",
-                "reference": "aae9a0a43bff37bd5d8d0311426c87bf36153f02",
+                "url": "https://api.github.com/repos/sebastianbergmann/diff/zipball/912dc2fbe3e3c1e7873313cc801b100b6c68c87b",
+                "reference": "912dc2fbe3e3c1e7873313cc801b100b6c68c87b",
                 "shasum": ""
             },
             "require": {
@@ -2752,7 +2752,7 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/diff/issues",
                 "security": "https://github.com/sebastianbergmann/diff/security/policy",
-                "source": "https://github.com/sebastianbergmann/diff/tree/5.0.1"
+                "source": "https://github.com/sebastianbergmann/diff/tree/5.0.3"
             },
             "funding": [
                 {
@@ -2760,7 +2760,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-03-23T05:12:41+00:00"
+            "time": "2023-05-01T07:48:21+00:00"
         },
         {
             "name": "sebastian/environment",

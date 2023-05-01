@@ -30,16 +30,7 @@ suites:
                 download.default_directory: '/tmp/tests'
           username: 'admin'
           password: 'admin'
-          database host: 'mysql-test'
-          database user: 'root'
-          database password: 'root'
-          database name: 'sites_joomla{JOOMLA_VERSION}'
-          database type: 'mysqli'
-          database prefix: 'j_'
-          install sample data: 'no'
-          sample data: 'Default English (GB) Sample Data'
           admin email: 'admin@example.com'
-          language: 'English (United Kingdom)'
           timeout: 10
           downloads: '/tmp/tests'
           home_dir: '/usr/src/Projects/DPDocker/tests/www/joomla{JOOMLA_VERSION}'
@@ -62,9 +53,8 @@ suites:
 paths:
   tests: tests
   output: _output
-  data: tests/_data
-  support: tests/Support
-  envs: tests/_envs
+  data: tests/data
+  support: tests/src/Support
 actor_suffix: Tester
 extensions:
   enabled:

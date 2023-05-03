@@ -47,4 +47,4 @@ if [[ ! -z $4 && $4 == *".php:"* ]]; then
 fi
 
 # Run the tests
-vendor/bin/codecept run --env desktop
+vendor/bin/codecept run --env desktop $4

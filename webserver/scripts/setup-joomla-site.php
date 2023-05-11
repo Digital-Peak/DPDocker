@@ -217,6 +217,7 @@ function createLinks($folderRoot, $wwwRoot)
         }
         if (strpos($filename, 'lib_') === 0) {
             createLink($folderRoot . $filename, $wwwRoot . '/libraries/' . $filename);
+            createLink($folderRoot . $filename . '/' . $filename . '.xml', $wwwRoot . '/administrator/manifests/libraries/' . $filename . '.xml');
 
             if (file_exists($folderRoot . $filename . '/media')) {
                 createLink($folderRoot . $filename . '/media', $wwwRoot . '/media/' . $filename);

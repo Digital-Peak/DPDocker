@@ -42,6 +42,8 @@ suites:
           prefix: 'j_'
         DigitalPeak\Module\DPFile:
           files_root: '/tmp/tests'
+        DigitalPeak\Module\DPMail:
+          url: 'http://mailcatcher-test:1080'
         Tests\Support\Helper\Acceptance:
           url: 'http://localhost/joomla{JOOMLA_VERSION}'
         REST:

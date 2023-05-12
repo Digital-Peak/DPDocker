@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "dbcb88c4357f1938b51439c759902846",
+    "content-hash": "f820e390af7929ec750fa8f0c49ea20e",
     "packages": [
         {
             "name": "behat/gherkin",
@@ -793,16 +793,16 @@
         },
         {
             "name": "digital-peak/dpception",
-            "version": "0.0.4",
+            "version": "0.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Digital-Peak/DPCeption.git",
-                "reference": "8fba647c90aabbdde236e1aacf682ea4ae9cdde0"
+                "reference": "a558a35ad7624acad4d62ac3f13cc30c2d0a10f8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Digital-Peak/DPCeption/zipball/8fba647c90aabbdde236e1aacf682ea4ae9cdde0",
-                "reference": "8fba647c90aabbdde236e1aacf682ea4ae9cdde0",
+                "url": "https://api.github.com/repos/Digital-Peak/DPCeption/zipball/a558a35ad7624acad4d62ac3f13cc30c2d0a10f8",
+                "reference": "a558a35ad7624acad4d62ac3f13cc30c2d0a10f8",
                 "shasum": ""
             },
             "require": {
@@ -811,7 +811,7 @@
                 "codeception/module-db": "^3.1.0",
                 "codeception/module-filesystem": "^3.0.0",
                 "codeception/module-webdriver": "^4.0.0",
-                "guzzlehttp/guzzle": "^7.5.1",
+                "digital-peak/thinhttp": "^0.0.10",
                 "php": ">=7.4.0"
             },
             "require-dev": {
@@ -831,9 +831,48 @@
             "homepage": "https://github.com/Digital-Peak/DPCeption",
             "support": {
                 "issues": "https://github.com/Digital-Peak/DPCeption/issues",
-                "source": "https://github.com/Digital-Peak/DPCeption/tree/0.0.4"
+                "source": "https://github.com/Digital-Peak/DPCeption/tree/0.0.5"
             },
-            "time": "2023-05-11T08:03:56+00:00"
+            "time": "2023-05-12T07:04:11+00:00"
+        },
+        {
+            "name": "digital-peak/thinhttp",
+            "version": "v0.0.10",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Digital-Peak/ThinHTTP.git",
+                "reference": "e90fc9602c7eb65718a9c8cbb997eb05ac9151a3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Digital-Peak/ThinHTTP/zipball/e90fc9602c7eb65718a9c8cbb997eb05ac9151a3",
+                "reference": "e90fc9602c7eb65718a9c8cbb997eb05ac9151a3",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "DigitalPeak\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "A thin HTTP client for curl based requests.",
+            "homepage": "https://github.com/Digital-Peak/ThinHTTP",
+            "keywords": [
+                "http",
+                "rest"
+            ],
+            "support": {
+                "issues": "https://github.com/Digital-Peak/ThinHTTP/issues",
+                "source": "https://github.com/Digital-Peak/ThinHTTP/tree/v0.0.10"
+            },
+            "time": "2023-03-28T13:20:23+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",

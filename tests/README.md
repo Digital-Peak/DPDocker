@@ -71,7 +71,7 @@ When running the cypress tests a UI is opened where all the spec files are liste
 ## Internals
 Running the system tests is a rather complex setup. Due some startup issues we need to start every container in sequence. In total are six containers created. First the MySQL and postgres container. Then the web server which is accessible on the url _localhost:8080/joomla{joomla version}_ or _localhost:8080/{joomla}_ and selenium. If all are up, then the actual system tests are executed.
 
-During a test PHPMyAdmin is available under _localhost:8081_, PGAdmin is available under _localhost:8082_ and the mailcatcher on _localhost:8083_.
+During a test PHPMyAdmin is available under _localhost:8081_, PGAdmin is available under _localhost:8082_ and the mailcatcher on _localhost:8083_. When running the Joomla system tests, then a mail server is started on port 8084 on the selenium server. This port is exposed to the outside and the Joomla testing web server can reach that port through the host _host.docker.internal_.
 
 Every suite can provide an install folder which will be executed first to do some setup tasks after installation of the extension. The order of the other tests is randomly to prevent execution order issues as every test need to be isolated.
 

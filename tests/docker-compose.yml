@@ -13,6 +13,8 @@ services:
   joomla-system-tests:
     image: cypress/included:12.8.1
     entrypoint: /usr/src/Projects/DPDocker/tests/scripts/exec-joomla-system-tests.sh ${JOOMLA} ${DB} ${TEST}
+    ports:
+      - 8084:8084
     depends_on:
       - joomla-web-test
       - phpmyadmin-test
@@ -63,6 +65,8 @@ services:
       - ./www:/var/www/html
       - ../..:/var/www/html/Projects
       - ../..:/usr/src/Projects
+    extra_hosts:
+      - host.docker.internal:host-gateway
 
   joomla-web-test:
     image: digitpeak/dpdocker-web:${PHP_VERSION}
@@ -70,6 +74,7 @@ services:
       STARTUP_COMMAND_1: if [[ -f /var/www/html/configuration.php ]]; then mv /var/www/html/configuration.php /var/www/html/configuration.php.bak; fi
       STARTUP_COMMAND_2: /usr/src/Projects/DPDocker/webserver/scripts/install-joomla.sh /var/www/html ${DB}-test joomla_${JOOMLA} Cypress mailcatcher-test
       STARTUP_COMMAND_3: sed -i "/\$$secret/c\ public \$$secret = 'tEstValue';" /var/www/html/configuration.php
+      STARTUP_COMMAND_4: sudo sed -i "s/debug = '1'/debug = 0/g" /var/www/html/configuration.php
       JOOMLA_INSTALLATION_DISABLE_LOCALHOST_CHECK: 1
       PHP_INI_XDEBUG__DISCOVER_CLIENT_HOST: 1
     depends_on:
@@ -81,6 +86,8 @@ services:
     volumes:
       - ../../${JOOMLA}:/var/www/html
       - ../..:/usr/src/Projects
+    extra_hosts:
+      - host.docker.internal:host-gateway
 
   mysql-test:
     image: mysql:${MYSQL_DBVERSION}

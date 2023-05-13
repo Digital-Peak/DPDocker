@@ -37,6 +37,8 @@ module.exports = defineConfig({
 		db_user: 'root',
 		db_password: 'root',
 		db_prefix: 'j_',
+		smtp_host: 'host.docker.internal',
+		smtp_port: '8084',
 		cmsPath: '.',
 	},
 });

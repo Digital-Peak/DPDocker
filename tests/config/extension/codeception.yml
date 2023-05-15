@@ -57,6 +57,7 @@ paths:
   output: _output
   data: tests/data
   support: tests/src/Support
+  envs: tests/env
 params:
   - env
 actor_suffix: Tester

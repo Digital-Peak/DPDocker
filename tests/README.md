@@ -68,6 +68,22 @@ DPDocker starts selenium which offers a [VNC endpoint](https://github.com/Seleni
 ## Cypress test UI
 When running the cypress tests a UI is opened where all the spec files are listed. It is recommended not to execute the install spec file as when launching the tests, a fresh installation is already done.
 
+## Tests setup
+The tests need to be namespaced and must be in the folder tests/src. An example can be found in the [DPAttachments repository](https://github.com/Digital-Peak/DPAttachments/tree/main/tests). Basically you place the Helper, Steps and Page classes in the tests/src/Support folder and the actual tests into tests/src/Acceptance. Is there a need to setup some sample data or setup Joomla in a way which is needed for the extension tests, then put them into the folder tests/src/Acceptance/Install.
+
+Test data files should be placed in the tests/data folder, the can be accessed with `codecept_data_dir('test.jpg)`.
+
+If the helper class needs some additional config data like API keys, then add them to the file tests/env/desktop.yml:
+
+```
+modules:
+  config:
+    Tests\Support\Helper\Acceptance:
+      api_token: the-token
+```
+
+In the `Tests\Support\Helper\Acceptance` class you can then access that token with `$this->_getConfig('api_token')`. More information can be found in the [Codeception environment docs](https://codeception.com/docs/AdvancedUsage#Environments).
+
 ## Internals
 Running the system tests is a rather complex setup. Due some startup issues we need to start every container in sequence. In total are six containers created. First the MySQL and postgres container. Then the web server which is accessible on the url _localhost:8080/joomla{joomla version}_ or _localhost:8080/{joomla}_ and selenium. If all are up, then the actual system tests are executed.
 

@@ -19,8 +19,10 @@ mkdir $(dirname $0)/../tmp
 cd $(dirname $0)/../tmp
 cp -r $(dirname $0)/../../../$1/tests .
 cp -r $(dirname $0)/../config/extension/* .
-sed -i "s/{BROWSER}/$3/" codeception.yml
-sed -i "s/{JOOMLA_VERSION}/$2/" codeception.yml
+
+export CODECEPTION_BROWSER=$3
+export CODECEPTION_JOOMLA_VERSION=$2
+export CODECEPTION_EXTENSION=$1
 
 # Build the actions class and copy it back
 vendor/bin/codecept clean

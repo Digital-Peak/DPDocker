@@ -1,6 +1,0 @@
-#!/bin/bash
-
-docker push ${DOCKER_REPO}:7.3
-docker push ${DOCKER_REPO}:7.4
-docker push ${DOCKER_REPO}:8.0
-docker push ${DOCKER_REPO}

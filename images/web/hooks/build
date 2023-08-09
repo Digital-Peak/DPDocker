@@ -1,6 +1,0 @@
-#!/bin/bash
-
-docker build . -f ${DOCKERFILE_PATH} -t ${DOCKER_REPO}:7.3 --build-arg PHP_VERSION=7.3
-docker build . -f ${DOCKERFILE_PATH} -t ${DOCKER_REPO}:7.4 --build-arg PHP_VERSION=7.4
-docker build . -f ${DOCKERFILE_PATH} -t ${DOCKER_REPO}:8.0 --build-arg PHP_VERSION=8.0
-docker build . -f ${DOCKERFILE_PATH} -t ${DOCKER_REPO} --build-arg PHP_VERSION=8.0

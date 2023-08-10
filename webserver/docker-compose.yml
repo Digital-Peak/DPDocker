@@ -4,7 +4,7 @@ services:
   web:
     image: digitpeak/dpdocker-web:${PHP_VERSION}
     environment:
-      STARTUP_COMMAND_1: cp /var/www/html/Projects/DPDocker/webserver/scripts/index.php /var/www/html
+      STARTUP_COMMAND_1: sudo chown docker:docker /home/docker && cp /var/www/html/Projects/DPDocker/webserver/scripts/index.php /var/www/html
       STARTUP_COMMAND_2: php /var/www/html/Projects/DPDocker/webserver/scripts/setup-joomla-site.php j3 all ${DB} 3 ${REBUILD}
       STARTUP_COMMAND_3: php /var/www/html/Projects/DPDocker/webserver/scripts/setup-joomla-site.php j4 all ${DB} 4 ${REBUILD}
       STARTUP_COMMAND_4: php /var/www/html/Projects/DPDocker/webserver/scripts/setup-joomla-site.php dev3 all ${DB} 3 ${REBUILD}

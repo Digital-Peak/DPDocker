@@ -1,6 +1,6 @@
-ARG PHP_VERSION=8.0
+ARG PHP_VERSION=8.2
 
-FROM thecodingmachine/php:${PHP_VERSION}-v4-apache-node16
+FROM thecodingmachine/php:${PHP_VERSION}-v4-apache-node18
 
 # Enable extensions
 ENV PHP_EXTENSION_GD=1
@@ -40,6 +40,6 @@ ENV APACHE_EXTENSION_SSL=1
 
 # Setup the keys
 RUN mkdir /home/docker/keys
-RUN openssl req -new -newkey rsa:4096 -nodes -keyout /home/docker/keys/server.key -out /home/docker/keys/server.csr -subj "/CN=localhost"
-RUN openssl x509 -req -days 365 -in /home/docker/keys/server.csr -signkey /home/docker/keys/server.key -out /home/docker/keys/server.crt
+RUN sudo openssl req -new -newkey rsa:4096 -nodes -keyout /home/docker/keys/server.key -out /home/docker/keys/server.csr -subj "/CN=localhost"
+RUN sudo openssl x509 -req -days 365 -in /home/docker/keys/server.csr -signkey /home/docker/keys/server.key -out /home/docker/keys/server.crt
 COPY 000-default-ssl.conf /etc/apache2/sites-enabled/000-default-ssl.conf

@@ -35,7 +35,7 @@ if [ -f $root/package.json ]; then
 	fi
 	if [ ! -d $root/media/vendor ]; then
 		echo "Installing the assets (takes a while!)"
-	mkdir -p $root/media/vendor
+		mkdir -p $root/media/vendor
 		npm ci &>/dev/null
 	fi
 fi
@@ -68,6 +68,11 @@ fi
 if [[ -z $dbHost || $dbHost == 'mysql'* ]]; then
 	echo "Installing Joomla with mysql"
 	sed -i "s/{DBDRIVER}/mysqli/g" $root/configuration.php
+
+	while ! mysqladmin ping -u root -proot -h $dbHost --silent; do
+		echo "$(date) - waiting for db server"
+		sleep 4
+	done
 
 	# Install joomla
 	mysql -u root -proot -h $dbHost -e "drop database if exists $dbName"

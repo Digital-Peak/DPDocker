@@ -51,7 +51,6 @@ if [ -z $t ]; then
 	# We start mysql early to rebuild the database
 	EXTENSION=$e TEST=$t JOOMLA=$j DB=$db MYSQL_DBVERSION=$my POSTGRES_DBVERSION=$pg PHP_VERSION=$php BROWSER=$b docker-compose -f $(dirname $0)/docker-compose.yml up -d mysql-test
 	EXTENSION= TEST=$t JOOMLA=$j REBUILD= DB=$db MYSQL_DBVERSION=$my POSTGRES_DBVERSION=$pg PHP_VERSION=$php BROWSER= docker-compose -f $(dirname $0)/docker-compose.yml up -d postgres-test
-	sleep 15
 fi
 
 # Run containers in detached mode so when the system tests command ends, we can stop them afterwards

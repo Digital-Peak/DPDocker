@@ -4,7 +4,8 @@ services:
   joomla-pr:
     image: digitpeak/dpdocker-web:${PHP_VERSION}
     environment:
-      STARTUP_COMMAND_1: /var/www/html/Projects/DPDocker/joomla-pr/scripts/exec-joomla-pr-webserver.sh ${PR} ${DB} ${REBUILD}
+      STARTUP_COMMAND_1: sudo chown docker:docker /home/docker
+      STARTUP_COMMAND_2: /var/www/html/Projects/DPDocker/joomla-pr/scripts/exec-joomla-pr-webserver.sh ${PR} ${DB} ${REBUILD}
       JOOMLA_INSTALLATION_DISABLE_LOCALHOST_CHECK: 1
     depends_on:
       - mysql-pr

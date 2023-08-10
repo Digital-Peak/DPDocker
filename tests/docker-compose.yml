@@ -41,7 +41,7 @@ services:
   web-test:
     image: digitpeak/dpdocker-web:${PHP_VERSION}
     environment:
-      STARTUP_COMMAND_1: php /var/www/html/Projects/DPDocker/webserver/scripts/setup-joomla-site.php joomla3 ${EXTENSION} ${DB}-test 3
+      STARTUP_COMMAND_1: sudo chown docker:docker /home/docker && php /var/www/html/Projects/DPDocker/webserver/scripts/setup-joomla-site.php joomla3 ${EXTENSION} ${DB}-test 3
       STARTUP_COMMAND_2: php /var/www/html/Projects/DPDocker/webserver/scripts/setup-joomla-site.php joomla4 ${EXTENSION} ${DB}-test 4
       # Some defaults
       STARTUP_COMMAND_3: sudo sed -i "s/debug = '1'/debug = 0/g" /var/www/html/joomla3/configuration.php
@@ -72,7 +72,7 @@ services:
     image: digitpeak/dpdocker-web:${PHP_VERSION}
     environment:
       STARTUP_COMMAND_1: if [[ -f /var/www/html/configuration.php ]]; then mv /var/www/html/configuration.php /var/www/html/configuration.php.bak; fi
-      STARTUP_COMMAND_2: /usr/src/Projects/DPDocker/webserver/scripts/install-joomla.sh /var/www/html ${DB}-test joomla_${JOOMLA} Cypress mailcatcher-test
+      STARTUP_COMMAND_2: sudo chown docker:docker /home/docker && /usr/src/Projects/DPDocker/webserver/scripts/install-joomla.sh /var/www/html ${DB}-test joomla_${JOOMLA} Cypress mailcatcher-test
       STARTUP_COMMAND_3: sudo sed -i "/\$$secret/c\ public \$$secret = 'tEstValue';" /var/www/html/configuration.php
       STARTUP_COMMAND_4: sudo sed -i "s/smtphost = 'mailcatcher-test'/smtphost = 'host.docker.internal'/g" /var/www/html/configuration.php
       STARTUP_COMMAND_5: sudo sed -i "s/smtpport = '1025'/smtpport = '8084'/g" /var/www/html/configuration.php

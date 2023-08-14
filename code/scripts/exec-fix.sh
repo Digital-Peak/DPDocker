@@ -6,9 +6,10 @@
 cd $(dirname $0)/../config
 composer install --quiet
 
-csStandard=$(dirname $0)/../config/cs-ruleset.xml
-if [ -f $(dirname $0)/../../../$1/package/rules/phpcs.xml ]; then
-  csStandard=$csStandard,$(dirname $0)/../../../$1/package/rules/phpcs.xml
+# Allow the extension to overwrite the default file
+file=$(dirname $0)/../config/.php-cs-fixer.php
+if [ -f $(dirname $0)/../../../$1/.php-cs-fixer.php ]; then
+	file=$(dirname $0)/../../../$1/.php-cs-fixer.php
 fi
 
-$(dirname $0)/../config/vendor/bin/phpcbf --colors --standard=$csStandard $(dirname $0)/../../../$1/$2
+$(dirname $0)/../config/vendor/bin/php-cs-fixer fix --path-mode=intersection -v --config $file $(dirname $0)/../../../$1/$2

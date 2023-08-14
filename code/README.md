@@ -1,7 +1,7 @@
 # Code task
-This task runs some different code quality scripts. You can analyze and fix code violations of your code style. Additionally you can print some code stats of your extension.
+This task runs some different code quality scripts. You can analyze and fix code violations of your code style. What for rules are used can be found in the file /code/config/.php-cs-fixer.php.
 
-The code sniffer PHP project from [squizlabs](https://github.com/squizlabs/PHP_CodeSniffer) is used for code analysis and the [phploc](https://github.com/sebastianbergmann/phploc) project from Sebastian Bergmann for measuring your extension.
+The code style fixer PHP project from [the symfony guys](https://github.com/PHP-CS-Fixer/PHP-CS-Fixer) is used for code style checks and fixes.
 
 ## Prerequisites
 Nothing special.
@@ -27,36 +27,35 @@ Example
 
 `./run-fix.sh Foo`
 
-### Code stats
-To run a code stats, execute the following command:
-
-`./run-stats.sh extension`
-
-Example
-
-`./run-stats.sh Foo`
 
 ## Internals
-Our code style is based on PSR-2 and not the Joomla standard. So we are using this one as template. But it is possible to define your own one in your extension. Just place your preferred rule style file in your extension at the location _package/rules/phpcs.xml_ and you can overwrite the ones from us.
+Our code style is based on PSR-2 which is also the Joomla standard now, but we are using tabs. So we are using this one as template. But it is possible to define your own one in your extension. Just place your preferred code style file in the root folder of your extension.
 
 ## Result
 ### Code checker
 The code check prints the output of the _phpcs_ command directly to the console:
 ```
-./run-check.sh Foo
-......E............................................ 51 / 51 (100%)
 
+./run-fix.sh Foo
 
-FILE: ...c/Projects/Foo/com_foo/site/controllers/foo.php
---------------------------------------------------------------------------------
-FOUND 1 ERROR AFFECTING 1 LINE
---------------------------------------------------------------------------------
-40 | ERROR | [x] Short array syntax must be used to define arrays
---------------------------------------------------------------------------------
-PHPCBF CAN FIX THE 1 MARKED SNIFF VIOLATIONS AUTOMATICALLY
---------------------------------------------------------------------------------
+PHP CS Fixer 3.22.0 Chips & Pizza by Fabien Potencier and Dariusz Ruminski.
+PHP runtime: 8.2.2
+Loaded config default from "/usr/src/Projects/DPDocker/code/scripts/../../../DPAttachments/.php-cs-fixer.php".
+.FF.F...FFFFF..F.........F.....F..................                                                                                                                                               50 / 50 (100%)
+Legend: .-no changes, F-fixed, S-skipped (cached or empty file), I-invalid file syntax (file ignored), E-error
+   1) /usr/src/Projects/DPAttachments/com_dpattachments/site/src/View/Attachment/HtmlView.php (global_namespace_import, no_unused_imports)
+   2) /usr/src/Projects/DPAttachments/com_dpattachments/site/src/View/Form/HtmlView.php (global_namespace_import, no_unused_imports)
+   3) /usr/src/Projects/DPAttachments/com_dpattachments/site/src/Controller/DisplayController.php (global_namespace_import, no_unused_imports)
+   4) /usr/src/Projects/DPAttachments/com_dpattachments/admin/src/Model/AttachmentModel.php (single_space_around_construct, global_namespace_import, no_unused_imports)
+   5) /usr/src/Projects/DPAttachments/com_dpattachments/admin/src/View/Attachment/HtmlView.php (global_namespace_import, no_unused_imports)
+   6) /usr/src/Projects/DPAttachments/com_dpattachments/admin/src/View/Attachments/HtmlView.php (global_namespace_import, no_unused_imports)
+   7) /usr/src/Projects/DPAttachments/com_dpattachments/admin/src/Table/AttachmentTable.php (global_namespace_import, no_unused_imports)
+   8) /usr/src/Projects/DPAttachments/com_dpattachments/admin/src/Extension/DPAttachmentsComponent.php (global_namespace_import, no_unused_imports)
+   9) /usr/src/Projects/DPAttachments/com_dpattachments/admin/src/Controller/AttachmentController.php (global_namespace_import, no_unused_imports)
+  10) /usr/src/Projects/DPAttachments/tests/src/Support/_generated/AcceptanceTesterActions.php (indentation_type, single_space_around_construct, blank_line_after_opening_tag, blank_lines_before_namespace, constant_case, curly_braces_position, no_whitespace_in_blank_line)
+  11) /usr/src/Projects/DPAttachments/tests/src/Support/Step/Attachment.php (global_namespace_import, no_unused_imports)
 
-Time: 3.62 secs; Memory: 32.01MB
+Found 11 of 50 files that can be fixed in 2.494 seconds, 28.000 MB memory used
 ```
 
 ### Code fixer
@@ -64,82 +63,22 @@ The code fixer fixes the code style violations where possible with the  _phpcbf_
 ```
 ./run-fix.sh Foo
 
-PHPCBF RESULT SUMMARY
---------------------------------------------------------------------------------
-FILE                                                            FIXED  REMAINING
---------------------------------------------------------------------------------
-...tachments/com_foo/site/controllers/foo.php  1      0
---------------------------------------------------------------------------------
-A TOTAL OF 1 ERROR WERE FIXED IN 1 FILE
---------------------------------------------------------------------------------
+PHP CS Fixer 3.22.0 Chips & Pizza by Fabien Potencier and Dariusz Ruminski.
+PHP runtime: 8.2.2
+Loaded config default from "/usr/src/Projects/DPDocker/code/scripts/../../../DPAttachments/.php-cs-fixer.php".
+.FF.F...FFFFF..F.........F.....F..................                                                                                                                                               50 / 50 (100%)
+Legend: .-no changes, F-fixed, S-skipped (cached or empty file), I-invalid file syntax (file ignored), E-error
+   1) /usr/src/Projects/DPAttachments/com_dpattachments/site/src/View/Attachment/HtmlView.php (global_namespace_import, no_unused_imports)
+   2) /usr/src/Projects/DPAttachments/com_dpattachments/site/src/View/Form/HtmlView.php (global_namespace_import, no_unused_imports)
+   3) /usr/src/Projects/DPAttachments/com_dpattachments/site/src/Controller/DisplayController.php (global_namespace_import, no_unused_imports)
+   4) /usr/src/Projects/DPAttachments/com_dpattachments/admin/src/Model/AttachmentModel.php (single_space_around_construct, global_namespace_import, no_unused_imports)
+   5) /usr/src/Projects/DPAttachments/com_dpattachments/admin/src/View/Attachment/HtmlView.php (global_namespace_import, no_unused_imports)
+   6) /usr/src/Projects/DPAttachments/com_dpattachments/admin/src/View/Attachments/HtmlView.php (global_namespace_import, no_unused_imports)
+   7) /usr/src/Projects/DPAttachments/com_dpattachments/admin/src/Table/AttachmentTable.php (global_namespace_import, no_unused_imports)
+   8) /usr/src/Projects/DPAttachments/com_dpattachments/admin/src/Extension/DPAttachmentsComponent.php (global_namespace_import, no_unused_imports)
+   9) /usr/src/Projects/DPAttachments/com_dpattachments/admin/src/Controller/AttachmentController.php (global_namespace_import, no_unused_imports)
+  10) /usr/src/Projects/DPAttachments/tests/src/Support/_generated/AcceptanceTesterActions.php (indentation_type, single_space_around_construct, blank_line_after_opening_tag, blank_lines_before_namespace, constant_case, curly_braces_position, no_whitespace_in_blank_line)
+  11) /usr/src/Projects/DPAttachments/tests/src/Support/Step/Attachment.php (global_namespace_import, no_unused_imports)
 
-Time: 3.95 secs; Memory: 32.01MB
-```
-
-### Code stats
-The code stats task prints the output of the _phploc_ command directly to the console:
-```
-./run-stats.sh Foo
-phploc 5.0.0 by Sebastian Bergmann.
-
-Directories                                         20
-Files                                               40
-
-Size
-  Lines of Code (LOC)                             3010
-  Comment Lines of Code (CLOC)                     474 (15.75%)
-  Non-Comment Lines of Code (NCLOC)               2536 (84.25%)
-  Logical Lines of Code (LLOC)                     925 (30.73%)
-    Classes                                        593 (64.11%)
-      Average Class Length                          32
-        Minimum Class Length                         0
-        Maximum Class Length                       112
-      Average Method Length                          8
-        Minimum Method Length                        0
-        Maximum Method Length                       63
-    Functions                                        0 (0.00%)
-      Average Function Length                        0
-    Not in classes or functions                    332 (35.89%)
-
-Cyclomatic Complexity
-  Average Complexity per LLOC                     0.33
-  Average Complexity per Class                   12.67
-    Minimum Class Complexity                      1.00
-    Maximum Class Complexity                     42.00
-  Average Complexity per Method                   4.28
-    Minimum Method Complexity                     1.00
-    Maximum Method Complexity                    26.00
-
-Dependencies
-  Global Accesses                                    9
-    Global Constants                                 0 (0.00%)
-    Global Variables                                 0 (0.00%)
-    Super-Global Variables                           9 (100.00%)
-  Attribute Accesses                               368
-    Non-Static                                     365 (99.18%)
-    Static                                           3 (0.82%)
-  Method Calls                                     812
-    Non-Static                                     456 (56.16%)
-    Static                                         356 (43.84%)
-
-Structure
-  Namespaces                                         1
-  Interfaces                                         0
-  Traits                                             0
-  Classes                                           18
-    Abstract Classes                                 0 (0.00%)
-    Concrete Classes                                18 (100.00%)
-  Methods                                           64
-    Scope
-      Non-Static Methods                            52 (81.25%)
-      Static Methods                                12 (18.75%)
-    Visibility
-      Public Methods                                44 (68.75%)
-      Non-Public Methods                            20 (31.25%)
-  Functions                                          0
-    Named Functions                                  0 (0.00%)
-    Anonymous Functions                              0 (0.00%)
-  Constants                                          0
-    Global Constants                                 0 (0.00%)
-    Class Constants                                  0 (0.00%)
+Fixed 11 of 50 files in 2.532 seconds, 28.000 MB memory used
 ```

@@ -17,7 +17,7 @@ Examples
 
 - `./run.sh -php 7.4 -db mysql -my 5.6`
 
-- `./run.sh -php 8.0 -db postgres -pg 13 -r rebuild`
+- `./run.sh -php 8.0 -db postgres -pg 13 -r yes`
 
 All attributes are optional.
 - -php  
@@ -32,12 +32,14 @@ All attributes are optional.
 - -pg  
   The Postgres database version. You can use supported tags on [hub.docker.com](https://hub.docker.com/_/postgres). If set then the Joomla installations will be installed with the respective driver. _latest_ is loaded by default.
 - -r  
-  If set then the whole web server is rebuild and you have a clean setup as when you started it for the first time.
+  When "yes" then the whole web server is rebuild and you have a clean setup as when you started it for the first time.
 
 ## Internals
 When starting the web server, there are seven docker containers started. An Apache web server, a MySQL server, a phpMyAdmin server, a postgres server, a pgAdmin server, a Mailcatcher server and an FTP server. All of them are out of the box ready to use.
 
 To install Joomla, link the extensions and discover them we use a mix of PHP and shell scripts. All these scripts can be found in the scripts folder.
+
+To speed up Joomla installations, DPDocker is caching the Joomla releases in the www/cache folder. So when something is screwed up, delete the cache folder. It downloads then the code again and installs the dependencies and builds the assets from scratch.
 
 ### Extension linking
 Extensions in the same directory as this project will automatically being linked when they follow the directory structure as described in the [main document](https://github.com/Digital-Peak/DPDocker#structure) or the [Weblinks for Joomla! Repository](https://github.com/joomla-extensions/weblinks). 

@@ -91,7 +91,7 @@ During a test PHPMyAdmin is available under _localhost:8081_, PGAdmin is availab
 
 Every suite can provide an install folder which will be executed first to do some setup tasks after installation of the extension. The order of the other tests is randomly to prevent execution order issues as every test need to be isolated.
 
-Tests for extension on Joomla 3 are executed on the url /joomla3 and for Joomla 4 on /joomla4. When the joomla core system tests are executed then joomla is available in the same folder as defined like /joomla-cms.
+Tests for extension on Joomla 3 are executed on the url /joomla3 and for Joomla 4 on /joomla4. When the joomla core system tests are executed then joomla is available in the same folder as defined like /joomla-cms. To speed up Joomla installations, DPDocker is caching the Joomla releases in the www/cache folder. So when something is screwed up, delete the cache folder. It downloads then the code again and installs the dependencies and builds the assets from scratch.
 
 ### Mailcatcher usage
 Mailcatcher has a simple REST interface where you can interact with the mails. To access mailcatcher in Codeception use the host mailcatcher-test:1080. The following code snippet is an example how to test if a mail contains a string:

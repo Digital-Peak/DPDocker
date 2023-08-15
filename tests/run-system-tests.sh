@@ -39,12 +39,19 @@ if [[ $(command -v vinagre) ]]; then
 	( sleep 15; vinagre localhost > /dev/null 2>&1 ) &
 fi
 
+# What a simple test should be executed, do a simple run
+args="run"
+if [ -z $t ]; then
+	# Recreate to prevent that some containers are created with the last parameters
+	args="up --force-recreate"
+fi
+
 # Run the tests
 if [ -z $j ]; then
-	EXTENSION=$e TEST=$t JOOMLA=3 DB=$db MYSQL_DBVERSION=$my POSTGRES_DBVERSION=$pg PHP_VERSION=$php BROWSER=$b docker-compose -f $(dirname $0)/docker-compose.yml up --force-recreate system-tests
-	EXTENSION=$e TEST=$t JOOMLA=4 DB=$db MYSQL_DBVERSION=$my POSTGRES_DBVERSION=$pg PHP_VERSION=$php BROWSER=$b docker-compose -f $(dirname $0)/docker-compose.yml up --force-recreate system-tests
+	EXTENSION=$e TEST=$t JOOMLA=3 DB=$db MYSQL_DBVERSION=$my POSTGRES_DBVERSION=$pg PHP_VERSION=$php BROWSER=$b docker-compose -f $(dirname $0)/docker-compose.yml $args system-tests
+	EXTENSION=$e TEST=$t JOOMLA=4 DB=$db MYSQL_DBVERSION=$my POSTGRES_DBVERSION=$pg PHP_VERSION=$php BROWSER=$b docker-compose -f $(dirname $0)/docker-compose.yml $args system-tests
 else
-	EXTENSION=$e TEST=$t JOOMLA=$j DB=$db MYSQL_DBVERSION=$my POSTGRES_DBVERSION=$pg PHP_VERSION=$php BROWSER=$b docker-compose -f $(dirname $0)/docker-compose.yml up --force-recreate system-tests
+	EXTENSION=$e TEST=$t JOOMLA=$j DB=$db MYSQL_DBVERSION=$my POSTGRES_DBVERSION=$pg PHP_VERSION=$php BROWSER=$b docker-compose -f $(dirname $0)/docker-compose.yml $args system-tests
 fi
 
 # Stop the containers

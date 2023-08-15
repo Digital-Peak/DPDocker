@@ -32,7 +32,7 @@ services:
       - /tmp/.X11-unix:/tmp/.X11-unix
 
   selenium-test:
-    image: selenium/standalone-${BROWSER}:4.9.1-20230508
+    image: selenium/standalone-${BROWSER}:4.11.0-20230801
     ports:
       - 4444:4444
       - 5900:5900

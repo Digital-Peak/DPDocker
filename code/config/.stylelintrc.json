@@ -6,6 +6,15 @@
 		"no-invalid-position-at-import-rule": null,
 		"scss/dollar-variable-pattern": null,
 		"scss/at-extend-no-missing-placeholder": null,
+		"rule-empty-line-before": [
+			"always",
+			{
+				"ignore": [
+					"after-comment",
+					"first-nested"
+				]
+			}
+		],
 		"selector-class-pattern": "^(?:(?:o|c|u|t|s|is|has|_|js|qa)-)?[a-zA-Z0-9]+(?:-[a-zA-Z0-9]+)*(?:__[a-zA-Z0-9]+(?:-[a-zA-Z0-9]+)*)?(?:--[a-zA-Z0-9]+(?:-[a-zA-Z0-9]+)*)?(?:\\[.+\\])?$"
 	}
 }

@@ -7,7 +7,7 @@ cd $(dirname $0)/../config
 composer install --quiet
 npm install --silent
 
-echo "Checking for PHP code style issues"
+echo -e "\nChecking for PHP code style issues"
 # Allow the extension to overwrite the default config file
 file=$(dirname $0)/../config/.php-cs-fixer.php
 if [ -f $(dirname $0)/../../../$1/.php-cs-fixer.php ]; then
@@ -15,7 +15,7 @@ if [ -f $(dirname $0)/../../../$1/.php-cs-fixer.php ]; then
 fi
 $(dirname $0)/../config/vendor/bin/php-cs-fixer fix --dry-run --path-mode=intersection -v --config $file $(dirname $0)/../../../$1/$2
 
-echo "Checking for Javascript code style issues"
+echo -e "\nChecking for Javascript code style issues"
 # Allow the extension to overwrite the default config file
 file=$(dirname $0)/../config/.eslintrc.js
 if [ -f $(dirname $0)/../../../$1/.eslintrc.js ]; then
@@ -23,7 +23,7 @@ if [ -f $(dirname $0)/../../../$1/.eslintrc.js ]; then
 fi
 DEBUG=eslint:cli-engine eslint --config $file --ignore-pattern '**/media/*' --ext .js $(dirname $0)/../../../$1/$2
 
-echo "Checking for CSS code style issues"
+echo -e "\nChecking for CSS code style issues"
 # Allow the extension to overwrite the default config file
 file=$(dirname $0)/../config/.stylelintrc.json
 if [ -f $(dirname $0)/../../../$1/.stylelintrc.json ]; then

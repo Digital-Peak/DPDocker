@@ -32,6 +32,11 @@ vendor/bin/codecept build
 mkdir -p $(dirname $0)/../../../$1/tests/src/Support/_generated
 cp -f $(dirname $0)/../tmp/tests/src/Support/_generated/AcceptanceTesterActions.php $(dirname $0)/../../../$1/tests/src/Support/_generated/AcceptanceTesterActions.php
 
+while  ! curl http://web-test  > /dev/null 2>&1; do
+	echo "$(date) - waiting for web server"
+	sleep 4
+done
+
 if [[ -d tests/src/Acceptance/Install && -z "$4" ]]; then
 	# Run the install task first
 	vendor/bin/codecept run --env desktop tests/src/Acceptance/Install

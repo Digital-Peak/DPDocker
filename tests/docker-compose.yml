@@ -3,12 +3,10 @@ version: '3.5'
 services:
   system-tests:
     image: digitpeak/dpdocker-cli
+    command: /usr/src/Projects/DPDocker/tests/scripts/exec-system-tests.sh ${EXTENSION} ${JOOMLA} ${BROWSER} ${TEST}
     depends_on:
       - web-test
       - selenium-test
-    environment:
-      STARTUP_COMMAND_1: while ! curl http://web-test > /dev/null 2>&1; do echo "$$(date) - waiting for web server"; sleep 4; done
-      STARTUP_COMMAND_2: /usr/src/Projects/DPDocker/tests/scripts/exec-system-tests.sh ${EXTENSION} ${JOOMLA} ${BROWSER} ${TEST}
     volumes:
       - ../..:/usr/src/Projects
       - /tmp/tests:/tmp/tests

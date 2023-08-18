@@ -3,6 +3,11 @@
 # @copyright Copyright (C) 2020 Digital Peak GmbH. <https://www.digital-peak.com>
 # @license   http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
 
+while  ! curl http://web-test  > /dev/null 2>&1; do
+	echo "$(date) - waiting for web server"
+	sleep 4
+done
+
 echo "Running Tests on Joomla $2 with $3"
 
 # Setup download dir with correct permissions
@@ -31,11 +36,6 @@ vendor/bin/codecept build
 # Copy generated action tester file back to the extension
 mkdir -p $(dirname $0)/../../../$1/tests/src/Support/_generated
 cp -f $(dirname $0)/../tmp/tests/src/Support/_generated/AcceptanceTesterActions.php $(dirname $0)/../../../$1/tests/src/Support/_generated/AcceptanceTesterActions.php
-
-while  ! curl http://web-test  > /dev/null 2>&1; do
-	echo "$(date) - waiting for web server"
-	sleep 4
-done
 
 if [[ -d tests/src/Acceptance/Install && -z "$4" ]]; then
 	# Run the install task first

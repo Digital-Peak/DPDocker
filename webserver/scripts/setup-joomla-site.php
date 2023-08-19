@@ -61,7 +61,7 @@ while (!feof($proc)) {
 // When cloned sync back the assets and dependencies
 if ($syncBack) {
 	echo 'Syncing assets and dependencies back to cache ' . $wwwRoot . PHP_EOL;
-	shell_exec('rsync -r --delete --exclude configuration.php ' . $wwwRoot . '/ /var/www/html/cache/' . $completeVersion);
+	shell_exec('rsync -r --delete --exclude configuration.php --exclude node_modules ' . $wwwRoot . '/ /var/www/html/cache/' . $completeVersion);
 }
 
 // Check if extensions are needed to be installed

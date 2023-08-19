@@ -37,8 +37,6 @@ if [ -f $root/package.json ]; then
 		echo "Installing the assets (takes a while!)"
 		mkdir -p $root/media/vendor
 		npm ci &>/dev/null
-		rm -rf $root/node_modules
-		rm -rf $root/administrator/components/com_media/node_modules
 	fi
 fi
 

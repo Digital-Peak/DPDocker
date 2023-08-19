@@ -9,7 +9,7 @@ my=${my:-latest}
 php=${php:-latest}
 e=${e:-}
 t=${t:-}
-j=${j:-}
+j=${j:-4}
 b=${b:-chrome}
 
 while [ $# -gt 0 ]; do
@@ -43,12 +43,7 @@ fi
 EXTENSION=$e TEST=$t JOOMLA=$j DB=$db MYSQL_DBVERSION=$my POSTGRES_DBVERSION=$pg PHP_VERSION=$php BROWSER=$b docker-compose -f $(dirname $0)/docker-compose.yml up -d web-test
 
 # Run the tests
-if [ -z $j ]; then
-	EXTENSION=$e TEST=$t JOOMLA=3 DB=$db MYSQL_DBVERSION=$my POSTGRES_DBVERSION=$pg PHP_VERSION=$php BROWSER=$b docker-compose -f $(dirname $0)/docker-compose.yml run system-tests
-	EXTENSION=$e TEST=$t JOOMLA=4 DB=$db MYSQL_DBVERSION=$my POSTGRES_DBVERSION=$pg PHP_VERSION=$php BROWSER=$b docker-compose -f $(dirname $0)/docker-compose.yml run system-tests
-else
-	EXTENSION=$e TEST=$t JOOMLA=$j DB=$db MYSQL_DBVERSION=$my POSTGRES_DBVERSION=$pg PHP_VERSION=$php BROWSER=$b docker-compose -f $(dirname $0)/docker-compose.yml run system-tests
-fi
+EXTENSION=$e TEST=$t JOOMLA=$j DB=$db MYSQL_DBVERSION=$my POSTGRES_DBVERSION=$pg PHP_VERSION=$php BROWSER=$b docker-compose -f $(dirname $0)/docker-compose.yml run system-tests
 
 # Stop the containers
 if [ -z $t ]; then

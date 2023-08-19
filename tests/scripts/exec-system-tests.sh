@@ -25,6 +25,15 @@ cd $(dirname $0)/../tmp
 cp -r $(dirname $0)/../../../$1/tests .
 cp -r $(dirname $0)/../config/extension/* .
 
+sudo sed -i "s/debug = '1'/debug = 0/g" /var/www/html/joomla/configuration.php
+sudo sed -i "s/sef = '1'/sef = 0/g" /var/www/html/joomla/configuration.php
+sudo sed -i "s/smtphost = 'mailcatcher'/smtphost = 'mailcatcher-test'/g" /var/www/html/joomla/configuration.php
+
+# Joomla 3 needs error reporting simple
+if [ $j == 3 ]; then
+	sudo sed -i "s/error_reporting = 'development'/error_reporting = 'simple'/g" /var/www/html/joomla/configuration.php
+fi
+
 export CODECEPTION_BROWSER=$3
 export CODECEPTION_JOOMLA_VERSION=$2
 export CODECEPTION_EXTENSION=$1

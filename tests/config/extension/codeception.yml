@@ -18,7 +18,7 @@ suites:
         DigitalPeak\Module\DPBrowser:
           host: 'selenium-test'
           port: 4444
-          url: 'http://web-test/joomla%CODECEPTION_JOOMLA_VERSION%'
+          url: 'http://web-test/joomla'
           browser: '%CODECEPTION_BROWSER%'
           restart: false
           clear_cookies: true
@@ -33,10 +33,10 @@ suites:
           admin email: 'admin@example.com'
           timeout: 10
           downloads: '/tmp/tests'
-          home_dir: '/usr/src/Projects/DPDocker/tests/www/joomla%CODECEPTION_JOOMLA_VERSION%'
+          home_dir: '/usr/src/Projects/DPDocker/tests/www/joomla'
           joomla_version: '%CODECEPTION_JOOMLA_VERSION%'
         DigitalPeak\Module\DPDb:
-          dsn: 'mysql:host=mysql-test;dbname=sites_joomla%CODECEPTION_JOOMLA_VERSION%'
+          dsn: 'mysql:host=mysql-test;dbname=sites_joomla'
           user: 'root'
           password: 'root'
           prefix: 'j_'
@@ -45,10 +45,10 @@ suites:
         DigitalPeak\Module\DPMail:
           url: 'http://mailcatcher-test:1080'
         Tests\Support\Helper\Acceptance:
-          url: 'http://localhost/joomla%CODECEPTION_JOOMLA_VERSION%'
+          url: 'http://localhost/joomla'
           extension_dir: '/usr/src/Projects/%CODECEPTION_EXTENSION%'
         REST:
-          url: 'http://web-test/joomla%CODECEPTION_JOOMLA_VERSION%/api/index.php/v1'
+          url: 'http://web-test/joomla/api/index.php/v1'
           depends: PhpBrowser
           part: Json
     error_level: 'E_ALL & ~E_STRICT & ~E_DEPRECATED'

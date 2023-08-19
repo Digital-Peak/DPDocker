@@ -9,38 +9,45 @@ $wwwRoot	   = '/var/www/html/' . $argv[1];
 $db			   = array_key_exists(3, $argv) ? $argv[3] : 'mysql';
 $joomlaVersion = array_key_exists(4, $argv) ? $argv[4] : (substr($argv[1], -1) == 4 ? 4 : 3);
 $force		   = array_key_exists(5, $argv) && $argv[5] === 'yes' ? true : false;
+$isBranch      = strpos($joomlaVersion, '-dev') !== false;
 
 if (is_dir($wwwRoot) && !$force) {
 	return;
 }
 
-$completeVersion = null;
-$syncBack		 = false;
-$versions		 = json_decode(file_get_contents('https://downloads.joomla.org/api/v1/latest/cms'));
-foreach ($versions->branches as $branch) {
-	if ($branch->branch !== 'Joomla! ' . $joomlaVersion) {
-		continue;
+$completeVersion = $isBranch ? $joomlaVersion : null;
+if (!$completeVersion) {
+	foreach (json_decode(file_get_contents('https://downloads.joomla.org/api/v1/latest/cms'))->branches as $branch) {
+		if ($branch->branch !== 'Joomla! ' . $joomlaVersion) {
+			continue;
+		}
+
+		$completeVersion = $branch->version;
+		break;
 	}
-
-	$completeVersion = $branch->version;
-
-	if (!is_dir('/var/www/html/cache/' . $completeVersion)) {
-		echo 'Cloning tag ' . $completeVersion . ' from repo to cache directory' . PHP_EOL;
-		echo shell_exec('git clone https://github.com/joomla/joomla-cms.git /var/www/html/cache/' . $completeVersion);
-		// Checkout latest stable release
-		shell_exec('git --work-tree=/var/www/html/cache/' . $completeVersion . ' --git-dir=/var/www/html/cache/' . $completeVersion . '/.git checkout tags/' . $completeVersion . ' 2>&1 > /dev/null');
-		$syncBack = true;
-	}
-
-	echo 'Syncing cache to ' . $wwwRoot . PHP_EOL;
-	shell_exec('rsync -r --delete /var/www/html/cache/' . $completeVersion . '/ ' . $wwwRoot);
-	break;
 }
 
 // No version found
 if (!$completeVersion) {
 	return;
 }
+
+$syncBack = false;
+if (!is_dir('/var/www/html/cache/' . $completeVersion)) {
+	echo 'Cloning tag ' . $completeVersion . ' from repo to cache directory' . PHP_EOL;
+	echo shell_exec('git clone https://github.com/joomla/joomla-cms.git /var/www/html/cache/' . $completeVersion);
+	// Checkout latest stable release
+	shell_exec('git --work-tree=/var/www/html/cache/' . $completeVersion . ' --git-dir=/var/www/html/cache/' . $completeVersion . '/.git checkout ' . ($isBranch ? $completeVersion : 'tags/' . $completeVersion) . ' 2>&1 > /dev/null');
+	$syncBack = true;
+}
+
+if ($isBranch) {
+	shell_exec('git --work-tree=/var/www/html/cache/' . $completeVersion . ' --git-dir=/var/www/html/cache/' . $completeVersion . '/.git pull');
+	$syncBack = true;
+}
+
+echo 'Syncing cache to ' . $wwwRoot . PHP_EOL;
+shell_exec('rsync -r --delete /var/www/html/cache/' . $completeVersion . '/ ' . $wwwRoot);
 
 echo 'Using version ' . $completeVersion . ' on ' . $wwwRoot . PHP_EOL;
 
@@ -52,7 +59,7 @@ file_put_contents(
 
 // Live output the install Joomla command
 while (@ob_end_flush());
-$proc = popen('/var/www/html/Projects/DPDocker/webserver/scripts/install-joomla.sh ' . $wwwRoot . ' ' . $db . ' sites_' . $argv[1] . ' "Joomla ' . $argv[1] . '" mailcatcher', 'r');
+$proc = popen('/var/www/html/Projects/DPDocker/webserver/scripts/install-joomla.sh ' . $wwwRoot . ' ' . $db . ' sites_' . $argv[1] . ' "Joomla ' . $argv[1] . '" mailcatcher' .($isBranch ? ' r' : ''), 'r');
 while (!feof($proc)) {
 	echo fread($proc, 4096);
 	@flush();

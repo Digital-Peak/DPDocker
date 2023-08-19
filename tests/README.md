@@ -1,5 +1,5 @@
 # Tests task
-This task runs the system tests of an extension on joomla 3 and 4 or a core joomla clone. System tests are browser tests performed by selenium and written in PHP with [Codeception](https://codeception.com). Since Joomla 4.3, the core system tests of the CMS are ported to [cypress](https://www.cypress.io).
+This task runs the system tests of an extension on joomla 3, 4 or a branch. System tests are browser tests performed by selenium and written in PHP with [Codeception](https://codeception.com). Since Joomla 4.3, the core system tests of the CMS are ported to [cypress](https://www.cypress.io) and can be xecuted with this task as well.
 
 Through a VNC viewer you can actually see what is executed inside a container in the browser, when the extension system tests are executed. More information can be found in the "Observe" chapter. The joomla extension specific Codeception modules are loaded from DPCeption. They offer extra functionality to test mails, files and do certain Joomla actions like log ins. More information can be found in the [DPCeption Github repository](https://github.com/Digital-Peak/DPCeption).
 
@@ -19,12 +19,12 @@ To run the extension tests, execute the following command:
 Examples
 
 ```
-./run-system-tests.sh -e Foo # All tests on Joomla 3 and 4 on the latest PHP version on chrome
-./run-system-tests.sh -e Foo -b firefox # All tests on Joomla 3 and 4 on the latest PHP version on firefox
+./run-system-tests.sh -e Foo # All tests on Joomla 4 on the latest PHP version on chrome
+./run-system-tests.sh -e Foo -b firefox -j 5.0-dev # All tests on Joomla 5.0-dev on the latest PHP version on firefox
 ./run-system-tests.sh -e Foo -j 3 -php 7.3 # All tests only on Joomla 3 and PHP 7.3 on chrome
-./run-system-tests.sh -e Foo -t tests/acceptance/views -php 8.0 # Test in folder tests/acceptance/views on Joomla 3 and 4 on PHP 8.0 on chrome
+./run-system-tests.sh -e Foo -t tests/acceptance/views -php 8.0 # Test in folder tests/acceptance/views on Joomla 4 on PHP 8.0 on chrome
 ./run-system-tests.sh -e Foo -t tests/acceptance/views -j 4 # Tests in folder tests/acceptance/views on Joomla 4 on the latest PHP version on chrome
-./run-system-tests.sh -e Foo -t tests/acceptance/views/ArticleViewCest.php:canSeeArticle # Test tests/acceptance/views/ArticleViewCest.php:canSeeArticle on Joomla 3 and 4 on the latest PHP version on chrome
+./run-system-tests.sh -e Foo -t tests/acceptance/views/ArticleViewCest.php:canSeeArticle # Test tests/acceptance/views/ArticleViewCest.php:canSeeArticle on Joomla 4 on the latest PHP version on chrome
 ./run-system-tests.sh -e Foo -t tests/acceptance/views/ArticleViewCest.php:canSeeArticle -j 4 -php 7.4 # Test tests/acceptance/views/ArticleViewCest.php:canSeeArticle on Joomla 4 on PHP 7.4 on chrome
 ```
 
@@ -33,7 +33,7 @@ Examples
 - -t  
   The test attribute is optional. If it is set then only this test is executed, otherwise the whole extension.
 - -j  
-  The Joomla version is optional. If it is not set, tests will be run on Joomla 3 and 4.
+  The Joomla version is optional, if not set it defaults to the latest stable version of Joomla 4. An actual branch can also be specified, like 4.4-dev or 5.0-dev, then the latest code is fetched from the repository.
 - -php  
   The PHP version is optional. If it is not set, tests will be run on the latest PHP version.
 
@@ -85,13 +85,13 @@ modules:
 In the `Tests\Support\Helper\Acceptance` class you can then access that token with `$this->_getConfig('api_token')`. More information can be found in the [Codeception environment docs](https://codeception.com/docs/AdvancedUsage#Environments).
 
 ## Internals
-Running the system tests is a rather complex setup. Due some startup issues we need to start every container in sequence. In total are six containers created. First the MySQL and postgres container. Then the web server which is accessible on the url _localhost:8080/joomla{joomla version}_ or _localhost:8080/{joomla}_ and selenium. If all are up, then the actual system tests are executed.
+Running the system tests is a rather complex setup. Due some startup issues we need to start every container in sequence. In total are six containers created. First the MySQL and postgres container. Then the web server which is accessible on the url _localhost:8080/joomla_ and selenium. If all are up, then the actual system tests are executed.
 
 During a test PHPMyAdmin is available under _localhost:8081_, PGAdmin is available under _localhost:8082_ and the mailcatcher on _localhost:8083_. When running the Joomla system tests, then a mail server is started on port 8084 on the selenium server. This port is exposed to the outside and the Joomla testing web server can reach that port through the host _host.docker.internal_.
 
 Every suite can provide an install folder which will be executed first to do some setup tasks after installation of the extension. The order of the other tests is randomly to prevent execution order issues as every test need to be isolated.
 
-Tests for extension on Joomla 3 are executed on the url /joomla3 and for Joomla 4 on /joomla4. When the joomla core system tests are executed then joomla is available in the same folder as defined like /joomla-cms. To speed up Joomla installations, DPDocker is caching the Joomla releases in the www/cache folder. So when something is screwed up, delete the cache folder. It downloads then the code again and installs the dependencies and builds the assets from scratch.
+The testing url is always /joomla. When the joomla core system tests are executed then joomla is available in the same folder as defined like /joomla-cms. To speed up Joomla installations, DPDocker is caching the Joomla releases in the www/cache folder. So when something is screwed up, delete the cache folder. It downloads then the code again and installs the dependencies and builds the assets from scratch.
 
 ### Mailcatcher usage
 Mailcatcher has a simple REST interface where you can interact with the mails. To access mailcatcher in Codeception use the host mailcatcher-test:1080. The following code snippet is an example how to test if a mail contains a string:

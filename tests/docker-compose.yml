@@ -8,6 +8,7 @@ services:
       - web-test
       - selenium-test
     volumes:
+      - ./www:/var/www/html
       - ../..:/usr/src/Projects
       - /tmp/tests:/tmp/tests
 
@@ -44,16 +45,7 @@ services:
     environment:
       STARTUP_COMMAND_01: if [ -z ${TEST} ]; then /usr/src/Projects/DPDocker/composer/scripts/exec-install.sh ${EXTENSION}; fi
       STARTUP_COMMAND_02: if [ -z ${TEST} ]; then /usr/src/Projects/DPDocker/npm/scripts/exec-npm-install.sh ${EXTENSION}; fi
-      STARTUP_COMMAND_03: sudo chown docker:docker /home/docker && php /var/www/html/Projects/DPDocker/webserver/scripts/setup-joomla-site.php joomla3 ${EXTENSION} ${DB}-test 3 ${TEST:-yes}
-      STARTUP_COMMAND_04: php /var/www/html/Projects/DPDocker/webserver/scripts/setup-joomla-site.php joomla4 ${EXTENSION} ${DB}-test 4 ${TEST:-yes}
-      # Some defaults
-      STARTUP_COMMAND_05: sudo sed -i "s/debug = '1'/debug = 0/g" /var/www/html/joomla3/configuration.php
-      STARTUP_COMMAND_06: sudo sed -i "s/error_reporting = 'development'/error_reporting = 'simple'/g" /var/www/html/joomla3/configuration.php
-      STARTUP_COMMAND_07: sudo sed -i "s/sef = '1'/sef = 0/g" /var/www/html/joomla3/configuration.php
-      STARTUP_COMMAND_08: sudo sed -i "s/smtphost = 'mailcatcher'/smtphost = 'mailcatcher-test'/g" /var/www/html/joomla3/configuration.php
-      STARTUP_COMMAND_09: sudo sed -i "s/debug = '1'/debug = 0/g" /var/www/html/joomla4/configuration.php
-      STARTUP_COMMAND_10: sudo sed -i "s/sef = '1'/sef = 0/g" /var/www/html/joomla4/configuration.php
-      STARTUP_COMMAND_11: sudo sed -i "s/smtphost = 'mailcatcher'/smtphost = 'mailcatcher-test'/g" /var/www/html/joomla4/configuration.php
+      STARTUP_COMMAND_03: sudo chown docker:docker /home/docker && php /var/www/html/Projects/DPDocker/webserver/scripts/setup-joomla-site.php joomla ${EXTENSION} ${DB}-test ${JOOMLA} ${TEST:-yes}
       PHP_INI_XDEBUG__DISCOVER_CLIENT_HOST: 1
       PHP_INI_SESSION__COOKIE_LIFETIME: 86400
       PHP_INI_SESSION__GC_MAXLIFETIME: 86400

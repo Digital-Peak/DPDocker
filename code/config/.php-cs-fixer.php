@@ -20,6 +20,7 @@ $config->setRules([
 		'no_break_comment'                => false,
 		'no_unused_imports'               => true,
 		'no_trailing_comma_in_singleline' => true,
+		'ordered_imports'                 => ['imports_order' => ['class', 'function', 'const'], 'sort_algorithm' => 'alpha'],
 		'binary_operator_spaces'          => [
 			'default'   => 'single_space',
 			'operators' => [

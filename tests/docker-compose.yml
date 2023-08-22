@@ -3,7 +3,7 @@ version: '3.5'
 services:
   system-tests:
     image: digitpeak/dpdocker-cli
-    command: /usr/src/Projects/DPDocker/tests/scripts/exec-system-tests.sh ${EXTENSION} ${JOOMLA} ${BROWSER} ${TEST}
+    command: /usr/src/Projects/DPDocker/tests/scripts/exec-system-tests.sh ${EXTENSION} ${JOOMLA} ${BROWSER} ${PHP_VERSION} ${TEST}
     depends_on:
       - web-test
       - selenium-test

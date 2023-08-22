@@ -35,6 +35,7 @@ suites:
           downloads: '/tmp/tests'
           home_dir: '/usr/src/Projects/DPDocker/tests/www/joomla'
           joomla_version: '%CODECEPTION_JOOMLA_VERSION%'
+          php_version: '%CODECEPTION_PHP_VERSION%'
         DigitalPeak\Module\DPDb:
           dsn: 'mysql:host=mysql-test;dbname=sites_joomla'
           user: 'root'

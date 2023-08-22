@@ -30,7 +30,7 @@ sudo sed -i "s/sef = '1'/sef = 0/g" /var/www/html/joomla/configuration.php
 sudo sed -i "s/smtphost = 'mailcatcher'/smtphost = 'mailcatcher-test'/g" /var/www/html/joomla/configuration.php
 
 # Joomla 3 needs error reporting simple
-if [ $j == 3 ]; then
+if [ $2 == 3 ]; then
 	sudo sed -i "s/error_reporting = 'development'/error_reporting = 'simple'/g" /var/www/html/joomla/configuration.php
 fi
 

@@ -43,9 +43,10 @@ services:
   web-test:
     image: digitpeak/dpdocker-web:${PHP_VERSION}
     environment:
-      STARTUP_COMMAND_01: if [ -z ${TEST} ]; then /usr/src/Projects/DPDocker/composer/scripts/exec-install.sh ${EXTENSION}; fi
-      STARTUP_COMMAND_02: if [ -z ${TEST} ]; then /usr/src/Projects/DPDocker/npm/scripts/exec-npm-install.sh ${EXTENSION}; fi
-      STARTUP_COMMAND_03: sudo chown docker:docker /home/docker && php /var/www/html/Projects/DPDocker/webserver/scripts/setup-joomla-site.php joomla ${EXTENSION} ${DB}-test ${JOOMLA} ${TEST:-yes}
+      STARTUP_COMMAND_1: sudo chown docker:docker /home/docker
+      STARTUP_COMMAND_2: if [ -z ${TEST} ]; then /usr/src/Projects/DPDocker/composer/scripts/exec-install.sh ${EXTENSION}; fi
+      STARTUP_COMMAND_3: if [ -z ${TEST} ]; then /usr/src/Projects/DPDocker/npm/scripts/exec-npm-install.sh ${EXTENSION}; fi
+      STARTUP_COMMAND_4: php /var/www/html/Projects/DPDocker/webserver/scripts/setup-joomla-site.php joomla ${EXTENSION} ${DB}-test ${JOOMLA} ${TEST:-yes}
       PHP_INI_XDEBUG__DISCOVER_CLIENT_HOST: 1
       PHP_INI_SESSION__COOKIE_LIFETIME: 86400
       PHP_INI_SESSION__GC_MAXLIFETIME: 86400

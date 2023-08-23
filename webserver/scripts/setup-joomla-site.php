@@ -47,7 +47,7 @@ if ($isBranch) {
 }
 
 echo 'Syncing cache to ' . $wwwRoot . PHP_EOL;
-shell_exec('rsync -r --delete /var/www/html/cache/' . $completeVersion . '/ ' . $wwwRoot);
+shell_exec('rsync -r --delete --exclude .git /var/www/html/cache/' . $completeVersion . '/ ' . $wwwRoot);
 
 echo 'Using version ' . $completeVersion . ' on ' . $wwwRoot . PHP_EOL;
 

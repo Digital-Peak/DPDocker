@@ -21,7 +21,7 @@ file=$(dirname $0)/../config/.eslintrc.js
 if [ -f $(dirname $0)/../../../$1/.eslintrc.js ]; then
 	file=$(dirname $0)/../../../$1/.eslintrc.js
 fi
-DEBUG=eslint:cli-engine eslint --config $file --ignore-pattern '**/media/*' --ext .js $(dirname $0)/../../../$1/$2
+DEBUG=eslint:cli-engine eslint --no-error-on-unmatched-pattern --config $file --ignore-pattern '**/media/*' --ext .js $(dirname $0)/../../../$1/$2
 
 echo -e "\nChecking for CSS code style issues"
 # Allow the extension to overwrite the default config file
@@ -29,4 +29,4 @@ file=$(dirname $0)/../config/.stylelintrc.json
 if [ -f $(dirname $0)/../../../$1/.stylelintrc.json ]; then
 	file=$(dirname $0)/../../../$1/.stylelintrc.json
 fi
-npx stylelint --formatter verbose "$(dirname $0)/../../../$1/$2/**/*.scss"
+npx stylelint --allow-empty-input --formatter verbose "$(dirname $0)/../../../$1/$2/**/*.scss"

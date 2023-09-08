@@ -42,8 +42,9 @@ if (!is_dir('/var/www/html/cache/' . $completeVersion)) {
 }
 
 if ($isBranch) {
-	shell_exec('git --work-tree=/var/www/html/cache/' . $completeVersion . ' --git-dir=/var/www/html/cache/' . $completeVersion . '/.git reset --hard');
-	shell_exec('git --work-tree=/var/www/html/cache/' . $completeVersion . ' --git-dir=/var/www/html/cache/' . $completeVersion . '/.git pull');
+	echo shell_exec('git --work-tree=/var/www/html/cache/' . $completeVersion . ' --git-dir=/var/www/html/cache/' . $completeVersion . '/.git fetch');
+	echo shell_exec('git --work-tree=/var/www/html/cache/' . $completeVersion . ' --git-dir=/var/www/html/cache/' . $completeVersion . '/.git reset --hard');
+	echo shell_exec('git --work-tree=/var/www/html/cache/' . $completeVersion . ' --git-dir=/var/www/html/cache/' . $completeVersion . '/.git pull');
 	$syncBack = true;
 }
 

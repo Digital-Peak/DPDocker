@@ -37,14 +37,14 @@ if (!is_dir('/var/www/html/cache/' . $completeVersion)) {
 	echo 'Cloning tag ' . $completeVersion . ' from repo to cache directory' . PHP_EOL;
 	echo shell_exec('git clone https://github.com/joomla/joomla-cms.git /var/www/html/cache/' . $completeVersion);
 	// Checkout latest stable release
-	shell_exec('git --work-tree=/var/www/html/cache/' . $completeVersion . ' --git-dir=/var/www/html/cache/' . $completeVersion . '/.git checkout ' . ($isBranch ? $completeVersion : 'tags/' . $completeVersion) . ' 2>&1 > /dev/null');
+	shell_exec('git --work-tree=/var/www/html/cache/' . $completeVersion . ' --git-dir=/var/www/html/cache/' . $completeVersion . '/.git checkout ' . ($isBranch ? $completeVersion : 'tags/' . $completeVersion));
 	$syncBack = true;
 }
 
 if ($isBranch) {
-	echo shell_exec('git --work-tree=/var/www/html/cache/' . $completeVersion . ' --git-dir=/var/www/html/cache/' . $completeVersion . '/.git fetch');
-	echo shell_exec('git --work-tree=/var/www/html/cache/' . $completeVersion . ' --git-dir=/var/www/html/cache/' . $completeVersion . '/.git reset --hard');
-	echo shell_exec('git --work-tree=/var/www/html/cache/' . $completeVersion . ' --git-dir=/var/www/html/cache/' . $completeVersion . '/.git pull');
+	shell_exec('git --work-tree=/var/www/html/cache/' . $completeVersion . ' --git-dir=/var/www/html/cache/' . $completeVersion . '/.git fetch');
+	shell_exec('git --work-tree=/var/www/html/cache/' . $completeVersion . ' --git-dir=/var/www/html/cache/' . $completeVersion . '/.git reset --hard');
+	shell_exec('git --work-tree=/var/www/html/cache/' . $completeVersion . ' --git-dir=/var/www/html/cache/' . $completeVersion . '/.git pull');
 	$syncBack = true;
 }
 
@@ -70,7 +70,7 @@ while (!feof($proc)) {
 // When cloned sync back the assets and dependencies
 if ($syncBack) {
 	echo 'Syncing assets and dependencies back to cache ' . $wwwRoot . PHP_EOL;
-	shell_exec('rsync -r --delete --exclude configuration.php --exclude node_modules ' . $wwwRoot . '/ /var/www/html/cache/' . $completeVersion);
+	shell_exec('rsync -r --delete --exclude .git --exclude configuration.php --exclude node_modules ' . $wwwRoot . '/ /var/www/html/cache/' . $completeVersion);
 }
 
 // Check if extensions are needed to be installed

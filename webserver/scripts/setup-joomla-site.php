@@ -34,14 +34,16 @@ if (!$completeVersion) {
 
 $syncBack = false;
 if (!is_dir('/var/www/html/cache/' . $completeVersion)) {
-	echo 'Cloning tag ' . $completeVersion . ' from repo to cache directory' . PHP_EOL;
+	echo 'Cloning ' . $completeVersion . ' from repo to cache directory' . PHP_EOL;
 	shell_exec('git clone https://github.com/joomla/joomla-cms.git /var/www/html/cache/' . $completeVersion . ' > /dev/null 2>&1');
 	// Checkout latest stable release
 	shell_exec('git --work-tree=/var/www/html/cache/' . $completeVersion . ' --git-dir=/var/www/html/cache/' . $completeVersion . '/.git checkout ' . ($isBranch ? $completeVersion : 'tags/' . $completeVersion) . ' > /dev/null 2>&1');
 	$syncBack = true;
 }
 
-if ($isBranch) {
+// Only update when it is a branch and not newly cloned
+if ($isBranch && !$syncBack) {
+	echo 'Updating branch ' . $completeVersion . PHP_EOL;
 	shell_exec('git --work-tree=/var/www/html/cache/' . $completeVersion . ' --git-dir=/var/www/html/cache/' . $completeVersion . '/.git fetch > /dev/null 2>&1');
 	shell_exec('git --work-tree=/var/www/html/cache/' . $completeVersion . ' --git-dir=/var/www/html/cache/' . $completeVersion . '/.git reset --hard > /dev/null 2>&1');
 	shell_exec('git --work-tree=/var/www/html/cache/' . $completeVersion . ' --git-dir=/var/www/html/cache/' . $completeVersion . '/.git pull > /dev/null 2>&1');

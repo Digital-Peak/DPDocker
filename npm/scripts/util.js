@@ -13,7 +13,9 @@ const babel = require('@babel/core');
 const rollup = require('rollup');
 const strip = require('js-cleanup');
 const resolve = require('@rollup/plugin-node-resolve');
+const replace = require('@rollup/plugin-replace');
 const svg = require('rollup-plugin-svg');
+const vue = require('rollup-plugin-vue');
 
 /**
  * Transpile function which can handle Javascript, SASS and CSS files.
@@ -73,8 +75,16 @@ function transpile(source, destination, isVendor, config) {
 					const bundle = await rollup.rollup({
 						input: source,
 						plugins: [
-							resolve.nodeResolve({ moduleDirectories: [config.moduleRoot + '/node_modules'] }),
-							svg()
+							replace({
+								preventAssignment: true,
+								values: {
+									'process.env.NODE_ENV': JSON.stringify('development'),
+									'process.env.VUE_ENV': JSON.stringify('browser')
+								}
+							}),
+							resolve.nodeResolve({ modulePaths: [config.moduleRoot + '/node_modules'] }),
+							svg(),
+							vue()
 						]
 					});
 

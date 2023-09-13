@@ -8,7 +8,7 @@
 		"codeception/codeception": "^5.0.11",
 		"codeception/module-rest": "^3.3.2",
 		"codeception/module-phpbrowser": "^3.0.0",
-		"digital-peak/dpception": "^0.1.1"
+		"digital-peak/dpception": "^0.1.2"
 	},
 	"autoload-dev": {
 		"psr-4": {

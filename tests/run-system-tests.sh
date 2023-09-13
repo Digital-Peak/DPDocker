@@ -35,8 +35,11 @@ if [ -z $t ]; then
 fi
 
 # Run VNC viewer
-if [[ $(command -v vinagre) ]]; then
+if [[ $(command -v vinagre) && -z $t ]]; then
 	( sleep 15; vinagre localhost > /dev/null 2>&1 ) &
+fi
+if [[ $(command -v vinagre) && ! -z $t ]]; then
+	( sleep 3; vinagre localhost > /dev/null 2>&1 ) &
 fi
 
 # Start web server already so it gets the updated variables

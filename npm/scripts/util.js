@@ -16,6 +16,7 @@ const resolve = require('@rollup/plugin-node-resolve');
 const replace = require('@rollup/plugin-replace');
 const svg = require('rollup-plugin-svg');
 const vue = require('rollup-plugin-vue');
+const css = require('rollup-plugin-import-css');
 
 /**
  * Transpile function which can handle Javascript, SASS and CSS files.
@@ -84,7 +85,8 @@ function transpile(source, destination, isVendor, config) {
 							}),
 							resolve.nodeResolve({ modulePaths: [config.moduleRoot + '/node_modules'] }),
 							svg(),
-							vue()
+							vue(),
+							css()
 						]
 					});
 
@@ -112,7 +114,8 @@ function transpile(source, destination, isVendor, config) {
 				outputStyle: 'expanded',
 				indentType: 'tab',
 				indentWidth: 1,
-				sourceMap: true
+				sourceMap: true,
+				includePaths: [config.moduleRoot + '/node_modules']
 			});
 
 			// Write the none minified content to the destination file

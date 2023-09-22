@@ -31,6 +31,8 @@ RUN sudo apt-get install -y zip
 RUN sudo apt-get install -y unzip
 RUN sudo apt-get install -y php-pear
 
+RUN sudo npm install -g bun
+
 # Install webgrind
 RUN git clone https://github.com/jokkedk/webgrind /var/www/html/wg
 

@@ -61,7 +61,7 @@ sed -i "s/{PATH}/${root//\//\\/}/g" $root/configuration.php
 
 # Joomla 3 needs error reporting simple because of PHP 8.2 deprecations
 if [ ! -f $root/package.json ]; then
-	sed -i "s/error_reporting = 'development'/error_reporting = 'simple'/g" $root/configuration.php
+	sed -i "s/error_reporting = 'maximum'/error_reporting = 'simple'/g" $root/configuration.php
 fi
 
 # Define install folder

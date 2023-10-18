@@ -65,6 +65,9 @@ function watchAssets(root, assets) {
 				return;
 			}
 
+			// For every App.vue there should be a default.js, so build that only
+			file = file.replace('App.vue', 'default.js').replaceAll('/vue/', '/js/');
+
 			if (index[file] == null) {
 				console.log('Building the whole extension because of file: ' + file.replace(root + '/', ''));
 				build.build(root, assets, false);

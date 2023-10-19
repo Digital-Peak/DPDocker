@@ -65,8 +65,19 @@ function watchAssets(root, assets) {
 				return;
 			}
 
-			// For every App.vue there should be a default.js, so build that only
-			file = file.replace('App.vue', 'default.js').replaceAll('/vue/', '/js/');
+			// For every App.vue there should be a plain js file
+			if (file.indexOf('App.vue')) {
+				// Replace the app part in the filename
+				let fileName = path.basename(file).replace('App.vue', '.js').toLowerCase();
+
+				// When there is nothing left default to default.js
+				if (fileName === '.js') {
+					fileName = 'default.js';
+				}
+
+				// Compile the new file path with js
+				file = path.dirname(file).replace('/vue/', '/js/') + '/' + fileName;
+			}
 
 			if (index[file] == null) {
 				console.log('Building the whole extension because of file: ' + file.replace(root + '/', ''));

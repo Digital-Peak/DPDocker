@@ -7,13 +7,13 @@ services:
       STARTUP_COMMAND_01: sudo chown docker:docker /home/docker && cp /var/www/html/Projects/DPDocker/webserver/scripts/index.php /var/www/html
       STARTUP_COMMAND_02: php /var/www/html/Projects/DPDocker/webserver/scripts/setup-joomla-site.php j3 all ${DB} 3 ${REBUILD}
       STARTUP_COMMAND_03: php /var/www/html/Projects/DPDocker/webserver/scripts/setup-joomla-site.php j4 all ${DB} 4 ${REBUILD}
-      STARTUP_COMMAND_04: php /var/www/html/Projects/DPDocker/webserver/scripts/setup-joomla-site.php j5 all ${DB} 5.0-dev ${REBUILD}
+      STARTUP_COMMAND_04: php /var/www/html/Projects/DPDocker/webserver/scripts/setup-joomla-site.php j5 all ${DB} 5 ${REBUILD}
       STARTUP_COMMAND_05: php /var/www/html/Projects/DPDocker/webserver/scripts/setup-joomla-site.php dev3 all ${DB} 3 ${REBUILD}
       STARTUP_COMMAND_06: php /var/www/html/Projects/DPDocker/webserver/scripts/setup-joomla-site.php dev4 all ${DB} 4 ${REBUILD}
-      STARTUP_COMMAND_07: php /var/www/html/Projects/DPDocker/webserver/scripts/setup-joomla-site.php dev5 all ${DB} 5.0-dev ${REBUILD}
+      STARTUP_COMMAND_07: php /var/www/html/Projects/DPDocker/webserver/scripts/setup-joomla-site.php dev5 all ${DB} 5 ${REBUILD}
       STARTUP_COMMAND_08: php /var/www/html/Projects/DPDocker/webserver/scripts/setup-joomla-site.php play3 '' ${DB} 3 ${REBUILD}
       STARTUP_COMMAND_09: php /var/www/html/Projects/DPDocker/webserver/scripts/setup-joomla-site.php play4 '' ${DB} 4 ${REBUILD}
-      STARTUP_COMMAND_10: php /var/www/html/Projects/DPDocker/webserver/scripts/setup-joomla-site.php play5 '' ${DB} 5.0-dev ${REBUILD}
+      STARTUP_COMMAND_10: php /var/www/html/Projects/DPDocker/webserver/scripts/setup-joomla-site.php play5 '' ${DB} 5 ${REBUILD}
       STARTUP_COMMAND_11: /var/www/html/Projects/DPDocker/webserver/scripts/setup-joomla-core.sh cms4 ${DB} ${REBUILD}
       STARTUP_COMMAND_12: /var/www/html/Projects/DPDocker/webserver/scripts/setup-joomla-core.sh cms5 ${DB} ${REBUILD}
       PHP_INI_XDEBUG__DISCOVER_CLIENT_HOST: 1

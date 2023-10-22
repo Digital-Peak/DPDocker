@@ -87,7 +87,14 @@ function transpile(source, destination, isVendor, config) {
 							svg(),
 							vue(),
 							css()
-						]
+						],
+						onwarn: function (message) {
+							// https://github.com/d3/d3-interpolate/issues/58
+							// Ignore circular dependency messages as they are fine within ES modules
+							if (/Circular dependency/.test(message)) {
+								return
+							}
+						},
 					});
 
 					// Generate code

@@ -146,8 +146,8 @@ function createLinks($folderRoot, $wwwRoot)
 		foreach ($languages as $language) {
 			foreach (new DirectoryIterator($folderRoot . '/src/administrator/language/' . $language) as $filename) {
 				createLink(
-					$folderRoot . '/src/administrator/language/' . $language . $filename,
-					$wwwRoot . '/administrator/language/' . $language . $filename
+					$folderRoot . '/src/administrator/language/' . $language . '/' . $filename,
+					$wwwRoot . '/administrator/language/' . $language . '/' . $filename
 				);
 			}
 		}
@@ -156,7 +156,7 @@ function createLinks($folderRoot, $wwwRoot)
 		$languages = scandir($folderRoot . '/src/language');
 		foreach ($languages as $language) {
 			foreach (new DirectoryIterator($folderRoot . '/src/language/' . $language) as $filename) {
-				createLink($folderRoot . '/src/language/' . $language . $filename, $wwwRoot . '/language/' . $language . $filename);
+				createLink($folderRoot . '/src/language/' . $language . '/' . $filename, $wwwRoot . '/language/' . $language . '/' . $filename);
 			}
 		}
 	}

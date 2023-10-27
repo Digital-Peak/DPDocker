@@ -18,13 +18,14 @@ suites:
         DigitalPeak\Module\DPBrowser:
           host: 'selenium-test'
           port: 4444
-          url: 'http://web-test/joomla'
+          url: 'https://web-test/joomla'
           browser: '%CODECEPTION_BROWSER%'
           restart: false
           clear_cookies: true
           window_size: 1024x1024
           capabilities:
             unexpectedAlertBehaviour: 'accept'
+            acceptInsecureCerts: true
             'goog:chromeOptions':
               prefs:
                 download.default_directory: '/tmp/tests'
@@ -49,7 +50,7 @@ suites:
           url: 'http://localhost/joomla'
           extension_dir: '/usr/src/Projects/%CODECEPTION_EXTENSION%'
         REST:
-          url: 'http://web-test/joomla/api/index.php/v1'
+          url: 'https://web-test/joomla/api/index.php/v1'
           depends: PhpBrowser
           part: Json
     error_level: 'E_ALL & ~E_STRICT & ~E_DEPRECATED'

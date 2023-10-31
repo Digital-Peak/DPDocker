@@ -4,6 +4,10 @@ services:
   system-tests:
     image: digitpeak/dpdocker-cli
     command: /usr/src/Projects/DPDocker/tests/scripts/exec-system-tests.sh ${EXTENSION} ${JOOMLA} ${BROWSER} ${PHP_VERSION} ${TEST}
+    environment:
+      PHP_INI_XDEBUG__MODE: profile
+      PHP_INI_XDEBUG__START_WITH_REQUEST: 1
+      PHP_INI_MEMPROF__OUTPUT_DIR: /usr/src/Projects/DPDocker/tests/memory
     depends_on:
       - web-test
       - selenium-test

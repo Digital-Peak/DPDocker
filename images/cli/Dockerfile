@@ -31,4 +31,10 @@ RUN sudo apt-get install -y zip
 RUN sudo apt-get install -y unzip
 RUN sudo apt-get install -y php-pear
 
+# Memory profiles
+RUN sudo apt-get install -y libjudy-dev
+RUN sudo apt-get install -y php-dev
+RUN sudo pecl install memprof
+ENV MEMPROF_PROFILE=dump_on_limit
+
 RUN sudo npm install -g bun

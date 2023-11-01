@@ -66,3 +66,6 @@ fi
 php -dextension=memprof.so vendor/codeception/codeception/app.php run $args --env desktop $5
 
 cp /tmp/cachegrind* $(dirname $0)/../tmp/profile/mem
+
+# Run the tests
+vendor/bin/codecept run --ext "DigitalPeak\Extension\Reporter" --env desktop $5

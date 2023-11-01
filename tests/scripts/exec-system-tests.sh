@@ -16,7 +16,8 @@ sudo chmod 777 /tmp/tests
 
 # Make sure the dependencies are correct
 cd $(dirname $0)/../config/extension
-composer install --quiet
+rm -rf vendor
+composer update
 
 # Change to the tests folder as working directory
 rm -rf $(dirname $0)/../tmp
@@ -48,7 +49,6 @@ mkdir $(dirname $0)/../tmp/profile/mem
 mkdir $(dirname $0)/../tmp/profile/xdebug
 export MEMPROF_PROFILE=dump_on_limit
 export XDEBUG_CONFIG="output_dir=$(realpath $(dirname $0)/../tmp/profile/xdebug)"
-sudo composer self-update
 args=
 
 # Check if there are multiple tests to run

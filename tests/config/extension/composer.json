@@ -5,10 +5,18 @@
 		}
 	},
 	"require": {
-		"codeception/codeception": "^5.0.12",
+		"symfony/var-dumper": "6.3.4",
+		"sebastian/exporter": "5.0.1",
+		"sebastian/complexity": "3.0.1",
+		"psy/psysh": "0.11.20",
+		"phpunit/php-code-coverage": "10.1.5",
+		"phpunit/phpunit": "10.3.4",
+		"codeception/codeception": "5.0.11",
 		"codeception/module-rest": "^3.3.2",
 		"codeception/module-phpbrowser": "^3.0.0",
-		"digital-peak/dpception": "^0.2.0"
+		"digital-peak/dpception": "^0.2.0",
+		"justinrainbow/json-schema": "5.2.12",
+		"codeception/stub": "4.1.1"
 	},
 	"autoload-dev": {
 		"psr-4": {

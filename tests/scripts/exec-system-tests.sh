@@ -59,4 +59,4 @@ if [[ ! -z $5 && $5 == *".php:"* ]]; then
 fi
 
 # Run the tests
-vendor/bin/codecept run --env desktop $5
+vendor/bin/codecept run --ext "DigitalPeak\Extension\Reporter" --env desktop $5

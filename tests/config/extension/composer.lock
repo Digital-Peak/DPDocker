@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ecb5495ca134a7e0fe29007a0ed7602f",
+    "content-hash": "cdb1ae821bc02566ac797e4be41f657c",
     "packages": [
         {
             "name": "behat/gherkin",
@@ -793,16 +793,16 @@
         },
         {
             "name": "digital-peak/dpception",
-            "version": "0.1.5",
+            "version": "0.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Digital-Peak/DPCeption.git",
-                "reference": "bc6b23b8f6b2496a44da47d8726ab6a095fee6b9"
+                "reference": "c62610ca3c3c3183bfe3fb6ca768b2710a6898ec"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Digital-Peak/DPCeption/zipball/bc6b23b8f6b2496a44da47d8726ab6a095fee6b9",
-                "reference": "bc6b23b8f6b2496a44da47d8726ab6a095fee6b9",
+                "url": "https://api.github.com/repos/Digital-Peak/DPCeption/zipball/c62610ca3c3c3183bfe3fb6ca768b2710a6898ec",
+                "reference": "c62610ca3c3c3183bfe3fb6ca768b2710a6898ec",
                 "shasum": ""
             },
             "require": {
@@ -831,9 +831,9 @@
             "homepage": "https://github.com/Digital-Peak/DPCeption",
             "support": {
                 "issues": "https://github.com/Digital-Peak/DPCeption/issues",
-                "source": "https://github.com/Digital-Peak/DPCeption/tree/0.1.5"
+                "source": "https://github.com/Digital-Peak/DPCeption/tree/0.2.0"
             },
-            "time": "2023-10-28T07:40:56+00:00"
+            "time": "2023-11-01T08:35:12+00:00"
         },
         {
             "name": "digital-peak/thinhttp",
@@ -4642,16 +4642,16 @@
         },
         {
             "name": "symfony/yaml",
-            "version": "v6.3.3",
+            "version": "v6.3.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
-                "reference": "e23292e8c07c85b971b44c1c4b87af52133e2add"
+                "reference": "9758b6c69d179936435d0ffb577c3708d57e38a8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/e23292e8c07c85b971b44c1c4b87af52133e2add",
-                "reference": "e23292e8c07c85b971b44c1c4b87af52133e2add",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/9758b6c69d179936435d0ffb577c3708d57e38a8",
+                "reference": "9758b6c69d179936435d0ffb577c3708d57e38a8",
                 "shasum": ""
             },
             "require": {
@@ -4694,7 +4694,7 @@
             "description": "Loads and dumps YAML files",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/yaml/tree/v6.3.3"
+                "source": "https://github.com/symfony/yaml/tree/v6.3.7"
             },
             "funding": [
                 {
@@ -4710,7 +4710,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-07-31T07:08:24+00:00"
+            "time": "2023-10-28T23:31:00+00:00"
         },
         {
             "name": "theseer/tokenizer",

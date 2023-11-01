@@ -34,13 +34,6 @@ if [ -z $t ]; then
 	docker-compose -f $(dirname $0)/docker-compose.yml stop
 fi
 
-# Run VNC viewer
-if [[ $(command -v vinagre) && -z $t ]]; then
-	( sleep 15; vinagre localhost > /dev/null 2>&1 ) &
-fi
-if [[ $(command -v vinagre) && ! -z $t ]]; then
-	( sleep 3; vinagre localhost > /dev/null 2>&1 ) &
-fi
 
 # Start web server already so it gets the updated variables
 EXTENSION=$e TEST=$t JOOMLA=$j DB=$db MYSQL_DBVERSION=$my POSTGRES_DBVERSION=$pg PHP_VERSION=$php BROWSER=$b docker-compose -f $(dirname $0)/docker-compose.yml up -d web-test

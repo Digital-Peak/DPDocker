@@ -37,14 +37,6 @@ export CODECEPTION_JOOMLA_VERSION=$2
 export CODECEPTION_PHP_VERSION=$4
 export CODECEPTION_EXTENSION=$1
 
-# Build the actions class and copy it back
-vendor/bin/codecept clean
-vendor/bin/codecept build
-
-if [[ -d tests/src/Acceptance/Install && -z "$5" ]]; then
-	# Run the install task first
-	vendor/bin/codecept run --env desktop tests/src/Acceptance/Install
-fi
 
 if [ -d tests/src/Acceptance/Install ]; then
 	# Remove the install tests, so they wont be executed again
@@ -54,18 +46,18 @@ fi
 mkdir $(dirname $0)/../tmp/profile
 mkdir $(dirname $0)/../tmp/profile/mem
 mkdir $(dirname $0)/../tmp/profile/xdebug
-export MEMPROF_PROFILE=1
+export MEMPROF_PROFILE=dump_on_limit
 export XDEBUG_CONFIG="output_dir=$(realpath $(dirname $0)/../tmp/profile/xdebug)"
-
+sudo composer self-update
 args=
 
 # Check if there are multiple tests to run
 if [[ ! -z $5 && $5 == *".php:"* ]]; then
 	args="--debug --steps"
 fi
-php -dextension=memprof.so vendor/codeception/codeception/app.php run $args --env desktop $5
+#php -dextension=memprof.so -dmemprof.output_dir="$(realpath $(dirname $0)/../tmp/profile/mem)" -i | grep memprof
+#exit
+#php -dextension=memprof.so -dmemprof.output_dir="$(realpath $(dirname $0)/../tmp/profile/mem)" memory.php
+php -dextension=memprof.so -dmemprof.output_dir="$(realpath $(dirname $0)/../tmp/profile/mem)" vendor/codeception/codeception/app.php run $args --ext "DigitalPeak\Extension\Reporter" --env desktop $5
 
-cp /tmp/cachegrind* $(dirname $0)/../tmp/profile/mem
-
-# Run the tests
-vendor/bin/codecept run --ext "DigitalPeak\Extension\Reporter" --env desktop $5
+# cp /tmp/cachegrind* $(dirname $0)/../tmp/profile/mem

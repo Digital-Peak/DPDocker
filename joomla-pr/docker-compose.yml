@@ -24,7 +24,7 @@ services:
     image: mysql:${MYSQL_DBVERSION}
     environment:
       MYSQL_ROOT_PASSWORD: root
-    command: --default-authentication-plugin=mysql_native_password --sql_mode=""
+    command: --default-authentication-plugin=mysql_native_password --log_error_suppression_list=MY-013360
     volumes:
       - ./mysql_data:/var/lib/mysql
 

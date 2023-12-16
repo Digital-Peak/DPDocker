@@ -23,4 +23,4 @@ if [ ! -d $(dirname $0)/www ]; then
 fi
 
 # Start the dev server
-DB=$db REBUILD=$r MYSQL_DBVERSION=$my POSTGRES_DBVERSION=$pg PHP_VERSION=$php docker-compose -f $(dirname $0)/docker-compose.yml up
+DB=$db REBUILD=$r MYSQL_DBVERSION=$my POSTGRES_DBVERSION=$pg PHP_VERSION=$php USER_ID=$(id -u) GROUP_ID=$(id -g) docker-compose -f $(dirname $0)/docker-compose.yml up

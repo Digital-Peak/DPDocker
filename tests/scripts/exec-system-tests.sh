@@ -55,7 +55,7 @@ fi
 # Check if there are multiple tests to run
 if [[ ! -z $5 && $5 == *".php:"* ]]; then
 	vendor/bin/codecept run --debug --steps --env desktop $5
-	exit 0
+	exit $?
 fi
 
 # Run the tests

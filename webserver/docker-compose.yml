@@ -89,3 +89,16 @@ services:
       - 30000-30009:30000-30009
     volumes:
       - ./www:/home/ftp
+
+  opensshserver:
+    image: lscr.io/linuxserver/openssh-server:latest
+    environment:
+      - PUID=${USER_ID}
+      - PGID=${GROUP_ID}
+      - USER_PASSWORD=sftp
+      - USER_NAME=sftp
+      - PASSWORD_ACCESS=true
+    volumes:
+      - ./www:/data
+    ports:
+      - 2222:2222

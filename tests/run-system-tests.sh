@@ -35,7 +35,7 @@ if [ -z $t ]; then
 fi
 
 # Start web server already so it gets the updated variables
-EXTENSION=$e TEST=$t JOOMLA=$j DB=$db MYSQL_DBVERSION=$my POSTGRES_DBVERSION=$pg PHP_VERSION=$php BROWSER=$b docker-compose -f $(dirname $0)/docker-compose.yml up -d web-test
+EXTENSION=$e TEST=$t JOOMLA=$j DB=$db MYSQL_DBVERSION=$my POSTGRES_DBVERSION=$pg PHP_VERSION=$php BROWSER=$b USER_ID=$(id -u) GROUP_ID=$(id -g) docker-compose -f $(dirname $0)/docker-compose.yml up -d web-test
 
 # Run VNC viewer
 if [[ $(command -v vinagre) ]]; then
@@ -48,7 +48,7 @@ if [[ $(command -v vinagre) ]]; then
 fi
 
 # Run the tests
-EXTENSION=$e TEST=$t JOOMLA=$j DB=$db MYSQL_DBVERSION=$my POSTGRES_DBVERSION=$pg PHP_VERSION=$php BROWSER=$b docker-compose -f $(dirname $0)/docker-compose.yml run system-tests
+EXTENSION=$e TEST=$t JOOMLA=$j DB=$db MYSQL_DBVERSION=$my POSTGRES_DBVERSION=$pg PHP_VERSION=$php BROWSER=$b USER_ID=$(id -u) GROUP_ID=$(id -g) docker-compose -f $(dirname $0)/docker-compose.yml run system-tests
 
 # Stop the containers
 if [ -z $t ]; then

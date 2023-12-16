@@ -55,6 +55,7 @@ services:
       - postgres-test
       - mailcatcher-test
       - ftpserver-test
+      - opensshserver-test
       - phpmyadmin-test
       - selenium-test
     ports:
@@ -139,3 +140,15 @@ services:
       FTP_USER_HOME: /home/ftp
     volumes:
       - /tmp/tests:/home/ftp
+
+  opensshserver-test:
+    image: lscr.io/linuxserver/openssh-server:latest
+    environment:
+      - PUID=${USER_ID}
+      - PGID=${GROUP_ID}
+      - USER_PASSWORD=sftp
+      - USER_NAME=sftp
+      - PASSWORD_ACCESS=true
+      - LOG_STDOUT=true
+    volumes:
+      - /tmp/tests:/test

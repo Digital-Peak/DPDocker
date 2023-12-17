@@ -71,3 +71,5 @@ With the url _localhost:82_ you get access to a pgAdmin instance.
 With the url _localhost:83_ you get access to a MailCatcher instance. [Mailcatcher](https://mailcatcher.me/) is a simple web front end to read mails. All sites are configured the way that mails are not sent to the real recipient but do land instead in the mailcatcher. This is handy when yo have to deal with mails.
 - **FTP server**  
 With the url _localhost:21_ you get access to a FTP server instance. You can log in with ftp/ftp. Please use none secure connections.
+- **SSH server**  
+With the url _localhost:2222_ you get access to a SSH server instance with SFTP support. You can log in with sftp/sftp or the key which is avilable in the web root on /var/www/html/key.

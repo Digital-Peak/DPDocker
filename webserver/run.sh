@@ -20,6 +20,7 @@ done
 # Create the www directory as the current user. So all subdirs will inherit the permissions.
 if [ ! -d $(dirname $0)/www ]; then
 	mkdir $(dirname $0)/www
+	ssh-keygen -q -t rsa -N '' -f $(dirname $0)/www/key
 fi
 
 # Start the dev server

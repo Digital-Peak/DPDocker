@@ -150,5 +150,7 @@ services:
       - USER_NAME=sftp
       - PASSWORD_ACCESS=true
       - LOG_STDOUT=true
+      - PUBLIC_KEY_FILE=/data/key.pub
     volumes:
       - /tmp/tests:/test
+      - ./www:/data

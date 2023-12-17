@@ -98,6 +98,7 @@ services:
       - USER_PASSWORD=sftp
       - USER_NAME=sftp
       - PASSWORD_ACCESS=true
+      - PUBLIC_KEY_FILE=/data/key.pub
     volumes:
       - ./www:/data
     ports:

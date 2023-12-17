@@ -27,6 +27,7 @@ fi
 
 if [ ! -d $(dirname $0)/www ]; then
 	mkdir $(dirname $0)/www
+	ssh-keygen -q -t rsa -N '' -f $(dirname $0)/www/key
 fi
 
 # Stop the containers

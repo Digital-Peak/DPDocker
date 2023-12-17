@@ -85,9 +85,9 @@ modules:
 In the `Tests\Support\Helper\Acceptance` class you can then access that token with `$this->_getConfig('api_token')`. More information can be found in the [Codeception environment docs](https://codeception.com/docs/AdvancedUsage#Environments).
 
 ## Internals
-Running the system tests is a rather complex setup. Due some startup issues we need to start every container in sequence. In total are six containers created. First the MySQL and postgres container. Then the web server which is accessible on the url _localhost:8080/joomla_ and selenium. If all are up, then the actual system tests are executed.
+Running the system tests is a rather complex setup. First are the selenium, database, (S)FTP and web servers started. If all are up, then the actual system tests are executed.
 
-During a test PHPMyAdmin is available under _localhost:8081_, PGAdmin is available under _localhost:8082_ and the mailcatcher on _localhost:8083_. When running the Joomla system tests, then a mail server is started on port 8084 on the selenium server. This port is exposed to the outside and the Joomla testing web server can reach that port through the host _host.docker.internal_.
+During a test PHPMyAdmin is available under _localhost:8081_, PGAdmin is available under _localhost:8082_ and the mailcatcher on _localhost:8083_. When running the Joomla system tests, then a mail server is started on port 8084 on the cypress server. This port is exposed to the outside and the Joomla testing web server can reach that port through the host _host.docker.internal_.
 
 Every suite can provide an install folder which will be executed first to do some setup tasks after installation of the extension. The order of the other tests is randomly to prevent execution order issues as every test need to be isolated.
 
@@ -112,6 +112,22 @@ public function seeInEmails($needle)
     $this->assertStringContainsString($needle, $mails);
 }
 ```
+
+### (S)FTP server usage
+When running the system teasts is a SFTP and FTP server available for testing.
+
+#### FTP
+- Host: ftpserver-test
+- Port: 21
+- Username: ftp
+- Password: ftp
+
+#### SFTP
+- Host: opensshserver-test
+- Port: 2222
+- Username: sftp
+- Password: sftp
+- Key file: /var/www/html/key
 
 ## Result
 You will see directly the output of the tests in the console where the Codeception system tests are started. If some do fail, then detailed reports are printed. Additionally you can find screenshots and the HTML pages of the failing tests in the folder tmp/_output of your docker project.

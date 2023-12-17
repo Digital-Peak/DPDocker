@@ -55,7 +55,7 @@ services:
       - postgres-test
       - mailcatcher-test
       - ftpserver-test
-      - opensshserver-test
+      - sshserver-test
       - phpmyadmin-test
       - selenium-test
     ports:
@@ -141,7 +141,7 @@ services:
     volumes:
       - /tmp/tests:/home/ftp
 
-  opensshserver-test:
+  sshserver-test:
     image: lscr.io/linuxserver/openssh-server:latest
     environment:
       - PUID=${USER_ID}

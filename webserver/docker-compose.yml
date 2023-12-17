@@ -90,7 +90,7 @@ services:
     volumes:
       - ./www:/home/ftp
 
-  opensshserver:
+  sshserver:
     image: lscr.io/linuxserver/openssh-server:latest
     environment:
       - PUID=${USER_ID}

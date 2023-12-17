@@ -123,7 +123,7 @@ When running the system teasts is a SFTP and FTP server available for testing.
 - Password: ftp
 
 #### SFTP
-- Host: opensshserver-test
+- Host: sshserver-test
 - Port: 2222
 - Username: sftp
 - Password: sftp

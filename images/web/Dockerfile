@@ -1,6 +1,6 @@
-ARG PHP_VERSION=8.2
+ARG PHP_VERSION=8.3
 
-FROM thecodingmachine/php:${PHP_VERSION}-v4-apache-node18
+FROM thecodingmachine/php:${PHP_VERSION}-v4-apache-node20
 
 # Enable extensions
 ENV PHP_EXTENSION_GD=1

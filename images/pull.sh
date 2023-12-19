@@ -5,12 +5,10 @@
 
 # Pull the images
 docker pull digitpeak/dpdocker-cli:7.4
-docker pull digitpeak/dpdocker-cli:8.0
-docker pull digitpeak/dpdocker-cli:8.1
 docker pull digitpeak/dpdocker-cli:8.2
+docker pull digitpeak/dpdocker-cli:8.3
 docker pull digitpeak/dpdocker-cli:latest
 docker pull digitpeak/dpdocker-web:7.4
-docker pull digitpeak/dpdocker-web:8.0
-docker pull digitpeak/dpdocker-web:8.1
 docker pull digitpeak/dpdocker-web:8.2
+docker pull digitpeak/dpdocker-web:8.3
 docker pull digitpeak/dpdocker-web:latest

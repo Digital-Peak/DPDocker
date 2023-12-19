@@ -5,12 +5,10 @@
 
 # Push the images
 docker push digitpeak/dpdocker-cli:7.4
-docker push digitpeak/dpdocker-cli:8.0
-docker push digitpeak/dpdocker-cli:8.1
 docker push digitpeak/dpdocker-cli:8.2
+docker push digitpeak/dpdocker-cli:8.3
 docker push digitpeak/dpdocker-cli:latest
 docker push digitpeak/dpdocker-web:7.4
-docker push digitpeak/dpdocker-web:8.0
-docker push digitpeak/dpdocker-web:8.1
 docker push digitpeak/dpdocker-web:8.2
+docker push digitpeak/dpdocker-web:8.3
 docker push digitpeak/dpdocker-web:latest

@@ -103,3 +103,16 @@ services:
       - ./www:/data
     ports:
       - 2222:2222
+
+  webdavserver:
+    image: apachewebdav/apachewebdav
+    ports:
+      - 8084:80
+    environment:
+      PUID: ${USER_ID}
+      PGID: ${GROUP_ID}
+      AUTH_TYPE: Digest
+      USERNAME: webdav
+      PASSWORD: webdav
+    volumes:
+      - ./www:/var/lib/dav/data

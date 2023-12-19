@@ -10,7 +10,7 @@ services:
     volumes:
       - ./www:/var/www/html
       - ../..:/usr/src/Projects
-      - /tmp/tests:/tmp/tests
+      - test:/tmp/tests
 
   joomla-system-tests:
     image: cypress/included:12.8.1
@@ -37,7 +37,7 @@ services:
       - 5900:5900
     volumes:
       - /dev/shm:/dev/shm
-      - /tmp/tests:/tmp/tests
+      - test:/tmp/tests
       - ../..:/usr/src/Projects
 
   web-test:
@@ -56,6 +56,7 @@ services:
       - mailcatcher-test
       - ftpserver-test
       - sshserver-test
+      - webdavserver-test
       - phpmyadmin-test
       - selenium-test
     ports:
@@ -139,7 +140,7 @@ services:
       FTP_USER_PASS: ftp
       FTP_USER_HOME: /home/ftp
     volumes:
-      - /tmp/tests:/home/ftp
+      - test:/home/ftp
 
   sshserver-test:
     image: lscr.io/linuxserver/openssh-server:latest
@@ -152,5 +153,19 @@ services:
       - LOG_STDOUT=true
       - PUBLIC_KEY_FILE=/data/key.pub
     volumes:
-      - /tmp/tests:/test
+      - test:/test
       - ./www:/data
+
+  webdavserver-test:
+    image: apachewebdav/apachewebdav
+    environment:
+      PUID: ${USER_ID}
+      PGID: ${GROUP_ID}
+      AUTH_TYPE: Digest
+      USERNAME: webdav
+      PASSWORD: webdav
+    volumes:
+      - test:/var/lib/dav/data
+
+volumes:
+  test:

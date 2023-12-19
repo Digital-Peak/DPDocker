@@ -15,6 +15,7 @@ file=$(dirname $0)/../config/.php-cs-fixer.php
 if [ -f $(dirname $0)/../../../$1/.php-cs-fixer.php ]; then
 	file=$(dirname $0)/../../../$1/.php-cs-fixer.php
 fi
+export PHP_CS_FIXER_IGNORE_ENV=1
 $(dirname $0)/../config/vendor/bin/php-cs-fixer fix --dry-run --path-mode=intersection -v --config $file $(dirname $0)/../../../$1/$2 || status=$?
 
 echo -e "\nChecking for Javascript code style issues"

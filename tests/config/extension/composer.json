@@ -7,7 +7,7 @@
 	"require": {
 		"codeception/codeception": "^5.0.12",
 		"codeception/module-rest": "^3.3.2",
-		"codeception/module-phpbrowser": "^3.0.0",
+		"codeception/module-phpbrowser": "^3.0.1",
 		"digital-peak/dpception": "^0.2.1",
 		"phpunit/phpunit": "10.3.4"
 	},

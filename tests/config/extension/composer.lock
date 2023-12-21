@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a57ea342349a61d56ff0a891d1aa4d7c",
+    "content-hash": "f37c9f59c8503ec0503907095886ba94",
     "packages": [
         {
             "name": "behat/gherkin",
@@ -460,16 +460,16 @@
         },
         {
             "name": "codeception/module-db",
-            "version": "3.1.1",
+            "version": "3.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Codeception/module-db.git",
-                "reference": "185889230bccfc65d2c03624879ade5357ec43f9"
+                "reference": "0ff358215efef8513869d407bb3bb850187975a3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Codeception/module-db/zipball/185889230bccfc65d2c03624879ade5357ec43f9",
-                "reference": "185889230bccfc65d2c03624879ade5357ec43f9",
+                "url": "https://api.github.com/repos/Codeception/module-db/zipball/0ff358215efef8513869d407bb3bb850187975a3",
+                "reference": "0ff358215efef8513869d407bb3bb850187975a3",
                 "shasum": ""
             },
             "require": {
@@ -508,9 +508,9 @@
             ],
             "support": {
                 "issues": "https://github.com/Codeception/module-db/issues",
-                "source": "https://github.com/Codeception/module-db/tree/3.1.1"
+                "source": "https://github.com/Codeception/module-db/tree/3.1.0"
             },
-            "time": "2023-03-18T07:35:25+00:00"
+            "time": "2022-12-03T09:57:03+00:00"
         },
         {
             "name": "codeception/module-filesystem",

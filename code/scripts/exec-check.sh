@@ -11,6 +11,13 @@ npm install --silent
 
 echo -e "\nChecking for PHP code style issues"
 # Allow the extension to overwrite the default config file
+file=$(dirname $0)/../config/rector.php
+if [ -f $(dirname $0)/../../../$1/rector.php ]; then
+	file=$(dirname $0)/../../../$1/rector.php
+fi
+$(dirname $0)/../config/vendor/bin/rector process --dry-run --config $file $(dirname $0)/../../../$1/$2 || status=$?
+
+# Allow the extension to overwrite the default config file
 file=$(dirname $0)/../config/.php-cs-fixer.php
 if [ -f $(dirname $0)/../../../$1/.php-cs-fixer.php ]; then
 	file=$(dirname $0)/../../../$1/.php-cs-fixer.php

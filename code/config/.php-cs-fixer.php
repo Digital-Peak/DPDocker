@@ -33,8 +33,9 @@ $config->setRules([
 				'=>' => 'align_single_space_minimal'
 			]
 		],
-		'no_useless_else'         => true,
-		'global_namespace_import' => ['import_classes' => false, 'import_constants' => false, 'import_functions' => false],
+		'no_useless_else'              => true,
+		'global_namespace_import'      => ['import_classes' => false, 'import_constants' => false, 'import_functions' => false],
+		'fully_qualified_strict_types' => ['import_symbols' => true]
 	])
 	->setUsingCache(false)
 	->setIndent("\t")

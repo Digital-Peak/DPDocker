@@ -3,9 +3,18 @@
 # @copyright Copyright (C) 2020 Digital Peak GmbH. <https://www.digital-peak.com>
 # @license   http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
 
+export DPDOCKER_EXTENSION_PATH=$(realpath $(dirname $0)/../../../$1)
+
 cd $(dirname $0)/../config
 composer install --quiet
 npm install --silent
+
+if [ ! -d $(dirname $0)/../tmp ]; then
+	git clone --depth 1 https://github.com/joomla/joomla-cms.git $(dirname $0)/../tmp
+	cd $(dirname $0)/../tmp
+	composer install --no-dev
+	npm install
+fi
 
 echo -e "\nFixing PHP code style issues"
 # Allow the extension to overwrite the default config file
@@ -14,6 +23,7 @@ if [ -f $(dirname $0)/../../../$1/rector.php ]; then
 	file=$(dirname $0)/../../../$1/rector.php
 fi
 $(dirname $0)/../config/vendor/bin/rector process --config $file $(dirname $0)/../../../$1/$2
+
 # Allow the extension to overwrite the default config file
 file=$(dirname $0)/../config/.php-cs-fixer.php
 if [ -f $(dirname $0)/../../../$1/.php-cs-fixer.php ]; then
@@ -36,3 +46,5 @@ if [ -f $(dirname $0)/../../../$1/.stylelintrc.json ]; then
 	file=$(dirname $0)/../../../$1/.stylelintrc.json
 fi
 npx stylelint --fix --allow-empty-input --formatter verbose "$(dirname $0)/../../../$1/$2/**/*.scss"
+
+find $(dirname $0)/../tmp -type l -delete

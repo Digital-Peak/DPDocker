@@ -56,9 +56,9 @@ return static function (RectorConfig $rectorConfig) : void {
 		RemoveUselessReturnTagRector::class,
 		// Keep <?php } ? on same line
 		NewlineAfterStatementRector::class,
-		// Functions are needed which belong to
+		// Do not remove methods and properties
 		RemoveUnusedPrivateMethodRector::class,
-		// Internal base classes are not detected correctly
+		// Stay safe and do not remove code
 		FinalizeClassesWithoutChildrenRector::class,
 		RemoveParentCallWithoutParentRector::class,
 		// Keep the or in JEXEC
@@ -75,4 +75,9 @@ return static function (RectorConfig $rectorConfig) : void {
 		'*/AcceptanceTesterActions.php',
 		'*/deleted.php'
 	]);
+
+	// Do not use the core classes for DPCalendar as it still supports J3
+	if (strpos(getenv('DPDOCKER_EXTENSION_PATH'), 'DPCalendar') === false) {
+		$rectorConfig->bootstrapFiles([__DIR__ . '/bootstrap.php']);
+	}
 };

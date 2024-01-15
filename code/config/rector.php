@@ -18,7 +18,6 @@ use Rector\DeadCode\Rector\ClassMethod\RemoveUselessReturnTagRector;
 use Rector\DeadCode\Rector\If_\UnwrapFutureCompatibleIfPhpVersionRector;
 use Rector\DeadCode\Rector\StaticCall\RemoveParentCallWithoutParentRector;
 use Rector\EarlyReturn\Rector\If_\ChangeOrIfContinueToMultiContinueRector;
-use Rector\EarlyReturn\Rector\Return_\PreparedValueToEarlyReturnRector;
 use Rector\Privatization\Rector\Class_\FinalizeClassesWithoutChildrenRector;
 use Rector\Set\ValueObject\LevelSetList;
 use Rector\Set\ValueObject\SetList;
@@ -63,8 +62,6 @@ return static function (RectorConfig $rectorConfig) : void {
 		RemoveParentCallWithoutParentRector::class,
 		// Keep the or in JEXEC
 		LogicalToBooleanRector::class,
-		// Fixing early return is too dangerous with missing classes
-		PreparedValueToEarlyReturnRector::class,
 		// Post inc
 		PostIncDecToPreIncDecRector::class,
 		// No splitting if with ||
@@ -76,8 +73,5 @@ return static function (RectorConfig $rectorConfig) : void {
 		'*/deleted.php'
 	]);
 
-	// Do not use the core classes for DPCalendar as it still supports J3
-	if (strpos(getenv('DPDOCKER_EXTENSION_PATH'), 'DPCalendar') === false) {
-		$rectorConfig->bootstrapFiles([__DIR__ . '/bootstrap.php']);
-	}
+	$rectorConfig->bootstrapFiles([__DIR__ . '/joomla-bootstrap.php']);
 };

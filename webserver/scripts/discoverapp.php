@@ -9,7 +9,6 @@ use Joomla\CMS\Application\CliApplication;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Installer\Installer;
 use Joomla\CMS\Log\Log;
-use Joomla\CMS\Log\LogEntry;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 
 $path = dirname(__FILE__);

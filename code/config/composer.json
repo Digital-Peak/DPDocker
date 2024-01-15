@@ -1,7 +1,14 @@
 {
 	"require": {
 		"friendsofphp/php-cs-fixer": "^3.46.0",
-		"rector/rector": "^0.18.13"
+		"rector/rector": "^0.18.13",
+		"phpstan/phpstan": "1.10.54",
+		"phpstan/phpstan-deprecation-rules": "^1.1.4"
+	},
+	"autoload": {
+		"psr-4": {
+			"DigitalPeak\\DPDocker\\Code\\": "src/"
+		}
 	},
 	"type": "project"
 }

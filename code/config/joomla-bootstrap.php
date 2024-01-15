@@ -32,11 +32,6 @@ ob_start();
 createLinks(getenv('DPDOCKER_EXTENSION_PATH') . '/', dirname(__DIR__) . '/tmp');
 ob_end_clean();
 
-// Delete the cached namespace file
-if (file_exists(JPATH_CACHE . '/autoload_psr4.php')) {
-	unlink(JPATH_CACHE . '/autoload_psr4.php');
-}
-
 // Load the extension namespaces
 JLoader::register('JNamespacePsr4Map', JPATH_LIBRARIES . '/namespacemap.php');
 $map = new JNamespacePsr4Map();

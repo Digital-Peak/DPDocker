@@ -12,3 +12,9 @@ services:
     command: /usr/src/Projects/DPDocker/code/scripts/exec-fix.sh ${EXTENSION} ${FILE}
     volumes:
       - ../..:/usr/src/Projects
+
+  analyze:
+    image: digitpeak/dpdocker-cli
+    command: /usr/src/Projects/DPDocker/code/scripts/exec-analyze.sh ${EXTENSION} ${FILE}
+    volumes:
+      - ../..:/usr/src/Projects

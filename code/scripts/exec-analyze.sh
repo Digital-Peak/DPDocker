@@ -22,6 +22,9 @@ git pull
 composer install --no-dev
 rm -f $(dirname $0)/../tmp/administrator/cache/autoload_psr4.php
 
+# Contains an invalid Text class
+rm -f $(dirname $0)/../tmp/administrator/components/com_joomlaupdate/finalisation.php
+
 echo -e "\nFixing PHP code quality issues with Rector"
 # Allow the extension to overwrite the default config file
 file=$(dirname $0)/../config/rector.php

@@ -23,33 +23,39 @@ Nothing special.
 ### Code check
 To run a code check, execute the following command:
 
-`./run-check.sh extension`
+`./run-check.sh extension [path]`
 
 Example
 
-`./run-check.sh Foo`
+`./run-check.sh Foo com_foo/admin/src/Controller`
+
+The path is optional. If specified only files in the subpath are checked, it can also point to a single file.
 
 ### Code fix
 THIS TASK CHANGES YOUR CODE FILES, COMMIT ALL YOUR STUFF BEFORE RUNNING IT!!
 
 To run a code fix, execute the following command:
 
-`./run-fix.sh extension`
+`./run-fix.sh extension [path]`
 
 Example
 
-`./run-fix.sh Foo`
+`./run-fix.sh Foo com_foo/admin/src/Model`
+
+The path is optional. If specified only files in the subpath are checked, it can also point to a single file.
 
 ### Code analyze
 THIS TASK CHANGES YOUR CODE FILES, COMMIT ALL YOUR STUFF BEFORE RUNNING IT!! It is also recommended that you run the code style fixer after the analyze task as Rector works on the AST and it can happen that it does not rebuild the files the same way as they were before.
 
 To run a code analyze, execute the following command:
 
-`./run-analyze.sh extension`
+`./run-analyze.sh extension [path]`
 
 Example
 
-`./run-analyze.sh Foo`
+`./run-analyze.sh Foo  com_foo/admin/src/View`
+
+The path is optional. If specified only files in the subpath are checked, it can also point to a single file.
 
 ## Internals
 Our PHP code style is based on PSR-2 which is also the Joomla standard now, but we are using tabs. So we are using this one as template. But it is possible to define your own one in your extension. Just place your preferred code style file in the root folder of your extension.
@@ -75,5 +81,4 @@ PHPStan analyzes the code up to level 8, for now it doesn't care about mixed typ
 - The $displayData variable is allowed in layout files in the /layouts/ folder
 - Array doesn't need to be specified correctly with all attributes, we are relaxed here
 - CMSObject type hint messages for the getItem function, needs to be fixed in core first
-- Some language detection issues with the framework package
 - Ignoring triggerEvent as not all core events are converted yet

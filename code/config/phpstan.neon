@@ -12,6 +12,7 @@ parameters:
 	  - ../tmp
 	stubFiles:
 		- stubs/SiteApplication.stub
+		- stubs/Language.stub
 	excludePaths:
 		analyseAndScan:
 			- */tests/*
@@ -33,10 +34,6 @@ parameters:
 			message: '#no value type specified in iterable type array.#'
 		-
 			message: '#getItem\(\) has typehint with deprecated class Joomla\\CMS\\Object\\CMSObject#'
-		-
-			message: '#Call to deprecated method _\(\) of class Joomla\\CMS\\Language\\Language#'
-		-
-			message: '#Joomla\\CMS\\Language\\Text::#'
 		-
 			message: '#Call to deprecated method triggerEvent\(\)#'
 

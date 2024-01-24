@@ -13,7 +13,7 @@ Currently are the following PHP code analyze checks performed:
 - **Rector**  
 [Rector](https://getrector.com) fixes the PHP code and is able to upgrade it to a specific PHP version. Currently a minimum PHP compatibility of 7.4 is configured. The configuration is defined in the file in the file /code/config/rector.php. When the extension has a rector.php file in the root folder, then this one will taken, instead of the default one.
 - **PHPStan**  
-[PHPStan](https://phpstan.org) finds bugs in the extension PHP code with strong type hinting. Currently the most strict level 9 is used to analyze. The configuration is defined in the file in the file /code/config/phpstan.neon. When the extension has a phpstan.neon file in the root folder, then this one will taken, instead of the default one.
+[PHPStan](https://phpstan.org) finds bugs in the extension PHP code with strong type hinting. Currently up to level 8 does PHPStan check the code quality, as typed arrays is out of scope for now. The configuration is defined in the file in the file /code/config/phpstan.neon. When the extension has a phpstan.neon file in the root folder, then this one will taken, instead of the default one.
 
 
 ## Prerequisites

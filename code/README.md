@@ -60,7 +60,7 @@ The path is optional. If specified only files in the subpath are checked, it can
 ## Internals
 Our PHP code style is based on PSR-2 which is also the Joomla standard now, but we are using tabs. So we are using this one as template. But it is possible to define your own one in your extension. Just place your preferred code style file in the root folder of your extension.
 
-The analyze tools Rector and PHPStan are using the most strict levels, if you want to be less strict, copy the default configuration files and remove rector sets or individual rules or lover the PHPStan level. Both tools do load the joomla-bootstrap.php file which adds the Joomla classes and loads the extension classes into the Joomla classloader.
+The analyze tools Rector and PHPStan are using the most strict levels, if you want to be less strict, copy the default configuration files and remove rector sets or individual rules or lover the PHPStan level. Both tools do load the joomla-bootstrap.php file which adds the Joomla classes and loads the extension classes into the Joomla classloader. Thats why the Joomla code is cloned into the folder /code/tmp/joomla. The default branch is used and is updated on every analyze run, including the PHP dependencies installed.
 
 ### Rector
 Rector runs all available rules, except the naming ones as naming should be independent. It does also ignore the following rules:
@@ -73,6 +73,9 @@ Rector runs all available rules, except the naming ones as naming should be inde
 - The or boolean statement is allowed
 - Increments can also be written the post way
 - If statements are not split
+- Component classes can have use statements on one line as the CategoryServiceTrait and TagServiceTrait need to be defined with insteadof
+
+Rector does the first time cache the classes in /code/tmp/cache, so if something goes wrong, clear the cache directory.
 
 ### PHPStan
 PHPStan analyzes the code up to level 8, for now it doesn't care about mixed types which are on level 9 checked. While the analyze is performed, the following errors are ignored:

@@ -7,17 +7,17 @@
 
 define('_JEXEC', 1);
 define('JPATH_PLATFORM', 1);
-define('JPATH_BASE', dirname(__DIR__) . '/tmp');
+define('JPATH_BASE', dirname(__DIR__) . '/tmp/joomla');
 
 // Load the Joomla class loader
-require_once dirname(__DIR__) . '/tmp/includes/defines.php';
+require_once JPATH_BASE. '/includes/defines.php';
 
 require_once JPATH_LIBRARIES . '/loader.php';
 JLoader::setup();
 require_once JPATH_LIBRARIES . '/vendor/autoload.php';
 
 // Rector crashes as it is inside a phar
-//require_once dirname(__DIR__) . '/tmp/libraries/bootstrap.php';
+//require_once JPATH_BASE . '/tmp/libraries/bootstrap.php';
 
 // Start the auto loaders
 foreach (new RecursiveIteratorIterator(new RecursiveDirectoryIterator(getenv('DPDOCKER_EXTENSION_PATH'))) as $file) {
@@ -27,11 +27,11 @@ foreach (new RecursiveIteratorIterator(new RecursiveDirectoryIterator(getenv('DP
 }
 
 // Create the links to the extension
-require_once '../../webserver/scripts/link-extension.php';
+require_once '../../../webserver/scripts/link-extension.php';
 
 // Hide the output
 ob_start();
-createLinks(getenv('DPDOCKER_EXTENSION_PATH') . '/', dirname(__DIR__) . '/tmp');
+createLinks(getenv('DPDOCKER_EXTENSION_PATH') . '/', JPATH_BASE);
 ob_end_clean();
 
 // Load the extension namespaces

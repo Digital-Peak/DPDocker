@@ -24,9 +24,6 @@ use Rector\Set\ValueObject\LevelSetList;
 use Rector\Set\ValueObject\SetList;
 
 return static function (RectorConfig $rectorConfig) : void {
-	// Do not overload the system
-	$rectorConfig->parallel(120, 2, 2);
-
 	// Min version
 	$rectorConfig->phpVersion(PhpVersion::PHP_74);
 
@@ -71,13 +68,23 @@ return static function (RectorConfig $rectorConfig) : void {
 		// No splitting if with ||
 		ChangeOrIfContinueToMultiContinueRector::class,
 		// Multiuse should be allowed in component classes
-		SeparateMultiUseImportsRector::class=> ['*Component.php'],
+		SeparateMultiUseImportsRector::class => ['*Component.php'],
 
 		// Ignore not project files
-		'*/vendor',
+		'*/vendor/*',
 		'*/AcceptanceTesterActions.php',
 		'*/deleted.php'
 	]);
 
+	// The bootstrap file, which finds the core classes and loads the extension namespace
 	$rectorConfig->bootstrapFiles([__DIR__ . '/joomla-bootstrap.php']);
+
+	// Do not overload the system
+	$rectorConfig->parallel(120, 2, 2);
+
+	// The cache directory
+	if (!is_dir('/tmp/rector/' . getenv('DPDOCKER_EXTENSION_NAME'))) {
+		mkdir('/tmp/rector/' . getenv('DPDOCKER_EXTENSION_NAME'));
+	}
+	$rectorConfig->cacheDirectory('/tmp/rector/' . getenv('DPDOCKER_EXTENSION_NAME'));
 };

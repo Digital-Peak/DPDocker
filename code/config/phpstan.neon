@@ -4,12 +4,11 @@ includes:
 parameters:
 	level: 8
 	phpVersion: 70400
-	editorUrl: 'vscode://file/%%relFile%%:%%line%%'
 	reportUnmatchedIgnoredErrors: false
 	bootstrapFiles:
 		- joomla-bootstrap.php
 	scanDirectories:
-	  - ../tmp
+	  - ../tmp/joomla
 	stubFiles:
 		- stubs/SiteApplication.stub
 		- stubs/Language.stub

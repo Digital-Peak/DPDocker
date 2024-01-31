@@ -125,6 +125,9 @@ function createLinks($folderRoot, $wwwRoot)
 		if (strpos($filename, 'tmpl_') === 0) {
 			createLink($folderRoot . $filename, $wwwRoot . '/templates/' . str_replace('tmpl_', '', $filename));
 		}
+		if (strpos($filename, 'tpl_') === 0) {
+			createLink($folderRoot . $filename, $wwwRoot . '/templates/' . str_replace('tpl_', '', $filename));
+		}
 		if (strpos($filename, 'lib_') === 0) {
 			createLink($folderRoot . $filename, $wwwRoot . '/libraries/' . $filename);
 			createLink($folderRoot . $filename . '/' . $filename . '.xml', $wwwRoot . '/administrator/manifests/libraries/' . $filename . '.xml');

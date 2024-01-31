@@ -11,7 +11,6 @@ tmpDir=$(dirname $0)/../tmp/joomla
 
 cd $(dirname $0)/../config
 composer install --quiet
-npm install --silent
 
 if [ ! -d $tmpDir ]; then
 	git clone https://github.com/joomla/joomla-cms.git $tmpDir

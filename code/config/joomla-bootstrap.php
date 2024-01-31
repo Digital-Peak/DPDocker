@@ -32,6 +32,10 @@ require_once '../../../webserver/scripts/link-extension.php';
 // Hide the output
 ob_start();
 createLinks(getenv('DPDOCKER_EXTENSION_PATH') . '/', JPATH_BASE);
+$extensions = dirname(getenv('DPDOCKER_EXTENSION_PATH')) . '/Joomla-Extensions';
+if (is_dir($extensions)) {
+	createLinks($extensions . '/', JPATH_BASE);
+}
 ob_end_clean();
 
 // Load the extension namespaces

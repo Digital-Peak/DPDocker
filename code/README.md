@@ -13,8 +13,7 @@ Currently are the following PHP code analyze checks performed:
 - **Rector**  
 [Rector](https://getrector.com) fixes the PHP code and is able to upgrade it to a specific PHP version. Currently a minimum PHP compatibility of 7.4 is configured. The configuration is defined in the file in the file /code/config/rector.php. When the extension has a rector.php file in the root folder, then this one will taken, instead of the default one.
 - **PHPStan**  
-[PHPStan](https://phpstan.org) finds bugs in the extension PHP code with strong type hinting. Currently up to level 8 does PHPStan check the code quality, as typed arrays is out of scope for now. The configuration is defined in the file in the file /code/config/phpstan.neon. When the extension has a phpstan.neon file in the root folder, then this one will taken, instead of the default one.
-
+[PHPStan](https://phpstan.org) finds bugs in the extension PHP code with strong type hinting. Currently up to level 8 does PHPStan check the code quality, as typed arrays is out of scope for now. The configuration is defined in the file in the file /code/config/phpstan.neon. When the extension has a phpstan.neon file in the root folder, then this one will taken, instead of the default one. It is also possible to create a phpstan.neon file in the root of the extension project which references the original file from DPCocker through the [includes attribute](https://phpstan.org/config-reference#multiple-files).
 
 ## Prerequisites
 Nothing special.
@@ -61,6 +60,8 @@ The path is optional. If specified only files in the subpath are checked, it can
 Our PHP code style is based on PSR-2 which is also the Joomla standard now, but we are using tabs. So we are using this one as template. But it is possible to define your own one in your extension. Just place your preferred code style file in the root folder of your extension.
 
 The analyze tools Rector and PHPStan are using the most strict levels, if you want to be less strict, copy the default configuration files and remove rector sets or individual rules or lover the PHPStan level. Both tools do load the joomla-bootstrap.php file which adds the Joomla classes and loads the extension classes into the Joomla classloader. Thats why the Joomla code is cloned into the folder /code/tmp/joomla. The default branch is used and is updated on every analyze run, including the PHP dependencies installed.
+
+If your project connects to other extensions, then you can create a Joomla-Projects folder on the same level as DPDocker. The files of that project are included during code analyze. For example when you have a reference to DPAttachments, include the whole project there.
 
 ### Rector
 Rector runs all available rules, except the naming ones as naming should be independent. It does also ignore the following rules:

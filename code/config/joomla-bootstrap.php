@@ -6,6 +6,8 @@
  */
 
 define('_JEXEC', 1);
+define('JPATH_PLATFORM', 1);
+define('JPATH_BASE', dirname(__DIR__) . '/tmp');
 
 // Load the Joomla class loader
 require_once dirname(__DIR__) . '/tmp/includes/defines.php';

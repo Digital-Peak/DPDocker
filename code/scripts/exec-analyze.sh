@@ -19,6 +19,7 @@ fi
 
 cd $tmpDir
 git reset --hard
+git switch 5.0-dev
 git pull
 composer install --no-dev
 rm -f $tmpDir/administrator/cache/autoload_psr4.php

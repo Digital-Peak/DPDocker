@@ -19,7 +19,7 @@ abstract class NamespaceBased implements DynamicMethodReturnTypeExtension
 	protected function getNamespaces(): array
 	{
 		if (!$this->namespaces) {
-			$this->namespaces = require dirname(__DIR__, 4) . '/tmp/administrator/cache/autoload_psr4.php';
+			$this->namespaces = require dirname(__DIR__, 4) . '/tmp/joomla/administrator/cache/autoload_psr4.php';
 		}
 
 		return $this->namespaces;

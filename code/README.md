@@ -86,3 +86,4 @@ PHPStan analyzes the code up to level 8, for now it doesn't care about mixed typ
 - Array doesn't need to be specified correctly with all attributes, we are relaxed here
 - CMSObject type hint messages for the getItem function, needs to be fixed in core first
 - Ignoring triggerEvent as not all core events are converted yet
+- Ignoring the deprecated getError function as we need to wait till the core actually throws exceptions

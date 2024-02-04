@@ -35,6 +35,8 @@ parameters:
 			message: '#getItem\(\) has typehint with deprecated class Joomla\\CMS\\Object\\CMSObject#'
 		-
 			message: '#Call to deprecated method triggerEvent\(\)#'
+		-
+			message: '#Call to deprecated method getError\(\)#'
 
 services:
 	-

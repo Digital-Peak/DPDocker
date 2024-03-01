@@ -213,7 +213,10 @@ function findFilesRecursiveSync(base, name, files, result) {
 		(file) => {
 			const newbase = path.join(base, file);
 			if (fs.statSync(newbase).isDirectory()) {
-				result = findFilesRecursiveSync(newbase, name, fs.readdirSync(newbase), result);
+				try {
+					result = findFilesRecursiveSync(newbase, name, fs.readdirSync(newbase), result);
+				} catch (e) { }
+
 				return;
 			}
 

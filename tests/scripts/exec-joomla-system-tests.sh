@@ -3,7 +3,7 @@
 # @copyright Copyright (C) 2020 Digital Peak GmbH. <https://www.digital-peak.com>
 # @license   http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
 
-while  ! curl http://joomla-web-test  > /dev/null 2>&1; do
+while  ! wget -q --spider http://joomla-web-test; do
 	echo "$(date) - waiting for web server"
 	sleep 4
 done

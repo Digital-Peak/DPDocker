@@ -13,7 +13,7 @@ services:
       - test:/tmp/tests
 
   joomla-system-tests:
-    image: cypress/included:12.8.1
+    image: cypress/included:13.6.6
     entrypoint: /usr/src/Projects/DPDocker/tests/scripts/exec-joomla-system-tests.sh ${JOOMLA} ${DB} ${TEST}
     ports:
       - 8084:8084

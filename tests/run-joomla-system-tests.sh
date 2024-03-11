@@ -30,7 +30,7 @@ docker-compose -f $(dirname $0)/docker-compose.yml stop
 sudo xhost +
 
 # Run the tests
-EXTENSION= TEST=$t JOOMLA=$j REBUILD= DB=$db MYSQL_DBVERSION=$my POSTGRES_DBVERSION=$pg PHP_VERSION=$php BROWSER=$b docker-compose -f $(dirname $0)/docker-compose.yml up joomla-system-tests
+EXTENSION= TEST=$t JOOMLA=$j REBUILD= DB=$db MYSQL_DBVERSION=$my POSTGRES_DBVERSION=$pg PHP_VERSION=$php BROWSER=$b USER_ID= GROUP_ID= docker-compose -f $(dirname $0)/docker-compose.yml up joomla-system-tests
 
 # Stop the containers
 docker-compose -f $(dirname $0)/docker-compose.yml stop

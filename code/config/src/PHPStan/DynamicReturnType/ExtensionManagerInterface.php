@@ -7,8 +7,10 @@
 
 namespace DigitalPeak\DPDocker\Code\PHPStan\DynamicReturnType;
 
+use DPCalendar\Plugin\DPCalendarPlugin;
 use Joomla\CMS\Extension\ExtensionManagerInterface as CMSExtensionManagerInterface;
 use Joomla\CMS\Extension\MVCComponent;
+use Joomla\CMS\Plugin\CMSPlugin;
 use PhpParser\Node\Expr\MethodCall;
 use PHPStan\Analyser\Scope;
 use PHPStan\Reflection\MethodReflection;
@@ -53,7 +55,12 @@ class ExtensionManagerInterface extends NamespaceBased
 
 		// Plugin class
 		if ($type && $namespace = $this->findNamespace('\\Plugin\\' . $type . '\\' . $name)) {
-			return new ObjectType($namespace . 'Extension\\' . $name);
+			$class = $namespace . 'Extension\\' . $name;
+			if (!class_exists($class)) {
+				$class = CMSPlugin::class;
+			}
+
+			return new ObjectType($class);
 		}
 
 		return null;

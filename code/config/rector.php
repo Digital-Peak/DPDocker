@@ -25,7 +25,7 @@ use Rector\Set\ValueObject\SetList;
 
 return static function (RectorConfig $rectorConfig) : void {
 	// Min version
-	$rectorConfig->phpVersion(PhpVersion::PHP_74);
+	$rectorConfig->phpVersion(PhpVersion::PHP_81);
 
 	// No short class import
 	$rectorConfig->importShortClasses(false);
@@ -44,7 +44,7 @@ return static function (RectorConfig $rectorConfig) : void {
 		SetList::PRIVATIZATION,
 		SetList::STRICT_BOOLEANS,
 		SetList::TYPE_DECLARATION,
-		LevelSetList::UP_TO_PHP_74
+		LevelSetList::UP_TO_PHP_81
 	]);
 
 	// Skip some rules and folders/files

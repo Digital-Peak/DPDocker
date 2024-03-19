@@ -3,7 +3,7 @@ includes:
 
 parameters:
 	level: 8
-	phpVersion: 70400
+	phpVersion: 80100
 	reportUnmatchedIgnoredErrors: false
 	bootstrapFiles:
 		- joomla-bootstrap.php
@@ -20,6 +20,7 @@ parameters:
 			- */vendor/*
 			- */deleted.php
 			- */AcceptanceTesterActions.php
+			- */rector.php
 	universalObjectCratesClasses:
 		- Joomla\CMS\Object\CMSObject
 		- Joomla\CMS\Table\Table

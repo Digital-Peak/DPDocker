@@ -29,4 +29,4 @@ The cli image is intended to be used with cli tasks like running scripts or othe
 The web image runs an apache web server with all needed extensions enabled.
 
 ## Result
-The docker registry contains two new images, digitpeak/dpdocker-cli and digitpeak/dpdocker-web which are ready to be used. If you want to use a specific PHP version then use the images with a tag, like `digitpeak/dpdocker-cli:8.0`.
+The docker registry contains two new images, digitpeak/dpdocker-cli and digitpeak/dpdocker-web which are ready to be used. If you want to use a specific PHP version then use the images with a tag, like `digitpeak/dpdocker-cli:8.3`.

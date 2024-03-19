@@ -22,10 +22,10 @@ Examples
 ./run-system-tests.sh -e Foo # All tests on Joomla 4 on the latest PHP version on chrome
 ./run-system-tests.sh -e Foo -b firefox -j 5.0-dev # All tests on Joomla 5.0-dev on the latest PHP version on firefox
 ./run-system-tests.sh -e Foo -j 3 -php 7.3 # All tests only on Joomla 3 and PHP 7.3 on chrome
-./run-system-tests.sh -e Foo -t tests/acceptance/views -php 8.0 # Test in folder tests/acceptance/views on Joomla 4 on PHP 8.0 on chrome
+./run-system-tests.sh -e Foo -t tests/acceptance/views -php 8.3 # Test in folder tests/acceptance/views on Joomla 4 on PHP 8.3 on chrome
 ./run-system-tests.sh -e Foo -t tests/acceptance/views -j 4 # Tests in folder tests/acceptance/views on Joomla 4 on the latest PHP version on chrome
 ./run-system-tests.sh -e Foo -t tests/acceptance/views/ArticleViewCest.php:canSeeArticle # Test tests/acceptance/views/ArticleViewCest.php:canSeeArticle on Joomla 4 on the latest PHP version on chrome
-./run-system-tests.sh -e Foo -t tests/acceptance/views/ArticleViewCest.php:canSeeArticle -j 4 -php 7.4 # Test tests/acceptance/views/ArticleViewCest.php:canSeeArticle on Joomla 4 on PHP 7.4 on chrome
+./run-system-tests.sh -e Foo -t tests/acceptance/views/ArticleViewCest.php:canSeeArticle -j 4 -php 8.1 # Test tests/acceptance/views/ArticleViewCest.php:canSeeArticle on Joomla 4 on PHP 8.1 on chrome
 ```
 
 - -e  

@@ -1,18 +1,18 @@
 {
 	"name": "DPDocker",
 	"devDependencies": {
-		"@babel/core": "^7.24.0",
-		"@babel/preset-env": "^7.24.0",
+		"@babel/core": "^7.24.1",
+		"@babel/preset-env": "^7.24.1",
 		"@rollup/plugin-node-resolve": "^15.2.3",
 		"@rollup/plugin-replace": "^5.0.5",
 		"js-cleanup": "^1.2.0",
 		"node-watch": "^0.7.4",
-		"rollup": "^4.12.0",
+		"rollup": "^4.13.0",
 		"rollup-plugin-import-css": "^3.5.0",
 		"rollup-plugin-svg": "^2.0.0",
 		"rollup-plugin-vue": "^6.0.0",
-		"sass": "^1.71.1",
+		"sass": "^1.72.0",
 		"sync-request": "^6.1.0",
-		"terser": "^5.28.1"
+		"terser": "^5.29.2"
 	}
 }

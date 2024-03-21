@@ -18,4 +18,5 @@ services:
     command: /usr/src/Projects/DPDocker/code/scripts/exec-analyze.sh ${EXTENSION} ${FILE}
     volumes:
       - ../..:/usr/src/Projects
-      - ./tmp/cache:/tmp/rector
+      - ./tmp/cache/rector:/tmp/rector
+      - ./tmp/cache/phpstan:/tmp/phpstan

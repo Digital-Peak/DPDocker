@@ -5,6 +5,7 @@ parameters:
 	level: 8
 	phpVersion: 80100
 	reportUnmatchedIgnoredErrors: false
+	tmpDir: /tmp/phpstan/%env.DPDOCKER_EXTENSION_NAME%
 	bootstrapFiles:
 		- joomla-bootstrap.php
 	scanDirectories:

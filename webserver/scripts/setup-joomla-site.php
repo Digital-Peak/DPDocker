@@ -32,7 +32,7 @@ if (!$completeVersion) {
 
 		if ($completeVersion === '5.0.3') {
 			$isBranch      = true;
-			$completeVersion = '5.0-dev';
+			$completeVersion = '5.1-dev';
 		}
 
 		break;

@@ -8,9 +8,9 @@
 namespace DigitalPeak\DPDocker\Code\PHPStan\Reflection;
 
 use Joomla\CMS\Form\FormField as CMSFormField;
-use PHPStan\Reflection\PropertyReflection;
 use PHPStan\Reflection\ClassReflection;
 use PHPStan\Reflection\PropertiesClassReflectionExtension;
+use PHPStan\Reflection\PropertyReflection;
 
 class FormField implements PropertiesClassReflectionExtension
 {
@@ -18,7 +18,7 @@ class FormField implements PropertiesClassReflectionExtension
 	{
 		if (!$classReflection->is(CMSFormField::class)) {
 			return false;
-        }
+		}
 
 		return $classReflection->hasNativeProperty($propertyName);
 	}

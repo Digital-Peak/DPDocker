@@ -7,18 +7,18 @@
 
 namespace DigitalPeak\DPDocker\Code\PHPStan\Reflection;
 
-use PHPStan\Reflection\PropertyReflection;
 use PHPStan\Reflection\ClassReflection;
+use PHPStan\Reflection\PropertyReflection;
 use PHPStan\TrinaryLogic;
 use PHPStan\Type\Type;
 
-class FormFieldProperty implements PropertyReflection {
-
+class FormFieldProperty implements PropertyReflection
+{
 	public function __construct(
 		private ClassReflection $classReflection,
 		private string $propertyName
-	)
-	{}
+	) {
+	}
 
 	public function getDeclaringClass(): ClassReflection
 	{

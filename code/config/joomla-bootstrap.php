@@ -10,7 +10,7 @@ define('JPATH_PLATFORM', 1);
 define('JPATH_BASE', dirname(__DIR__) . '/tmp/joomla');
 
 // Load the Joomla class loader
-require_once JPATH_BASE. '/includes/defines.php';
+require_once JPATH_BASE . '/includes/defines.php';
 
 require_once JPATH_LIBRARIES . '/loader.php';
 JLoader::setup();
@@ -21,9 +21,9 @@ require_once JPATH_LIBRARIES . '/vendor/autoload.php';
 
 // Start the auto loaders
 foreach (new RecursiveIteratorIterator(new RecursiveDirectoryIterator(getenv('DPDOCKER_EXTENSION_PATH'))) as $file) {
-	 if (strpos($file , '/vendor/autoload.php') !== false) {
+	if (strpos($file, '/vendor/autoload.php') !== false) {
 		require_once $file;
-	 }
+	}
 }
 
 // Create the links to the extension

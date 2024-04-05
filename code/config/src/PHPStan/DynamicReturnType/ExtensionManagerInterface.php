@@ -7,7 +7,6 @@
 
 namespace DigitalPeak\DPDocker\Code\PHPStan\DynamicReturnType;
 
-use DPCalendar\Plugin\DPCalendarPlugin;
 use Joomla\CMS\Extension\ExtensionManagerInterface as CMSExtensionManagerInterface;
 use Joomla\CMS\Extension\MVCComponent;
 use Joomla\CMS\Plugin\CMSPlugin;

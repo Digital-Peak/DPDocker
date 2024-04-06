@@ -1,8 +1,8 @@
 {
 	"require": {
-		"friendsofphp/php-cs-fixer": "^3.52.0",
-		"rector/rector": "^1.0.3",
-		"phpstan/phpstan": "^1.10.63",
+		"friendsofphp/php-cs-fixer": "^3.52.1",
+		"rector/rector": "^1.0.4",
+		"phpstan/phpstan": "^1.10.66",
 		"phpstan/phpstan-deprecation-rules": "^1.1.4"
 	},
 	"autoload": {

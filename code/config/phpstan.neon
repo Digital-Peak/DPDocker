@@ -11,6 +11,7 @@ parameters:
 	scanDirectories:
 	  - ../tmp/joomla
 	stubFiles:
+		- stubs/AbstractMenu.stub
 		- stubs/AdminModel.stub
 		- stubs/Language.stub
 		- stubs/CMSApplication.stub

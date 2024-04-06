@@ -5,12 +5,15 @@
  * @license   http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
  */
 
-$finder = PhpCsFixer\Finder::create()
+use PhpCsFixer\Config;
+use PhpCsFixer\Finder;
+
+$finder = Finder::create()
 	->in(__DIR__)
 	->notPath('/tmpl/')
 	->notPath('/layouts/');
 
-$config = new PhpCsFixer\Config();
+$config = new Config();
 
 $config->setRules([
 		'@PSR12'                          => true,
@@ -18,6 +21,7 @@ $config->setRules([
 		'whitespace_after_comma_in_array' => true,
 		'single_space_around_construct'   => true,
 		'concat_space'                    => ['spacing' => 'one'],
+		'cast_spaces'                     => ['space' => 'none'],
 		'indentation_type'                => true,
 		'no_break_comment'                => false,
 		'no_unused_imports'               => true,

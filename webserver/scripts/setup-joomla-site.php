@@ -23,18 +23,6 @@ if (!$completeVersion) {
 		}
 
 		$completeVersion = $branch->version;
-
-		// Because of the security repos in the composer file, we need to use the branches
-		if ($completeVersion === '4.4.3') {
-			$isBranch      = true;
-			$completeVersion = '4.4-dev';
-		}
-
-		if ($completeVersion === '5.0.3') {
-			$isBranch      = true;
-			$completeVersion = '5.1-dev';
-		}
-
 		break;
 	}
 }

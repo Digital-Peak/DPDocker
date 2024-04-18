@@ -122,9 +122,11 @@ class DPDockerReleaseBuild
 			if (count($extensions) > 1 && is_file($this->extensionRoot . '/package/script.php')) {
 				copy($this->extensionRoot . '/package/script.php', $tmpFolder . '/script.php');
 			}
-			if (is_file($this->extensionRoot . '/package/deleted.php')) {
+
+			if (count($extensions) > 1 && is_file($this->extensionRoot . '/package/deleted.php')) {
 				copy($this->extensionRoot . '/package/deleted.php', $tmpFolder . '/deleted.php');
 			}
+
 			copy($this->extensionRoot . '/License.md', $tmpFolder . '/License.txt');
 			copy($manifestFile, $tmpFolder . '/' . $package->substituteManifestFileName . '.xml');
 

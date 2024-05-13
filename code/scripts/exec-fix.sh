@@ -17,11 +17,11 @@ $(dirname $0)/../config/vendor/bin/php-cs-fixer fix --allow-risky=yes --diff --p
 
 echo -e "\nFixing Javascript code style issues"
 # Allow the extension to overwrite the default config file
-file=$(dirname $0)/../config/.eslintrc.js
-if [ -f $(dirname $0)/../../../$1/.eslintrc.js ]; then
-	file=$(dirname $0)/../../../$1/.eslintrc.js
+file=$(dirname $0)/../config/eslint.config.mjs
+if [ -f $(dirname $0)/../../../$1/eslint.config.mjs ]; then
+	file=$(dirname $0)/../../../$1/eslint.config.mjs
 fi
-ESLINT_USE_FLAT_CONFIG=false DEBUG=eslint:cli-engine eslint --fix --no-error-on-unmatched-pattern --config $file --ignore-pattern '**/media/*' --ext .js $(dirname $0)/../../../$1/$2
+npx eslint --debug --fix --no-error-on-unmatched-pattern --no-ignore $(dirname $0)/../../../$1/com_dpcalendar/resources/js/dpcalendar.js
 
 echo -e "\nFixing CSS code style issues"
 # Allow the extension to overwrite the default config file

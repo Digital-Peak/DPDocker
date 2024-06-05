@@ -15,6 +15,12 @@ rebuild=$6
 cd $root
 echo "Doing setup on $root"
 
+if [ ! -d $root/.vscode ]; then
+	sudo cp -rf $(dirname $0)/vscode $root/.vscode
+	sudo chmod -R 777 $root/.vscode
+	sed -i "s|{PATH}|$root|g" $root/.vscode/launch.json
+fi
+
 if [ -f $root/administrator/cache/autoload_psr4.php ]; then
 	rm -f $root/administrator/cache/autoload_psr4.php
 fi

@@ -1,0 +1,8 @@
+{
+	"editor.formatOnSave": false,
+	"editor.indentSize": "tabSize",
+	"[javascript]": {
+		"editor.tabSize": 2
+	},
+	"php-cs-fixer.onsave": false
+}

@@ -108,7 +108,7 @@ services:
   webdavserver:
     image: apachewebdav/apachewebdav
     ports:
-      - 8084:80
+      - 84:80
     environment:
       PUID: ${USER_ID}
       PGID: ${GROUP_ID}

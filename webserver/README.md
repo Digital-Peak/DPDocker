@@ -73,3 +73,5 @@ With the url _localhost:83_ you get access to a MailCatcher instance. [Mailcatch
 With the url _localhost:21_ you get access to a FTP server instance. You can log in with ftp/ftp. Please use none secure connections.
 - **SSH server**  
 With the url _localhost:2222_ you get access to a SSH server instance with SFTP support. You can log in with sftp/sftp or the key which is available in the web root on /var/www/html/key.
+- **WebDAV server**  
+With the url _localhost:84_ you get access to a webdav server instance which points to the www root directory. You can log in with webdav/webdav.

@@ -20,15 +20,16 @@ ENV PHP_INI_UPLOAD_MAX_FILESIZE=200M
 ENV PHP_INI_POST_MAX_SIZE=200M
 
 # Install
-RUN sudo apt-get update
-RUN sudo apt-get install -y mariadb-client
-RUN sudo apt-get install -y postgresql-client
-RUN sudo apt-get install -y sqlite3
-RUN sudo apt-get install -y graphviz python
-RUN sudo apt-get install -y build-essential
-RUN sudo apt-get install -y rsync
-RUN sudo apt-get install -y zip
-RUN sudo apt-get install -y unzip
-RUN sudo apt-get install -y php-pear
+RUN sudo apt-get update && sudo apt-get install -y \
+	mariadb-client \
+	postgresql-client \
+	sqlite3 \
+	graphviz python \
+	build-essential \
+	rsync \
+	zip \
+	unzip \
+	php-pear
 
-RUN sudo npm install -g bun
+# Update NPM and install bun
+RUN sudo npm update -g npm && sudo npm install -g bun

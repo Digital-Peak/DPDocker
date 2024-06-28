@@ -79,6 +79,11 @@ return static function (RectorConfig $rectorConfig): void {
 	// Do not overload the system
 	$rectorConfig->parallel(120, 2, 2);
 
+	// Check if the temp dir exists
+	if (!is_dir('/tmp/rector')){
+		return;
+	}
+
 	// The cache directory
 	if (!is_dir('/tmp/rector/' . getenv('DPDOCKER_EXTENSION_NAME'))) {
 		mkdir('/tmp/rector/' . getenv('DPDOCKER_EXTENSION_NAME'));

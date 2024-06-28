@@ -59,12 +59,9 @@ return static function (RectorConfig $rectorConfig): void {
 		// Do not remove methods and properties
 		RemoveUnusedPrivateMethodRector::class,
 		// Stay safe and do not remove code
-		FinalizeClassesWithoutChildrenRector::class,
 		RemoveParentCallWithoutParentRector::class,
 		// Keep the or in JEXEC
 		LogicalToBooleanRector::class,
-		// Post inc
-		PostIncDecToPreIncDecRector::class,
 		// No splitting if with ||
 		ChangeOrIfContinueToMultiContinueRector::class,
 		// Multiuse should be allowed in component classes

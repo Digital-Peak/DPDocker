@@ -7,7 +7,6 @@
 // The needed libs
 const fs = require('fs');
 const path = require('path');
-const request = require('sync-request');
 const util = require('./util');
 
 util.findFilesRecursiveSync(path.resolve(process.argv[2]), 'assets.json').forEach(file => {
@@ -23,7 +22,7 @@ util.findFilesRecursiveSync(path.resolve(process.argv[2]), 'assets.json').forEac
 
 async function buildAssets(root, assets, includeVendor) {
 	// Looping over the assets
-	assets.local.forEach(asset => {
+	assets.local.forEach((asset) => {
 		if (!fs.existsSync(root + '/' + asset.src)) {
 			return;
 		}
@@ -38,7 +37,7 @@ async function buildAssets(root, assets, includeVendor) {
 		util.deleteDirectory(root + '/' + asset.dest);
 
 		// Traverse the directory and build the assets
-		util.getFiles(root + '/' + asset.src).forEach(file => {
+		util.getFiles(root + '/' + asset.src).forEach((file) => {
 			// Files starting with an underscore are treated as imports and do not need to be built
 			if (path.basename(file).indexOf('_') === 0) {
 				return;
@@ -55,7 +54,9 @@ async function buildAssets(root, assets, includeVendor) {
 	}
 
 	// Loop over the vendor assets
-	assets.vendor.forEach(asset => {
+	for (let i = 0; i < assets.vendor.length; i++) {
+		const asset = assets.vendor[i];
+
 		// Make sure that the destination folder exists
 		let dir = path.extname(asset.dest) ? path.dirname(root + '/' + asset.dest) : root + '/' + asset.dest;
 		if (!fs.existsSync(dir)) {
@@ -68,7 +69,9 @@ async function buildAssets(root, assets, includeVendor) {
 		}
 
 		// Loop over the source assets and combine them into a single file
-		asset.src.forEach((source, index) => {
+		for (let index = 0; index < asset.src.length; index++) {
+			const source = asset.src[index];
+
 			// Determine file name
 			let file = root + '/node_modules/' + source;
 			if (source.indexOf('https://') === -1) {
@@ -79,19 +82,19 @@ async function buildAssets(root, assets, includeVendor) {
 				// On the first entry write the file
 				if (index == 0 && fs.statSync(file).isFile()) {
 					copyFileSync(file, root + '/' + asset.dest);
-					return;
+					continue;
 				}
 
 				if (index === 0) {
 					copyFolderRecursiveSync(file, root + '/' + asset.dest);
-					return;
+					continue;
 				}
 			}
 
 			// If the destination is a folder just copy the file there
 			if (!path.extname(asset.dest)) {
 				copyFileSync(file, root + '/' + asset.dest);
-				return;
+				continue;
 			}
 
 			if (asset.binary === undefined) {
@@ -100,10 +103,11 @@ async function buildAssets(root, assets, includeVendor) {
 
 			let content = '';
 			if (source.indexOf('https://') === 0 && !asset.binary) {
-				content = request('GET', source).getBody('utf-8');
+				content = await fetch(source).then((res) => res.text());
+
 			}
 			if (source.indexOf('https://') === 0 && asset.binary) {
-				content = request('GET', source).getBody();
+				content = await fetch(source).then((res) => res.arrayBuffer()).then((array) => Buffer.from(array));
 			}
 
 			if (source.indexOf('https://') !== 0 && !asset.binary) {
@@ -115,12 +119,12 @@ async function buildAssets(root, assets, includeVendor) {
 
 			if (index == 0) {
 				fs.writeFileSync(root + '/' + asset.dest, content);
-				return;
+				continue;
 			}
 
 			// Append to the existing file
 			fs.appendFileSync(root + '/' + asset.dest, content);
-		});
+		};
 
 		// If defined, replace in the asset copy some content
 		if (asset.replace) {
@@ -164,7 +168,7 @@ async function buildAssets(root, assets, includeVendor) {
 				data.replace(/\/\/# sourceMappingURL=(.+?\.map)/g, ''),
 				'utf8'
 			);
-			return;
+			continue;
 		}
 
 		// Only transpile Javascript and CSS files
@@ -175,7 +179,7 @@ async function buildAssets(root, assets, includeVendor) {
 		if (asset.onlyMinified === true) {
 			fs.unlinkSync(root + '/' + asset.dest);
 		}
-	});
+	};
 }
 
 function copyFileSync(source, target) {

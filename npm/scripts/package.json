@@ -11,8 +11,7 @@
 		"rollup-plugin-import-css": "^3.5.0",
 		"rollup-plugin-svg": "^2.0.0",
 		"rollup-plugin-vue": "^6.0.0",
-		"sass": "^1.77.5",
-		"sync-request": "^6.1.0",
+		"sass": "^1.77.6",
 		"terser": "^5.31.1"
 	}
 }

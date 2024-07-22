@@ -1,5 +1,3 @@
-version: '3.5'
-
 services:
   build:
     image: digitpeak/dpdocker-cli

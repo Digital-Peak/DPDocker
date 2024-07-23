@@ -8,4 +8,4 @@ if [ -z $1 ]; then
 	exit 1
 fi
 
-EXTENSION=$1 VERSION=$2 docker-compose -f $(dirname $0)/docker-compose.yml run --rm build
+EXTENSION=$1 VERSION=$2 docker compose -f $(dirname $0)/docker-compose.yml run --rm build

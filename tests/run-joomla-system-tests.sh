@@ -24,13 +24,24 @@ if [ -z $j ]; then
 	exit
 fi
 
+export EXTENSION=$e
+export TEST=$t
+export JOOMLA=$j
+export DB=$db
+export MYSQL_DBVERSION=$my
+export POSTGRES_DBVERSION=$pg
+export PHP_VERSION=$php
+export BROWSER=$b
+export USER_ID=$(id -u)
+export GROUP_ID=$(id -g)
+
 # Stop the containers
-docker-compose -f $(dirname $0)/docker-compose.yml stop
+docker compose -f $(dirname $0)/docker-compose.yml stop
 
 sudo xhost +
 
 # Run the tests
-EXTENSION= TEST=$t JOOMLA=$j REBUILD= DB=$db MYSQL_DBVERSION=$my POSTGRES_DBVERSION=$pg PHP_VERSION=$php BROWSER=$b USER_ID= GROUP_ID= docker-compose -f $(dirname $0)/docker-compose.yml up joomla-system-tests
+docker compose -f $(dirname $0)/docker-compose.yml up joomla-system-tests
 
 # Stop the containers
-docker-compose -f $(dirname $0)/docker-compose.yml stop
+docker compose -f $(dirname $0)/docker-compose.yml stop

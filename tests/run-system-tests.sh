@@ -30,13 +30,24 @@ if [ ! -d $(dirname $0)/www ]; then
 	ssh-keygen -q -t rsa -N '' -f $(dirname $0)/www/key
 fi
 
+export EXTENSION=$e
+export TEST=$t
+export JOOMLA=$j
+export DB=$db
+export MYSQL_DBVERSION=$my
+export POSTGRES_DBVERSION=$pg
+export PHP_VERSION=$php
+export BROWSER=$b
+export USER_ID=$(id -u)
+export GROUP_ID=$(id -g)
+
 # Stop the containers
 if [ -z $t ]; then
-	docker-compose -f $(dirname $0)/docker-compose.yml stop
+	docker compose -f $(dirname $0)/docker-compose.yml stop
 fi
 
 # Start web server already so it gets the updated variables
-EXTENSION=$e TEST=$t JOOMLA=$j DB=$db MYSQL_DBVERSION=$my POSTGRES_DBVERSION=$pg PHP_VERSION=$php BROWSER=$b USER_ID=$(id -u) GROUP_ID=$(id -g) docker-compose -f $(dirname $0)/docker-compose.yml up -d web-test
+docker compose -f $(dirname $0)/docker-compose.yml up -d web-test
 
 # Run VNC viewer
 if [[ $(command -v vinagre) ]]; then
@@ -49,9 +60,9 @@ if [[ $(command -v vinagre) ]]; then
 fi
 
 # Run the tests
-EXTENSION=$e TEST=$t JOOMLA=$j DB=$db MYSQL_DBVERSION=$my POSTGRES_DBVERSION=$pg PHP_VERSION=$php BROWSER=$b USER_ID=$(id -u) GROUP_ID=$(id -g) docker-compose -f $(dirname $0)/docker-compose.yml run system-tests
+docker compose -f $(dirname $0)/docker-compose.yml run system-tests
 
 # Stop the containers
 if [ -z $t ]; then
-	docker-compose -f $(dirname $0)/docker-compose.yml stop
+	docker compose -f $(dirname $0)/docker-compose.yml stop
 fi

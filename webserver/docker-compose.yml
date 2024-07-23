@@ -1,5 +1,3 @@
-version: '3.5'
-
 services:
   web:
     image: digitpeak/dpdocker-web:${PHP_VERSION}

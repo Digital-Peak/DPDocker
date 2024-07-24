@@ -7,6 +7,7 @@
 
 use PhpCsFixer\Config;
 use PhpCsFixer\Finder;
+use PhpCsFixer\Runner\Parallel\ParallelConfigFactory;
 
 $finder = Finder::create()
 	->in(__DIR__)
@@ -43,6 +44,7 @@ $config->setRules([
 	])
 	->setUsingCache(false)
 	->setIndent("\t")
-	->setFinder($finder);
+	->setFinder($finder)
+	->setParallelConfig(ParallelConfigFactory::detect());
 
 return $config;

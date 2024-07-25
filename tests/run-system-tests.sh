@@ -43,11 +43,11 @@ export GROUP_ID=$(id -g)
 
 # Stop the containers
 if [ -z $t ]; then
-	docker compose -f $(dirname $0)/docker-compose.yml stop
+	docker compose -f $(dirname $0)/docker-compose.yml stop --remove-orphans
 fi
 
 # Start web server already so it gets the updated variables
-docker compose -f $(dirname $0)/docker-compose.yml up -d web-test
+docker compose -f $(dirname $0)/docker-compose.yml up -d web-test --remove-orphans
 
 # Run VNC viewer
 if [[ $(command -v vinagre) ]]; then

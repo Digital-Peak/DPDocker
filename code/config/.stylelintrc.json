@@ -10,6 +10,7 @@
 		"scss/dollar-variable-pattern": null,
 		"scss/at-extend-no-missing-placeholder": null,
 		"selector-id-pattern": null,
+		"no-duplicate-selectors": null,
 		"rule-empty-line-before": [
 			"always",
 			{

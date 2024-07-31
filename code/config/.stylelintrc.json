@@ -1,4 +1,7 @@
 {
+	"plugins": [
+		"stylelint-order"
+	],
 	"extends": [
 		"stylelint-config-standard-scss"
 	],
@@ -16,6 +19,66 @@
 				]
 			}
 		],
-		"selector-class-pattern": "^(?:(?:o|c|u|t|s|is|has|_|js|qa)-)?[a-zA-Z0-9]+(?:-[a-zA-Z0-9]+)*(?:__[a-zA-Z0-9]+(?:-[a-zA-Z0-9]+)*)?(?:--[a-zA-Z0-9]+(?:-[a-zA-Z0-9]+)*)?(?:\\[.+\\])?$"
+		"selector-class-pattern": "^(?:(?:o|c|u|t|s|is|has|_|js|qa)-)?[a-zA-Z0-9]+(?:-[a-zA-Z0-9]+)*(?:__[a-zA-Z0-9]+(?:-[a-zA-Z0-9]+)*)?(?:--[a-zA-Z0-9]+(?:-[a-zA-Z0-9]+)*)?(?:\\[.+\\])?$",
+		"order/order": [
+			"at-variables",
+			"at-rules",
+			"custom-properties",
+			"declarations",
+			"rules"
+		],
+		"order/properties-order": [
+			"z-index",
+			"display",
+			"justify-content",
+			"align-items",
+			"flex",
+			"flex-wrap",
+			"flex-direction",
+			"position",
+			"top",
+			"right",
+			"bottom",
+			"left",
+			"object-fit",
+			"width",
+			"min-width",
+			"max-width",
+			"height",
+			"min-height",
+			"max-height",
+			"overflow",
+			"margin",
+			"margin-top",
+			"margin-right",
+			"margin-bottom",
+			"margin-left",
+			"padding",
+			"padding-top",
+			"padding-right",
+			"padding-bottom",
+			"padding-left",
+			"background-color",
+			"color",
+			"border",
+			"border-top",
+			"border-right",
+			"border-bottom",
+			"border-left",
+			"border-color",
+			"border-image",
+			"text-align",
+			"text-transform",
+			"font-size",
+			"font-weight",
+			"font-style",
+			"box-shadow",
+			"box-sizing",
+			"word-wrap",
+			"white-space",
+			"text-decoration",
+			"list-style",
+			"cursor"
+		]
 	}
 }

@@ -8,7 +8,6 @@
 declare(strict_types=1);
 
 use Rector\CodeQuality\Rector\LogicalAnd\LogicalToBooleanRector;
-use Rector\CodingStyle\Rector\PostInc\PostIncDecToPreIncDecRector;
 use Rector\CodingStyle\Rector\Stmt\NewlineAfterStatementRector;
 use Rector\CodingStyle\Rector\Use_\SeparateMultiUseImportsRector;
 use Rector\Config\RectorConfig;
@@ -18,7 +17,6 @@ use Rector\DeadCode\Rector\ClassMethod\RemoveUselessReturnTagRector;
 use Rector\DeadCode\Rector\If_\UnwrapFutureCompatibleIfPhpVersionRector;
 use Rector\DeadCode\Rector\StaticCall\RemoveParentCallWithoutParentRector;
 use Rector\EarlyReturn\Rector\If_\ChangeOrIfContinueToMultiContinueRector;
-use Rector\Privatization\Rector\Class_\FinalizeClassesWithoutChildrenRector;
 use Rector\Set\ValueObject\LevelSetList;
 use Rector\Set\ValueObject\SetList;
 use Rector\ValueObject\PhpVersion;

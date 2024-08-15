@@ -1,5 +1,6 @@
 includes:
     - vendor/phpstan/phpstan-deprecation-rules/rules.neon
+    - ../tmp/joomla/build/phpstan/phpstan.neon
 
 parameters:
 	level: 8
@@ -10,10 +11,6 @@ parameters:
 		- joomla-bootstrap.php
 	scanDirectories:
 	  - ../tmp/joomla
-	stubFiles:
-		- stubs/AdminModel.stub
-		- stubs/Language.stub
-		- stubs/CMSApplication.stub
 	excludePaths:
 		analyseAndScan:
 			- */tests/*
@@ -24,13 +21,6 @@ parameters:
 			- */rector.php
 	dynamicConstantNames:
 		- JDEBUG
-	universalObjectCratesClasses:
-		- Joomla\CMS\Object\CMSObject
-		- Joomla\CMS\Table\Table
-		- Joomla\Component\Finder\Administrator\Indexer\Result
-	earlyTerminatingMethodCalls:
-		Joomla\CMS\Application\CMSApplicationInterface:
-			- close
 	ignoreErrors:
 		-
 			message: '#Variable \$this might not be defined.#'
@@ -41,42 +31,6 @@ parameters:
 		-
 			message: '#no value type specified in iterable type array.#'
 		-
-			message: '#getItem\(\) has typehint with deprecated class Joomla\\CMS\\Object\\CMSObject#'
-		-
 			message: '#Call to deprecated method triggerEvent\(\)#'
 		-
 			message: '#Call to deprecated method getError\(\)#'
-
-services:
-	-
-		class: DigitalPeak\DPDocker\Code\PHPStan\DynamicReturnType\DIContainer
-		tags:
-			- phpstan.broker.dynamicMethodReturnTypeExtension
-	-
-		class: DigitalPeak\DPDocker\Code\PHPStan\DynamicReturnType\ExtensionManagerInterface
-		tags:
-			- phpstan.broker.dynamicMethodReturnTypeExtension
-	-
-		class: DigitalPeak\DPDocker\Code\PHPStan\DynamicReturnType\ModelBootComponent
-		tags:
-			- phpstan.broker.dynamicMethodReturnTypeExtension
-	-
-		class: DigitalPeak\DPDocker\Code\PHPStan\DynamicReturnType\MVCFactoryInterfaceInterface
-		tags:
-			- phpstan.broker.dynamicMethodReturnTypeExtension
-	-
-		class: DigitalPeak\DPDocker\Code\PHPStan\DynamicReturnType\ControllerLoader
-		tags:
-			- phpstan.broker.dynamicMethodReturnTypeExtension
-	-
-		class: DigitalPeak\DPDocker\Code\PHPStan\DynamicReturnType\ViewModelLoader
-		tags:
-			- phpstan.broker.dynamicMethodReturnTypeExtension
-	-
-		class: DigitalPeak\DPDocker\Code\PHPStan\DynamicReturnType\ModelTableLoader
-		tags:
-			- phpstan.broker.dynamicMethodReturnTypeExtension
-	-
-		class: DigitalPeak\DPDocker\Code\PHPStan\Reflection\FormField
-		tags:
-			- phpstan.broker.propertiesClassReflectionExtension

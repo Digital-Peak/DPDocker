@@ -19,9 +19,9 @@ fi
 
 cd $tmpDir
 git reset --hard
-git switch 5.1-dev
+git switch 5.2-dev
 git pull
-composer install --no-dev
+composer install
 rm -f $tmpDir/administrator/cache/autoload_psr4.php
 
 # Contains an invalid Text class

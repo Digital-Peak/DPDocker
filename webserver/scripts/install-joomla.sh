@@ -106,6 +106,7 @@ if [[ -z $dbHost || $dbHost == 'mysql'* ]]; then
 	mysql -u root -proot -h $dbHost -D $dbName -e "INSERT INTO j_users (id, name, username, email, password, block, registerDate, params) VALUES(44, 'User', 'user', 'user@example.com', '\$2y\$10\$KesDwI5C.oMfZksWG7UHaOP.1TWf91HTZPOi143qx2Tvc/8.hJIU.', 0, '2020-01-01 00:00:01', '{}')"
 	mysql -u root -proot -h $dbHost -D $dbName -e "INSERT INTO j_user_usergroup_map (user_id, group_id) VALUES ('44', '2')"
 	mysql -u root -proot -h $dbHost -D $dbName -e "UPDATE j_extensions SET manifest_cache='{\"version\":\"3\"}'"
+	mysql -u root -proot -h $dbHost -D $dbName -e "UPDATE j_extensions SET enabled = 0 WHERE name = 'plg_quickicon_eos' OR name = 'plg_system_stats' OR name LIKE '%guided%'"
 fi
 
 if [[ $dbHost == 'postgres'* ]]; then
@@ -136,4 +137,5 @@ if [[ $dbHost == 'postgres'* ]]; then
 	psql -U root -h $dbHost -d $dbName -c "INSERT INTO j_users (id, name, username, email, password, block,  \"registerDate\", params) VALUES(44, 'User', 'user', 'user@example.com', '\$2y\$10\$KesDwI5C.oMfZksWG7UHaOP.1TWf91HTZPOi143qx2Tvc/8.hJIU.', 0, '2020-01-01 00:00:00', '{}')" > /dev/null
 	psql -U root -h $dbHost -d $dbName -c "INSERT INTO j_user_usergroup_map (user_id, group_id) VALUES ('44', '2')" > /dev/null
 	psql -U root -h $dbHost -d $dbName -c "UPDATE j_extensions SET manifest_cache='{\"version\":\"3\"}'" > /dev/null
+	psql -U root -h $dbHost -d $dbName -c "UPDATE j_extensions SET enabled = 0 WHERE name = 'plg_quickicon_eos' OR name = '' OR name LIKE '%guided%'" > /dev/null
 fi

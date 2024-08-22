@@ -800,12 +800,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Digital-Peak/DPCeption.git",
-                "reference": "94ea4dde6dd03251719b01e6767955a1d280a858"
+                "reference": "0c160ed8cc34ce325cee43dbf43e14717cb26e5d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Digital-Peak/DPCeption/zipball/94ea4dde6dd03251719b01e6767955a1d280a858",
-                "reference": "94ea4dde6dd03251719b01e6767955a1d280a858",
+                "url": "https://api.github.com/repos/Digital-Peak/DPCeption/zipball/0c160ed8cc34ce325cee43dbf43e14717cb26e5d",
+                "reference": "0c160ed8cc34ce325cee43dbf43e14717cb26e5d",
                 "shasum": ""
             },
             "require": {
@@ -836,7 +836,7 @@
                 "issues": "https://github.com/Digital-Peak/DPCeption/issues",
                 "source": "https://github.com/Digital-Peak/DPCeption/tree/0.4.1"
             },
-            "time": "2024-08-12T08:48:01+00:00"
+            "time": "2024-08-22T15:20:48+00:00"
         },
         {
             "name": "digital-peak/thinhttp",

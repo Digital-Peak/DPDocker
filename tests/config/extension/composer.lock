@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "106a6cf69551a2f7526cb29e81a43dfa",
+    "content-hash": "bb119bd49ec39c15a4a942eaf97e66a5",
     "packages": [
         {
             "name": "behat/gherkin",
@@ -796,16 +796,16 @@
         },
         {
             "name": "digital-peak/dpception",
-            "version": "0.4.1",
+            "version": "0.4.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Digital-Peak/DPCeption.git",
-                "reference": "0c160ed8cc34ce325cee43dbf43e14717cb26e5d"
+                "reference": "d138148c000386111bcee928687c54123cd6d8e7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Digital-Peak/DPCeption/zipball/0c160ed8cc34ce325cee43dbf43e14717cb26e5d",
-                "reference": "0c160ed8cc34ce325cee43dbf43e14717cb26e5d",
+                "url": "https://api.github.com/repos/Digital-Peak/DPCeption/zipball/d138148c000386111bcee928687c54123cd6d8e7",
+                "reference": "d138148c000386111bcee928687c54123cd6d8e7",
                 "shasum": ""
             },
             "require": {
@@ -834,9 +834,9 @@
             "homepage": "https://github.com/Digital-Peak/DPCeption",
             "support": {
                 "issues": "https://github.com/Digital-Peak/DPCeption/issues",
-                "source": "https://github.com/Digital-Peak/DPCeption/tree/0.4.1"
+                "source": "https://github.com/Digital-Peak/DPCeption/tree/0.4.2"
             },
-            "time": "2024-08-22T15:20:48+00:00"
+            "time": "2024-08-27T11:06:56+00:00"
         },
         {
             "name": "digital-peak/thinhttp",

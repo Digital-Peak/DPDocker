@@ -18,10 +18,16 @@ if [ ! -d $tmpDir ]; then
 fi
 
 cd $tmpDir
-git reset --hard
-git switch 5.2-dev
-git pull
-composer install
+
+# Only do an update when the full extension is analyzed
+if [ -z $2 ]; then
+	git reset --hard
+	git switch 5.2-dev
+	git pull
+	composer install
+fi
+
+# Delete the autoload file
 rm -f $tmpDir/administrator/cache/autoload_psr4.php
 
 # Contains an invalid Text class

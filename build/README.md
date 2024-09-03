@@ -28,6 +28,9 @@ That you don't have to make always a search and replace with the release date an
 
 _DP_DEPLOY_DATE_ will then be replaced with the current date and _DP_DEPLOY_VERSION_ will then be replaced with specified version argument in the task, when the build task is executed.
 
+### Extension specific build script
+During the package building can the extension execute it's own build script. If the build process detects a build.php file in the package folder, then it executes it before the extensions are built. Like that can extensions update internal caching files, etc.
+
 ## Result
 The installable builds are available in the dist folder after successful execution. The file name is defined in the build.json file and contains also the version number.
 

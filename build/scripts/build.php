@@ -45,6 +45,10 @@ class DPDockerReleaseBuild
 
 			$dpVersion = str_replace('.', '_', $dpVersion);
 
+			if (file_exists($this->extensionRoot . '/package/build.php')) {
+				require $this->extensionRoot . '/package/build.php';
+			}
+
 			// Collect the extensions which do belong to the package
 			$extensions = [];
 

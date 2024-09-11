@@ -13,7 +13,7 @@ file=$(dirname $0)/../config/.php-cs-fixer.php
 if [ -f $(dirname $0)/../../../$1/.php-cs-fixer.php ]; then
 	file=$(dirname $0)/../../../$1/.php-cs-fixer.php
 fi
-$(dirname $0)/../config/vendor/bin/php-cs-fixer fix --diff --path-mode=intersection -v --config $file $(dirname $0)/../../../$1/$2
+$(dirname $0)/../config/vendor/bin/php-cs-fixer fix --allow-risky=yes --diff --path-mode=intersection -v --config $file $(dirname $0)/../../../$1/$2
 
 echo -e "\nFixing Javascript code style issues"
 # Allow the extension to overwrite the default config file

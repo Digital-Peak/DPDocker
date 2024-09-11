@@ -41,7 +41,8 @@ $config->setRules([
 		'no_useless_else'                                  => true,
 		'nullable_type_declaration_for_default_null_value' => true,
 		'global_namespace_import'                          => ['import_classes' => false, 'import_constants' => false, 'import_functions' => false],
-		'fully_qualified_strict_types'                     => ['import_symbols' => true]
+		'fully_qualified_strict_types'                     => ['import_symbols' => true],
+		'native_function_invocation'                       => true
 	])
 	->setUsingCache(false)
 	->setIndent("\t")

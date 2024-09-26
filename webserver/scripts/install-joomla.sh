@@ -59,15 +59,16 @@ fi
 
 # Setup configuration file
 sudo cp $(dirname $0)/configuration.php $root/configuration.php
-sed -i "s/{SITE}/$site/g" $root/configuration.php
-sed -i "s/{DBHOST}/$dbHost/g" $root/configuration.php
-sed -i "s/{DBNAME}/$dbName/g" $root/configuration.php
-sed -i "s/{SMTPHOST}/$smtpHost/g" $root/configuration.php
-sed -i "s/{PATH}/${root//\//\\/}/g" $root/configuration.php
+# prevent the use of inplace sed -i as it creates unreadable tmp file inside the Docker container on Intel macOS
+sed "s/{SITE}/$site/g" > $root/configuration.tmp && mv $root/configuration.tmp $root/configuration.php
+sed "s/{DBHOST}/$dbHost/g" > $root/configuration.tmp && mv $root/configuration.tmp $root/configuration.php
+sed "s/{DBNAME}/$dbName/g" > $root/configuration.tmp && mv $root/configuration.tmp $root/configuration.php
+sed "s/{SMTPHOST}/$smtpHost/g" > $root/configuration.tmp && mv $root/configuration.tmp $root/configuration.php
+sed "s/{PATH}/${root//\//\\/}/g" > $root/configuration.tmp && mv $root/configuration.tmp $root/configuration.php
 
 # Joomla 3 needs error reporting simple because of PHP 8.2 deprecations
 if [ ! -f $root/package.json ]; then
-	sed -i "s/error_reporting = 'maximum'/error_reporting = 'simple'/g" $root/configuration.php
+	sed "s/error_reporting = 'maximum'/error_reporting = 'simple'/g" > $root/configuration.tmp && mv $root/configuration.tmp $root/configuration.php
 fi
 
 # Define install folder
@@ -78,7 +79,7 @@ fi
 
 if [[ -z $dbHost || $dbHost == 'mysql'* ]]; then
 	echo "Installing Joomla with mysql"
-	sed -i "s/{DBDRIVER}/mysqli/g" $root/configuration.php
+	sed "s/{DBDRIVER}/mysqli/g" > $root/configuration.tmp && mv $root/configuration.tmp $root/configuration.php
 
 	echo "Waiting for database server"
 	while ! mysqladmin ping -u root -proot -h $dbHost --silent  > /dev/null; do
@@ -111,7 +112,7 @@ fi
 
 if [[ $dbHost == 'postgres'* ]]; then
 	echo "Installing Joomla with postgres"
-	sed -i "s/{DBDRIVER}/pgsql/g" $root/configuration.php
+	sed "s/{DBDRIVER}/pgsql/g" > $root/configuration.tmp && mv $root/configuration.tmp $root/configuration.php
 	export PGPASSWORD=root
 
 	# Clear existing connections

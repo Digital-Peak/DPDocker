@@ -115,26 +115,27 @@ function transpile(source, destination, isVendor, config) {
 		case 'scss':
 		case 'css':
 			// Compile sass files
-			let result = sass.renderSync({
-				file: source,
+			let result = sass.compile(source, {
 				outFile: destination,
-				outputStyle: 'expanded',
+				style: 'expanded',
 				indentType: 'tab',
 				indentWidth: 1,
 				sourceMap: true,
-				includePaths: [config.moduleRoot + '/node_modules']
+				loadPaths: [config.moduleRoot + '/node_modules']
 			});
 
-			// Write the none minified content to the destination file
-			fs.writeFileSync(destination, result.css.toString());
+			// Write the none minified content to the destination file with the source mapping
+			fs.writeFileSync(destination, result.css.toString() + '\n/*# sourceMappingURL=' + path.basename(destination) + '.map */');
 
-			// Write the map content to the destination file
-			fs.writeFileSync(destination + '.map', result.map);
+			// Write the map content to the destination file with the adjusted paths
+			const mapRoot = destination.substring(0, destination.indexOf('/resources') + 1);
+			const segments = destination.substring(destination.indexOf('/media')).split('/');
+			fs.writeFileSync(destination + '.map', JSON.stringify(result.sourceMap).replaceAll('file://' + mapRoot, '../'.repeat(segments.length - 2)));
 
 			// Write the minified content to the destination file
 			fs.writeFileSync(
 				destination.replace('.css', '.min.css'),
-				sass.renderSync({ data: result.css.toString(), outputStyle: 'compressed' }).css.toString()
+				sass.compileString(result.css.toString(), { style: 'compressed' }).css.toString()
 			);
 	}
 }

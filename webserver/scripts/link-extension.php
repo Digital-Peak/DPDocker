@@ -91,6 +91,7 @@ function createLinks($folderRoot, $wwwRoot)
 				createLink($folderRoot . $filename . '/api', $wwwRoot . '/api/components/' . $filename);
 			}
 		}
+
 		if (strpos($filename, 'mod_') === 0) {
 			createLink($folderRoot . $filename, $wwwRoot . '/modules/' . $filename);
 
@@ -98,6 +99,7 @@ function createLinks($folderRoot, $wwwRoot)
 				createLink($folderRoot . $filename . '/media', $wwwRoot . '/media/' . $filename);
 			}
 		}
+
 		if (strpos($filename, 'plg_') === 0) {
 			foreach (new RegexIterator(new DirectoryIterator($folderRoot . $filename), "/\\.xml\$/i") as $pluginFile) {
 				$xml = new SimpleXMLElement(file_get_contents($folderRoot . $filename . '/' . $pluginFile));
@@ -122,12 +124,15 @@ function createLinks($folderRoot, $wwwRoot)
 				}
 			}
 		}
+
 		if (strpos($filename, 'tmpl_') === 0) {
 			createLink($folderRoot . $filename, $wwwRoot . '/templates/' . str_replace('tmpl_', '', $filename));
 		}
+
 		if (strpos($filename, 'tpl_') === 0) {
 			createLink($folderRoot . $filename, $wwwRoot . '/templates/' . str_replace('tpl_', '', $filename));
 		}
+
 		if (strpos($filename, 'lib_') === 0) {
 			createLink($folderRoot . $filename, $wwwRoot . '/libraries/' . $filename);
 			createLink($folderRoot . $filename . '/' . $filename . '.xml', $wwwRoot . '/administrator/manifests/libraries/' . $filename . '.xml');
@@ -135,6 +140,11 @@ function createLinks($folderRoot, $wwwRoot)
 			if (file_exists($folderRoot . $filename . '/media')) {
 				createLink($folderRoot . $filename . '/media', $wwwRoot . '/media/' . $filename);
 			}
+		}
+
+		// Link resources for sourcemap
+		if (file_exists($folderRoot . $filename . '/resources')) {
+			createLink($folderRoot . $filename . '/resources', $wwwRoot . '/media/resources/' . $filename);
 		}
 	}
 	echo 'Finished to create the links for ' . $folderRoot . PHP_EOL;
@@ -144,6 +154,6 @@ function createLink($source, $target)
 {
 	$source = realpath($source);
 
-	@mkdir(dirname($target), '777', true);
+	@mkdir(dirname($target), 0777, true);
 	shell_exec('ln -sfn ' . $source . ' ' . $target);
 }

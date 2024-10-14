@@ -98,7 +98,7 @@ function transpile(source, destination, isVendor, config) {
 					});
 
 					// Generate code
-					await bundle.write({ dir: path.dirname(destination), format: 'es', sourcemap: true });
+					await bundle.write({ file: destination, format: 'iife', sourcemap: true });
 
 					if (config.docBlock) {
 						let content = strip(fs.readFileSync(destination, 'utf8'), null, { comments: 'none', sourcemap: true });

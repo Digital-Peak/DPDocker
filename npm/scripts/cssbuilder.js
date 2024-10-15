@@ -15,7 +15,7 @@ function buildAsset(root, asset, config) {
 	// Traverse the directory and build the assets
 	util.getFiles(root + '/' + asset.src).forEach((file) => {
 		// Files starting with an underscore are treated as imports and do not need to be built
-		if (path.basename(file).indexOf('_') === 0) {
+		if (path.basename(file).indexOf('_') === 0 || file.indexOf('.js') !== -1) {
 			return;
 		}
 

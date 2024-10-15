@@ -83,8 +83,6 @@ async function watchAssets(root, assets) {
 			return;
 		}
 
-		util.deleteDirectory(root + '/' + asset.dest);
-
 		// Traverse the directory and build the assets
 		const files = {};
 		util.getFiles(root + '/' + asset.src).forEach((file) => {
@@ -99,6 +97,8 @@ async function watchAssets(root, assets) {
 		if (Object.keys(files).length === 0) {
 			return;
 		}
+
+		util.deleteDirectory(root + '/' + asset.dest);
 
 		try {
 			const bundle = await rollup.watch({

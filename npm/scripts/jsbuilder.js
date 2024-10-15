@@ -49,11 +49,20 @@ async function buildAsset(root, asset, config) {
 				vue(),
 				css(),
 				terser()
-			]
+			],
+			context: 'window'
 		});
 
 		// Generate code
-		await bundle.write({ dir: root + '/' + asset.dest, format: 'es', sourcemap: true });
+		await bundle.write({
+			dir: root + '/' + asset.dest, format: 'es', sourcemap: true, chunkFileNames: (chunkInfo) => {
+				if (chunkInfo.facadeModuleId !== null && chunkInfo.facadeModuleId.indexOf('node_modules') !== -1) {
+					return 'libraries/[name].js';
+				}
+
+				return 'modules/[name].js';
+			}
+		});
 
 		if (config.docBlock) {
 			Object.values(files).forEach((f) => {
@@ -73,6 +82,9 @@ async function watchAssets(root, assets) {
 		if (!fs.existsSync(root + '/' + asset.src)) {
 			return;
 		}
+
+		util.deleteDirectory(root + '/' + asset.dest);
+
 		// Traverse the directory and build the assets
 		const files = {};
 		util.getFiles(root + '/' + asset.src).forEach((file) => {
@@ -91,7 +103,15 @@ async function watchAssets(root, assets) {
 		try {
 			const bundle = await rollup.watch({
 				input: files,
-				output: { dir: root + '/' + asset.dest, format: 'es', sourcemap: true },
+				output: {
+					dir: root + '/' + asset.dest, format: 'es', sourcemap: true, chunkFileNames: (chunkInfo) => {
+						if (chunkInfo.facadeModuleId !== null && chunkInfo.facadeModuleId.indexOf('node_modules') !== -1) {
+							return 'libraries/[name].js';
+						}
+
+						return 'modules/[name].js';
+					}
+				},
 				plugins: [
 					replace({
 						preventAssignment: true,
@@ -103,9 +123,9 @@ async function watchAssets(root, assets) {
 					resolve.nodeResolve({ modulePaths: [assets.config.moduleRoot + '/node_modules'] }),
 					svg(),
 					vue(),
-					css(),
-					terser()
-				]
+					css()
+				],
+				context: 'window'
 			});
 
 			bundle.on('event', (event) => {
@@ -130,7 +150,7 @@ async function watchAssets(root, assets) {
 			console.log(e);
 		}
 	});
-};
+}
 
 module.exports = {
 	buildAsset: buildAsset,

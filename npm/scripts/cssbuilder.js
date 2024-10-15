@@ -64,7 +64,7 @@ function watchAssets(root, assets) {
 		filesToWatch,
 		{ recursive: true },
 		(type, file) => {
-			if (type != 'update') {
+			if (type != 'update' || file.indexOf('.js') !== -1) {
 				return;
 			}
 

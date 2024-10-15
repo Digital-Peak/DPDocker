@@ -11,7 +11,7 @@ const js = require('./jsbuilder');
 const css = require('./cssbuilder');
 const util = require('./util');
 
-util.findFilesRecursiveSync(path.resolve(process.argv[2] + (3 in process.argv ? '/' + process.argv[3] : '')), 'assets.json').forEach((file) => {
+util.findFilesRecursiveSync(path.resolve(process.argv[2] + (3 in process.argv && process.argv[3] !== 'all' ? '/' + process.argv[3] : '')), 'assets.json').forEach((file) => {
 	// Loading the assets from the assets file of the extension
 	console.log('Started building assets from config ' + file);
 	const assets = JSON.parse(fs.readFileSync(file, 'utf8'));

@@ -7,11 +7,12 @@
 // The needed libs
 const fs = require('fs');
 const path = require('path');
-const strip = require('js-cleanup');
+const jsstrip = require('js-cleanup');
 const rollup = require('rollup');
 const resolve = require('@rollup/plugin-node-resolve');
 const replace = require('@rollup/plugin-replace');
 const terser = require('@rollup/plugin-terser');
+const strip = require('@rollup/plugin-strip');
 const svg = require('rollup-plugin-svg');
 const vue = require('rollup-plugin-vue');
 const css = require('rollup-plugin-import-css');
@@ -33,7 +34,7 @@ async function buildAsset(root, asset, config) {
 		if (config.docBlock) {
 			Object.values(rollupConfig.input).forEach((f) => {
 				const destination = f.replace(asset.src, asset.dest);
-				let content = strip(fs.readFileSync(destination, 'utf8'), null, { comments: 'none', sourcemap: true });
+				let content = jsstrip(fs.readFileSync(destination, 'utf8'), null, { comments: 'none', sourcemap: true });
 				fs.writeFileSync(destination, config.docBlock + "\n" + content.code);
 				fs.writeFileSync(destination + '.map', content.map.mappings);
 			});
@@ -110,11 +111,12 @@ function getConfig(root, asset, config) {
 					'process.env.VUE_ENV': JSON.stringify('browser')
 				}
 			}),
-			resolve.nodeResolve({ modulePaths: [config.moduleRoot + '/node_modules']}),
+			resolve.nodeResolve({ modulePaths: [config.moduleRoot + '/node_modules'] }),
 			urlresolve(),
 			svg(),
 			vue(),
-			css()
+			css(),
+			strip()
 		],
 		context: 'window'
 	};

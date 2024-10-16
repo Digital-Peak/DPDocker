@@ -15,58 +15,24 @@ const terser = require('@rollup/plugin-terser');
 const svg = require('rollup-plugin-svg');
 const vue = require('rollup-plugin-vue');
 const css = require('rollup-plugin-import-css');
+const urlresolve = require('rollup-plugin-url-resolve');
 const util = require('./util');
 
 async function buildAsset(root, asset, config) {
-	// Traverse the directory and build the assets
-	const files = {};
-	util.getFiles(root + '/' + asset.src).forEach((file) => {
-		// Files starting with an underscore are treated as imports and do not need to be built
-		if (path.basename(file).indexOf('_') === 0 || file.indexOf('.js') === -1) {
+	try {
+		const rollupConfig = getConfig(root, asset, config);
+		if (Object.keys(rollupConfig.input).length === 0) {
 			return;
 		}
 
-		files[file.replace(root + '/js/', '').replace('.js', '.min')] = file;
-	});
-
-	if (Object.keys(files).length === 0) {
-		return;
-	}
-
-	try {
-		const bundle = await rollup.rollup({
-			input: files,
-			plugins: [
-				replace({
-					preventAssignment: true,
-					values: {
-						'process.env.NODE_ENV': JSON.stringify('development'),
-						'process.env.VUE_ENV': JSON.stringify('browser')
-					}
-				}),
-				resolve.nodeResolve({ modulePaths: [config.moduleRoot + '/node_modules'] }),
-				svg(),
-				vue(),
-				css(),
-				terser()
-			],
-			context: 'window'
-		});
+		const bundle = await rollup.rollup(rollupConfig);
 
 		// Generate code
-		await bundle.write({
-			dir: root + '/' + asset.dest, format: 'es', sourcemap: true, chunkFileNames: (chunkInfo) => {
-				if (chunkInfo.facadeModuleId !== null && chunkInfo.facadeModuleId.indexOf('node_modules') !== -1) {
-					return 'libraries/[name].js';
-				}
-
-				return 'modules/[name].js';
-			}
-		});
+		await bundle.write(rollupConfig.output);
 
 		if (config.docBlock) {
-			Object.values(files).forEach((f) => {
-				const destination = f.replace(asset.src, asset.dest).replace('.js', '.min.js');
+			Object.values(rollupConfig.input).forEach((f) => {
+				const destination = f.replace(asset.src, asset.dest);
 				let content = strip(fs.readFileSync(destination, 'utf8'), null, { comments: 'none', sourcemap: true });
 				fs.writeFileSync(destination, config.docBlock + "\n" + content.code);
 				fs.writeFileSync(destination + '.map', content.map.mappings);
@@ -79,54 +45,15 @@ async function buildAsset(root, asset, config) {
 
 async function watchAssets(root, assets) {
 	assets.local.forEach(async (asset) => {
-		if (!fs.existsSync(root + '/' + asset.src)) {
-			return;
-		}
-
-		// Traverse the directory and build the assets
-		const files = {};
-		util.getFiles(root + '/' + asset.src).forEach((file) => {
-			// Files starting with an underscore are treated as imports and do not need to be built
-			if (path.basename(file).indexOf('_') === 0 || file.indexOf('.js') === -1) {
-				return;
-			}
-
-			files[file.replace(root + '/js/', '').replace('.js', '')] = file;
-		});
-
-		if (Object.keys(files).length === 0) {
+		const rollupConfig = getConfig(root, asset, assets.config);
+		if (Object.keys(rollupConfig.input).length === 0) {
 			return;
 		}
 
 		util.deleteDirectory(root + '/' + asset.dest);
 
 		try {
-			const bundle = await rollup.watch({
-				input: files,
-				output: {
-					dir: root + '/' + asset.dest, format: 'es', sourcemap: true, chunkFileNames: (chunkInfo) => {
-						if (chunkInfo.facadeModuleId !== null && chunkInfo.facadeModuleId.indexOf('node_modules') !== -1) {
-							return 'libraries/[name].js';
-						}
-
-						return 'modules/[name].js';
-					}
-				},
-				plugins: [
-					replace({
-						preventAssignment: true,
-						values: {
-							'process.env.NODE_ENV': JSON.stringify('development'),
-							'process.env.VUE_ENV': JSON.stringify('browser')
-						}
-					}),
-					resolve.nodeResolve({ modulePaths: [assets.config.moduleRoot + '/node_modules'] }),
-					svg(),
-					vue(),
-					css()
-				],
-				context: 'window'
-			});
+			const bundle = await rollup.watch(rollupConfig);
 
 			bundle.on('event', (event) => {
 				switch (event.code) {
@@ -150,6 +77,47 @@ async function watchAssets(root, assets) {
 			console.log(e);
 		}
 	});
+}
+
+function getConfig(root, asset, config) {
+	// Traverse the directory and build the assets
+	const files = {};
+	util.getFiles(root + '/' + asset.src).forEach((file) => {
+		// Files starting with an underscore are treated as imports and do not need to be built
+		if (path.basename(file).indexOf('_') === 0 || file.indexOf('.js') === -1) {
+			return;
+		}
+
+		files[file.replace(root + '/js/', '').replace('.js', '')] = file;
+	});
+
+	return {
+		input: files,
+		output: {
+			dir: root + '/' + asset.dest, format: 'es', sourcemap: true, chunkFileNames: (chunkInfo) => {
+				if (chunkInfo.facadeModuleId !== null && chunkInfo.facadeModuleId.indexOf('node_modules') !== -1) {
+					return 'libraries/[name].js';
+				}
+
+				return 'modules/[name].js';
+			}
+		},
+		plugins: [
+			replace({
+				preventAssignment: true,
+				values: {
+					'process.env.NODE_ENV': JSON.stringify('development'),
+					'process.env.VUE_ENV': JSON.stringify('browser')
+				}
+			}),
+			resolve.nodeResolve({ modulePaths: [config.moduleRoot + '/node_modules']}),
+			urlresolve(),
+			svg(),
+			vue(),
+			css()
+		],
+		context: 'window'
+	};
 }
 
 module.exports = {

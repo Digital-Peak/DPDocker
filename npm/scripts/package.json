@@ -12,6 +12,7 @@
 		"rollup": "^4.24.0",
 		"rollup-plugin-import-css": "^3.5.5",
 		"rollup-plugin-svg": "^2.0.0",
+		"rollup-plugin-url-resolve": "^0.2.0",
 		"rollup-plugin-vue": "^6.0.0",
 		"sass": "^1.79.5",
 		"terser": "^5.34.1"

@@ -24,7 +24,7 @@ util.findFilesRecursiveSync(path.resolve(process.argv[2] + (3 in process.argv &&
 
 async function buildAssets(root, assets, includeVendor) {
 	// Looping over the assets
-	assets.local.forEach((asset) => {
+	assets.local.forEach(async (asset) => {
 		if (!fs.existsSync(root + '/' + asset.src)) {
 			return;
 		}

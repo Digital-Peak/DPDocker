@@ -7,7 +7,6 @@
 // The needed libs
 const fs = require('fs');
 const path = require('path');
-const jsstrip = require('js-cleanup');
 const rollup = require('rollup');
 const resolve = require('@rollup/plugin-node-resolve');
 const replace = require('@rollup/plugin-replace');
@@ -15,6 +14,7 @@ const terser = require('@rollup/plugin-terser');
 const strip = require('@rollup/plugin-strip');
 const svg = require('rollup-plugin-svg');
 const vue = require('rollup-plugin-vue');
+const license = require('rollup-plugin-license');
 const css = require('rollup-plugin-import-css');
 const urlresolve = require('rollup-plugin-url-resolve');
 const util = require('./util');
@@ -26,23 +26,20 @@ async function buildAsset(root, asset, config) {
 			return;
 		}
 
-		// Add production plugins
+		// Strip console logs, etc
 		rollupConfig.plugins.push(strip());
-		rollupConfig.plugins.push(terser());
 
+		// Compress and remove comments
+		rollupConfig.plugins.push(terser({ format: { comments: false } }));
+
+		// Add the license header
+		rollupConfig.plugins.push(license({banner: { content: config.docBlock }}));
+
+		// Create the rollup instance
 		const bundle = await rollup.rollup(rollupConfig);
 
 		// Generate code
 		await bundle.write(rollupConfig.output);
-
-		if (config.docBlock) {
-			Object.values(rollupConfig.input).forEach((f) => {
-				const destination = f.replace(asset.src, asset.dest);
-				let content = jsstrip(fs.readFileSync(destination, 'utf8'), null, { comments: 'none', sourcemap: true });
-				fs.writeFileSync(destination, config.docBlock + "\n" + content.code);
-				fs.writeFileSync(destination + '.map', content.map.mappings);
-			});
-		}
 	} catch (e) {
 		console.log(e);
 	}
@@ -55,9 +52,11 @@ async function watchAssets(root, assets) {
 			return;
 		}
 
+		// Delete the directory
 		util.deleteDirectory(root + '/' + asset.dest);
 
 		try {
+			// Watch the files
 			const bundle = await rollup.watch(rollupConfig);
 
 			bundle.on('event', (event) => {

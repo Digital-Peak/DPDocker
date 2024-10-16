@@ -14,15 +14,18 @@ const util = require('./util');
 util.findFilesRecursiveSync(path.resolve(process.argv[2] + (3 in process.argv && process.argv[3] !== 'all' ? '/' + process.argv[3] : '')), 'assets.json').forEach((file) => {
 	// Loading the assets from the assets file of the extension
 	console.log('Started building assets from config ' + file);
+
 	const assets = JSON.parse(fs.readFileSync(file, 'utf8'));
 	if (!assets.config) {
 		assets.config = {};
 	}
 	assets.config.moduleRoot = path.dirname(file);
-	buildAssets(path.dirname(file), assets, 3 in process.argv).then(() => console.log('Finished building assets from config ' + file));
+	buildAssets(path.dirname(file), assets, 3 in process.argv).then(()=>console.log('Finished building assets from config ' + file));
 });
 
 async function buildAssets(root, assets, includeVendor) {
+	const promises = [];
+
 	// Looping over the assets
 	assets.local.forEach(async (asset) => {
 		if (!fs.existsSync(root + '/' + asset.src)) {
@@ -40,10 +43,10 @@ async function buildAssets(root, assets, includeVendor) {
 
 		if (assets.modules) {
 			// Build the JS asset
-			js.buildAsset(root, asset, assets.config);
+			promises.push(js.buildAsset(root, asset, assets.config));
 
 			// Build the style asset
-			css.buildAsset(root, asset, assets.config);
+			promises.push(css.buildAsset(root, asset, assets.config));
 
 			return;
 		}
@@ -59,6 +62,8 @@ async function buildAssets(root, assets, includeVendor) {
 			util.transpile(file, file.replace(asset.src, asset.dest).replace('scss', 'css'), false, assets.config);
 		});
 	});
+
+	await Promise.all(promises);
 
 	// Check if the vendor dir needs to be built as well
 	if (!includeVendor || !assets.vendor) {
@@ -192,6 +197,8 @@ async function buildAssets(root, assets, includeVendor) {
 			fs.unlinkSync(root + '/' + asset.dest);
 		}
 	};
+
+	return promises;
 }
 
 function copyFileSync(source, target) {

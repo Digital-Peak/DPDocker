@@ -26,6 +26,10 @@ async function buildAsset(root, asset, config) {
 			return;
 		}
 
+		// Add production plugins
+		rollupConfig.plugins.push(strip());
+		rollupConfig.plugins.push(terser());
+
 		const bundle = await rollup.rollup(rollupConfig);
 
 		// Generate code
@@ -115,8 +119,7 @@ function getConfig(root, asset, config) {
 			urlresolve(),
 			svg(),
 			vue(),
-			css(),
-			strip()
+			css()
 		],
 		context: 'window'
 	};

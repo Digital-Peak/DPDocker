@@ -11,7 +11,7 @@ const sass = require('sass');
 const watch = require('node-watch');
 const util = require('./util');
 
-function buildAsset(root, asset, config) {
+async function buildAsset(root, asset, config) {
 	// Traverse the directory and build the assets
 	util.getFiles(root + '/' + asset.src).forEach((file) => {
 		// Files starting with an underscore are treated as imports and do not need to be built

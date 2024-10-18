@@ -20,7 +20,7 @@ util.findFilesRecursiveSync(path.resolve(process.argv[2] + (3 in process.argv &&
 		assets.config = {};
 	}
 	assets.config.moduleRoot = path.dirname(file);
-	buildAssets(path.dirname(file), assets, 3 in process.argv).then(()=>console.log('Finished building assets from config ' + file));
+	buildAssets(path.dirname(file), assets, 3 in process.argv).then(() => console.log('Finished building assets from config ' + file));
 });
 
 async function buildAssets(root, assets, includeVendor) {

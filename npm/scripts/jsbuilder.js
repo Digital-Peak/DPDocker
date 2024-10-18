@@ -33,7 +33,7 @@ async function buildAsset(root, asset, config) {
 		rollupConfig.plugins.push(terser({ format: { comments: false } }));
 
 		// Add the license header
-		rollupConfig.plugins.push(license({banner: { content: config.docBlock }}));
+		rollupConfig.plugins.push(license({ banner: { content: config.docBlock } }));
 
 		// Create the rollup instance
 		const bundle = await rollup.rollup(rollupConfig);
@@ -99,11 +99,28 @@ function getConfig(root, asset, config) {
 		input: files,
 		output: {
 			dir: root + '/' + asset.dest, format: 'es', sourcemap: true, chunkFileNames: (chunkInfo) => {
-				if (chunkInfo.facadeModuleId !== null && chunkInfo.facadeModuleId.indexOf('node_modules') !== -1) {
-					return 'libraries/[name].js';
+				// The path segments
+				const segments = (chunkInfo.facadeModuleId ?? chunkInfo.moduleIds[0]).split('/');
+
+				// Special handling for libs
+				if (segments.indexOf('node_modules') !== -1) {
+					// The root libraries name
+					let name = 'libraries/';
+
+					// Add the package name and module
+					name += segments.splice(segments.findIndex((p) => p === 'node_modules') + 1, 2).join('/').replace('@', '');
+
+					// Normalize the filename
+					name += '/' + chunkInfo.name.replace('.min', '').replace('.esm', '') + '.js';
+
+					return name;
 				}
 
-				return 'modules/[name].js';
+				// Get the module folder
+				const name = segments.at(-2);
+
+				// Return the internal modules with package name as subpath
+				return 'modules/' + (name !== 'js-modules' ? name + '/' : '') + '[name].js';
 			}
 		},
 		plugins: [

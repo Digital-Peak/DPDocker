@@ -65,7 +65,7 @@ async function watchAssets(root, assets) {
 						startBundleTime = Date.now();
 						break;
 					case 'BUNDLE_START':
-						console.log(`Started to create bundles ${Object.values(event.input).join(',')} → ${Array.isArray(event.output) ? event.output.join(',') : event.output}`);
+						console.log(`Started to create the following bundles to ${event.output}:\n  - ${Object.values(event.input).join('\n  - ').replaceAll(root, '')}`);
 						break;
 					case 'BUNDLE_END':
 						console.log(`Finished to create bundles ${Array.isArray(event.output) ? event.output.join(',') : event.output} in ${Date.now() - startBundleTime}ms`);

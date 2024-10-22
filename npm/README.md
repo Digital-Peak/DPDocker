@@ -49,6 +49,9 @@ Example
 The code to perform the tasks is running on node.js. It uses tools like sass compiler, babel, rollup or minifyjs. All the local assets of an extension should not be placed in the media folder, because the transpile tasks does copy them there. So you would end in an infinite loop. We at Digital Peak do place the assets always in the resource folder on the same level as the media folder is.
 If the assets file contains a "docBlock" property then all comments in the generated JS files are stripped out and the "docBlock" is added to the top of the generated file.
 
+## ES6 modules
+[ES6 module support](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules) is a first class citizen in DPDocker. Means all javascript files are created in a way that they can be loaded with the type="module" parameter. Like that are dynamic imports possible and all the javascript code is run in strict support. Modules are built with [rollup](https://rollupjs.org/es-module-syntax/) and dynamic imports are placed within the asset definition.
+
 ### Install/update
 npm install or update is executed within the package folder. All dependencies will then be available in the node_modules folder.
 
@@ -58,7 +61,7 @@ Both tasks are transpiling the files in the same way. Sass files are transpiled 
 From the Javascript dependencies are only the none minified files used. The minified file is generated out of this one and not the one from the package itself. Like that we have it consistent across the whole project and it is possible to generate map files correctly for local development.
 
 ## Result
-All assets are on the right location.
+All assets are placed in the destination from the dest attribute. Vendor Javascript imports are placed within the vendor directory when dynamically imported whle modules are placed within the modules folder.
 
 ## Asset file documentation
 The asset.json file does define the assets of an extension. It can include local assets or external dependencies.
@@ -76,9 +79,6 @@ The vendor property can contain an array of web dependencies like Javascript, CS
 
 ### docBlock
 A docblock which is added to the top of the generated JS files. All the other ones are then stripped out of the file.
-
-### Browser compatibility
-The default browsers definition where the assets are compiled to, is that they must have a usage of over 0.25% and maintained or iOS/Safari 8 compatible while Internet Explorer is not supported anymore. When you want change the compatibility then you can define a compatibility property in the config part. Supported are the compatibility definitions from [babel preset env](https://babeljs.io/docs/en/babel-preset-env#targetsbrowsers), which is based on the [browserlist project](https://github.com/browserslist/browserslist).
 
 ### Example
 Example of assets.json file in com_foo/resources:

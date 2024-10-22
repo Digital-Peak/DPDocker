@@ -7,10 +7,12 @@
 const fs = require('fs');
 const path = require('path');
 const watch = require('node-watch');
+const js = require('./jsbuilder');
+const css = require('./cssbuilder');
 const util = require('./util');
 const build = require('./build');
 
-util.findFilesRecursiveSync(path.resolve(process.argv[2]), 'assets.json').forEach(file => {
+util.findFilesRecursiveSync(path.resolve(process.argv[2] + (3 in process.argv ? '/' + process.argv[3] : '')), 'assets.json').forEach((file) => {
 	// Loading the assets from the assets file of the extension
 	console.log('Started watching assets from config ' + file);
 	const assets = JSON.parse(fs.readFileSync(file, 'utf8'));
@@ -18,6 +20,14 @@ util.findFilesRecursiveSync(path.resolve(process.argv[2]), 'assets.json').forEac
 		assets.config = {};
 	}
 	assets.config.moduleRoot = path.dirname(file);
+
+	if (assets.modules) {
+		js.watchAssets(path.dirname(file), assets);
+		css.watchAssets(path.dirname(file), assets);
+
+		return;
+	}
+
 	watchAssets(path.dirname(file), assets);
 });
 

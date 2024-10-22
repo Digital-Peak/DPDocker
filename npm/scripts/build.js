@@ -7,11 +7,14 @@
 // The needed libs
 const fs = require('fs');
 const path = require('path');
+const js = require('./jsbuilder');
+const css = require('./cssbuilder');
 const util = require('./util');
 
-util.findFilesRecursiveSync(path.resolve(process.argv[2]), 'assets.json').forEach(file => {
+util.findFilesRecursiveSync(path.resolve(process.argv[2] + (3 in process.argv && process.argv[3] !== 'all' ? '/' + process.argv[3] : '')), 'assets.json').forEach((file) => {
 	// Loading the assets from the assets file of the extension
 	console.log('Started building assets from config ' + file);
+
 	const assets = JSON.parse(fs.readFileSync(file, 'utf8'));
 	if (!assets.config) {
 		assets.config = {};
@@ -21,8 +24,10 @@ util.findFilesRecursiveSync(path.resolve(process.argv[2]), 'assets.json').forEac
 });
 
 async function buildAssets(root, assets, includeVendor) {
+	const promises = [];
+
 	// Looping over the assets
-	assets.local.forEach((asset) => {
+	assets.local.forEach(async (asset) => {
 		if (!fs.existsSync(root + '/' + asset.src)) {
 			return;
 		}
@@ -36,6 +41,16 @@ async function buildAssets(root, assets, includeVendor) {
 		// Delete the assets directory first
 		util.deleteDirectory(root + '/' + asset.dest);
 
+		if (assets.modules) {
+			// Build the JS asset
+			promises.push(js.buildAsset(root, asset, assets.config));
+
+			// Build the style asset
+			promises.push(css.buildAsset(root, asset, assets.config));
+
+			return;
+		}
+
 		// Traverse the directory and build the assets
 		util.getFiles(root + '/' + asset.src).forEach((file) => {
 			// Files starting with an underscore are treated as imports and do not need to be built
@@ -47,6 +62,8 @@ async function buildAssets(root, assets, includeVendor) {
 			util.transpile(file, file.replace(asset.src, asset.dest).replace('scss', 'css'), false, assets.config);
 		});
 	});
+
+	await Promise.all(promises);
 
 	// Check if the vendor dir needs to be built as well
 	if (!includeVendor || !assets.vendor) {

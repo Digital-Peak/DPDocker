@@ -3,6 +3,11 @@
 # @copyright Copyright (C) 2020 Digital Peak GmbH. <https://www.digital-peak.com>
 # @license   http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
 
+if [ ! -d $(dirname $0)/../../../$1/tests ]; then
+	echo "No tests found in $(realpath $(dirname $0)/../../../$1/tests), aborting!"
+	exit 0
+fi
+
 while  ! curl http://web-test  > /dev/null 2>&1; do
 	echo "$(date) - waiting for web server"
 	sleep 4

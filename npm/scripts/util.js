@@ -121,7 +121,8 @@ function transpile(source, destination, isVendor, config) {
 				indentType: 'tab',
 				indentWidth: 1,
 				sourceMap: true,
-				loadPaths: [config.moduleRoot + '/node_modules']
+				loadPaths: [config.moduleRoot + '/node_modules'],
+				quietDeps: true
 			});
 
 			// Write the none minified content to the destination file with the source mapping

@@ -19,8 +19,16 @@ async function buildAsset(root, asset, config) {
 			return;
 		}
 
+		// The destination
+		let destination = file.replace(asset.src, asset.dest).replace('scss', 'css');
+
+		// For the build task, make it minified
+		if (process.argv[1].indexOf('build.js') > 0) {
+			destination = destination.replace('.css', '.min.css');
+		}
+
 		// Transpile the file
-		transpile(file, file.replace(asset.src, asset.dest).replace('scss', 'css').replace('.css', '.min.css'), config);
+		transpile(file, destination, config);
 	});
 };
 

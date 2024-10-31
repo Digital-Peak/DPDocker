@@ -15,6 +15,7 @@ const vue = require('rollup-plugin-vue');
 const license = require('rollup-plugin-license');
 const css = require('rollup-plugin-import-css');
 const urlresolve = require('rollup-plugin-url-resolve');
+const MapGenerator = require('magic-string');
 const util = require('./util');
 
 async function buildAsset(root, asset, config) {
@@ -24,18 +25,25 @@ async function buildAsset(root, asset, config) {
 			return;
 		}
 
-		// Compress and remove debug and comments
-		rollupConfig.plugins.push(terser({
-			module: true,
-			compress: {
-				drop_console: true,
-				drop_debugger: true,
-			},
-			format: { comments: false }
-		}));
+		if (process.argv[1].indexOf('watch.js') > 0) {
+			// Use source maps
+			rollupConfig.output.sourcemap = true;
+		}
 
-		// Add the license header
-		rollupConfig.plugins.push(license({ banner: { content: config.docBlock } }));
+		if (process.argv[1].indexOf('build.js') > 0) {
+			// Compress and remove debug and comments
+			rollupConfig.plugins.push(terser({
+				module: true,
+				compress: {
+					drop_console: true,
+					drop_debugger: true,
+				},
+				format: { comments: false }
+			}));
+
+			// Add the license header
+			rollupConfig.plugins.push(license({ banner: { content: config.docBlock } }));
+		}
 
 		// Create the rollup instance
 		const bundle = await rollup.rollup(rollupConfig);
@@ -100,6 +108,8 @@ function getConfig(root, asset, config) {
 		files[file.replace(root + '/js/', '').replace('.js', '')] = file;
 	});
 
+	// Create the hash from the current timestamp minus the timestamp from 1.1.2024 to make it a bit shorter
+	const hash = Math.floor(Date.now() / 1000) - 1704070800;
 	return {
 		input: files,
 		output: {
@@ -143,7 +153,18 @@ function getConfig(root, asset, config) {
 			urlresolve(),
 			svg(),
 			vue(),
-			css()
+			css(),
+			{
+				name: 'dp-cache',
+				// Append hash to the imported files for busting
+				renderChunk(code) {
+					const transformed = code.replaceAll('.min.js', '.min.js?' + hash);
+					return {
+						code: transformed,
+						map: new MapGenerator(transformed).generateMap().toString()
+					};
+				}
+			}
 		],
 		context: 'window'
 	};

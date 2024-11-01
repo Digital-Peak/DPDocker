@@ -120,6 +120,12 @@ function getConfig(root, asset, config) {
 				// The path segments
 				const segments = (chunkInfo.facadeModuleId ?? chunkInfo.moduleIds[0]).split('/');
 
+				let fileName = chunkInfo.name.replace('.min', '').replace('.esm', '');
+				if (segments[segments.length - 1].endsWith('.css')) {
+					fileName += '.css';
+				}
+				fileName += '.min.js';
+
 				// Special handling for libs
 				if (segments.indexOf('node_modules') !== -1) {
 					// The root libraries name
@@ -129,7 +135,7 @@ function getConfig(root, asset, config) {
 					name += segments.splice(segments.findIndex((p) => p === 'node_modules') + 1, 2).join('/').replace('@', '');
 
 					// Normalize the filename
-					name += '/' + chunkInfo.name.replace('.min', '').replace('.esm', '') + '.min.js';
+					name += '/' + fileName;
 
 					return name;
 				}
@@ -138,7 +144,7 @@ function getConfig(root, asset, config) {
 				const name = segments.at(-2);
 
 				// Return the internal modules with package name as subpath
-				return 'modules/' + (name !== 'js-modules' ? name + '/' : '') + '[name].min.js';
+				return 'modules/' + (name !== 'js-modules' ? name + '/' : '') + fileName;
 			}
 		},
 		plugins: [
@@ -153,12 +159,18 @@ function getConfig(root, asset, config) {
 			urlresolve(),
 			svg(),
 			vue(),
-			css(),
+			css({ modules: true }),
 			{
 				name: 'dp-cache',
-				// Append hash to the imported files for busting
 				renderChunk(code) {
-					const transformed = code.replaceAll('.min.js', '.min.js?' + hash);
+					// Append hash to the imported files for busting
+					let transformed = code.replaceAll('.min.js', '.min.js?' + hash);
+
+					// Directly append the css to the browser with polyfill
+					if (transformed.endsWith('export { sheet as default };')) {
+						transformed = transformed.replace('export { sheet as default };', 'if(document.adoptedStyleSheets)document.adoptedStyleSheets.push(sheet);else{var styleString="";for(let e=0;e<sheet.cssRules.length;e++)styleString=styleString.concat(sheet.cssRules[e].cssText);var style=document.createElement("style");style.type="text/css",style.innerHTML=styleString,document.getElementsByTagName("head")[0].appendChild(style)}');
+					}
+
 					return {
 						code: transformed,
 						map: new MapGenerator(transformed).generateMap().toString()

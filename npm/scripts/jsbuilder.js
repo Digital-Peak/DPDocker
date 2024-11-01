@@ -10,6 +10,7 @@ const rollup = require('rollup');
 const resolve = require('@rollup/plugin-node-resolve');
 const replace = require('@rollup/plugin-replace');
 const terser = require('@rollup/plugin-terser');
+const json = require('@rollup/plugin-json');
 const svg = require('rollup-plugin-svg');
 const vue = require('rollup-plugin-vue');
 const license = require('rollup-plugin-license');
@@ -159,6 +160,7 @@ function getConfig(root, asset, config) {
 			urlresolve(),
 			svg(),
 			vue(),
+			json(),
 			css({ modules: true }),
 			{
 				name: 'dp-cache',

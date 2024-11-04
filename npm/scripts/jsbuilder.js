@@ -180,7 +180,13 @@ function getConfig(root, asset, config) {
 				}
 			}
 		],
-		context: 'window'
+		context: 'window',
+		onwarn: function ( message ) {
+			// As maintainers refuse to remove the circular dependency https://github.com/d3/d3-interpolate/issues/58
+			if ( /Circular dependency.*d3-interpolate/.test(message) ) {
+			  return
+			}
+		  },
 	};
 }
 

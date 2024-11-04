@@ -119,7 +119,7 @@ function getConfig(root, asset, config) {
 			entryFileNames: '[name].min.js',
 			chunkFileNames: (chunkInfo) => {
 				// The path segments
-				const segments = (chunkInfo.facadeModuleId ?? chunkInfo.moduleIds[0]).split('/');
+				const segments = (chunkInfo.facadeModuleId ?? chunkInfo.moduleIds[chunkInfo.moduleIds.length-1]).split('/');
 
 				let fileName = chunkInfo.name.replace('.min', '').replace('.esm', '');
 				if (segments[segments.length - 1].endsWith('.css')) {

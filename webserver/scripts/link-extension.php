@@ -93,7 +93,10 @@ function createLinks($folderRoot, $wwwRoot)
 		}
 
 		if (strpos($filename, 'mod_') === 0) {
-			createLink($folderRoot . $filename, $wwwRoot . '/modules/' . $filename);
+			foreach (new RegexIterator(new DirectoryIterator($folderRoot . $filename), "/\\.xml\$/i") as $moduleFile) {
+				$xml = new SimpleXMLElement(file_get_contents($folderRoot . $filename . '/' . $moduleFile));
+				createLink($folderRoot . $filename, $wwwRoot . ($xml->attributes()->client === 'administrator' ? '/administrator/' : '') . '/modules/' . $filename);
+			}
 
 			if (file_exists($folderRoot . $filename . '/media')) {
 				createLink($folderRoot . $filename . '/media', $wwwRoot . '/media/' . $filename);

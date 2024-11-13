@@ -111,7 +111,13 @@ function transpile(source, destination, config) {
 		case 'css':
 			// Define the content and file path, based on the extension of the destination
 			if (destination.indexOf('.min.css') > -1) {
-				const result = sass.compile(source, { outFile: destination, style: 'compressed', loadPaths: [config.moduleRoot + '/node_modules'], quietDeps: true });
+				const result = sass.compile(source, {
+					outFile: destination,
+					style: 'compressed',
+					loadPaths: [config.moduleRoot + '/node_modules'],
+					quietDeps: true,
+					silenceDeprecations: ['import']
+				});
 
 				// Write the minified content to the file
 				fs.writeFileSync(destination, (config.docBlock ? config.docBlock + '\n' : '') + result.css.toString().trim());
@@ -126,7 +132,8 @@ function transpile(source, destination, config) {
 				indentWidth: 1,
 				sourceMap: true,
 				loadPaths: [config.moduleRoot + '/node_modules'],
-				quietDeps: true
+				quietDeps: true,
+				silenceDeprecations: ['import']
 			});
 
 			// Normalize the extension

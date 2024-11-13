@@ -17,11 +17,15 @@ $(dirname $0)/../config/vendor/bin/php-cs-fixer fix --allow-risky=yes --diff --p
 
 echo -e "\nFixing Javascript code style issues"
 # Allow the extension to overwrite the default config file
-file=$(dirname $0)/../config/.eslintrc.js
-if [ -f $(dirname $0)/../../../$1/.eslintrc.js ]; then
-	file=$(dirname $0)/../../../$1/.eslintrc.js
+file=$(dirname $0)/../config/eslint.config.mjs
+if [ -f $(dirname $0)/../../../$1/eslint.config.mjs ]; then
+	file=$(dirname $0)/../../../$1/eslint.config.mjs
 fi
-DEBUG=eslint:cli-engine eslint --fix --no-error-on-unmatched-pattern --config $file --ignore-pattern '**/media/*' --ext .js $(dirname $0)/../../../$1/$2
+# Eslint needs to config and pattern below the current path
+# https://github.com/eslint/eslint/discussions/18806
+cd $(dirname $0)/../../../
+$(dirname $0)/../config/node_modules/.bin/eslint --config $file --fix $(dirname $0)/../../../$1/$2
+cd $(dirname $0)/../config
 
 echo -e "\nFixing CSS code style issues"
 # Allow the extension to overwrite the default config file
@@ -29,6 +33,4 @@ file=$(dirname $0)/../config/.stylelintrc.json
 if [ -f $(dirname $0)/../../../$1/.stylelintrc.json ]; then
 	file=$(dirname $0)/../../../$1/.stylelintrc.json
 fi
-npx stylelint --fix --allow-empty-input --formatter verbose "$(dirname $0)/../../../$1/$2/**/*.scss"
-
-find $(dirname $0)/../tmp -type l -delete
+stylelint --fix --allow-empty-input --formatter verbose "$(dirname $0)/../../../$1/$2/**/*.scss"

@@ -5,7 +5,7 @@ Currently are the following code style checks performed:
 - **PHP**  
 The code style fixer PHP project from [the symfony guys](https://github.com/PHP-CS-Fixer/PHP-CS-Fixer) is used for code style checks and fixes for PHP files. The rules are defined in the file in the file /code/config/.php-cs-fixer.php. When the extension has a .php-cs-fixer.php file in the root folder, then this one will taken, instead of the default one.
 - **Javascript**  
-[Eslint](https://eslint.org) is used for code style checks of Javascript files. The rules are defined in the file in the file /code/config/.eslintrc.js. When the extension has a .eslintrc.js file in the root folder, then this one will taken, instead of the default one.
+[Eslint](https://eslint.org) is used for code style checks of Javascript files. The rules are defined in the file in the file /code/config/eslint.config.mjs. When the extension has a eslint.config.mjs. file in the root folder, then this one will taken, instead of the default one.
 - **CSS/SCSS**  
 [Stylelint](https://stylelint.io) is used for code style checks of CSS and SCSS files. The rules are defined in the file in the file /code/config/.stylelintrc.json. When the extension has a .stylelintrc.json file in the root folder, then this one will taken, instead of the default one.
 

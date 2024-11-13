@@ -21,7 +21,11 @@ file=$(dirname $0)/../config/eslint.config.mjs
 if [ -f $(dirname $0)/../../../$1/eslint.config.mjs ]; then
 	file=$(dirname $0)/../../../$1/eslint.config.mjs
 fi
-npx eslint --debug --fix --no-error-on-unmatched-pattern --no-ignore $(dirname $0)/../../../$1/com_dpcalendar/resources/js/dpcalendar.js
+# Eslint needs to config and pattern below the current path
+# https://github.com/eslint/eslint/discussions/18806
+cd $(dirname $0)/../../../
+$(dirname $0)/../config/node_modules/.bin/eslint --config $file --fix $(dirname $0)/../../../$1/$2
+cd $(dirname $0)/../config
 
 echo -e "\nFixing CSS code style issues"
 # Allow the extension to overwrite the default config file
@@ -29,6 +33,6 @@ file=$(dirname $0)/../config/.stylelintrc.json
 if [ -f $(dirname $0)/../../../$1/.stylelintrc.json ]; then
 	file=$(dirname $0)/../../../$1/.stylelintrc.json
 fi
-# npx stylelint --fix --allow-empty-input --formatter verbose "$(dirname $0)/../../../$1/$2/**/*.scss"
+stylelint --fix --allow-empty-input --formatter verbose "$(dirname $0)/../../../$1/$2/**/*.scss"
 
 find $(dirname $0)/../tmp -type l -delete

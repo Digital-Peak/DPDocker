@@ -3,7 +3,7 @@ This task runs some different code quality scripts. You can check and fix PHP, J
 
 Currently are the following code style checks performed:
 - **PHP**  
-The code style fixer PHP project from [the symfony guys](https://github.com/PHP-CS-Fixer/PHP-CS-Fixer) is used for code style checks and fixes for PHP files. The rules are defined in the file in the file /code/config/.php-cs-fixer.php. When the extension has a .php-cs-fixer.php file in the root folder, then this one will taken, instead of the default one.
+The code style fixer PHP project from [the symfony guys](https://github.com/PHP-CS-Fixer/PHP-CS-Fixer) is used for code style checks and fixes for PHP files. The rules are defined in the file in the file /code/config/.php-cs-fixer.php. When the extension has a .php-cs-fixer.php file in the root folder, then this one will taken, instead of the default one. An extension can include the the one from this project and add some more sugar. Like that are always changes in the base file automatically included in the project.
 - **Javascript**  
 [Eslint](https://eslint.org) is used for code style checks of Javascript files. The rules are defined in the file in the file /code/config/eslint.config.mjs. When the extension has a eslint.config.mjs. file in the root folder, then this one will taken, instead of the default one.
 - **CSS/SCSS**  

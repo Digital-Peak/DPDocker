@@ -12,7 +12,8 @@ use PhpCsFixer\Runner\Parallel\ParallelConfigFactory;
 $finder = Finder::create()
 	->in(__DIR__)
 	->notPath('/tmpl/')
-	->notPath('/layouts/');
+	->notPath('/layouts/')
+	->notName('AcceptanceTesterActions.php');
 
 $config = new Config();
 

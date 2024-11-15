@@ -19,6 +19,9 @@ parameters:
 			- */deleted.php
 			- */AcceptanceTesterActions.php
 			- */rector.php
+	stubFiles:
+		- stubs/Form.stub
+		- stubs/ListModel.stub
 	dynamicConstantNames:
 		- JDEBUG
 	ignoreErrors:

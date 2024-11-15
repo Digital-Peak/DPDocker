@@ -1,0 +1,11 @@
+<?php
+
+namespace Joomla\CMS\MVC\Model;
+
+class ListModel
+{
+	/**
+	 * @return \Joomla\CMS\Form\Form
+     */
+    public function getFilterForm();
+}

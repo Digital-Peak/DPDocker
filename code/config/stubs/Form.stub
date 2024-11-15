@@ -1,0 +1,7 @@
+<?php
+
+namespace Joomla\CMS\Form;
+
+class Form
+{
+}

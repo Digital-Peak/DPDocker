@@ -22,7 +22,7 @@ cd $tmpDir
 # Only do an update when the full extension is analyzed
 if [ -z $2 ]; then
 	git reset --hard
-	git switch 5.2-dev
+	git switch $(git remote show origin | sed -n '/HEAD branch/s/.*: //p')
 	git pull
 	composer install
 fi

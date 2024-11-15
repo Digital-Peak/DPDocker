@@ -33,4 +33,4 @@ parameters:
 		-
 			message: '#Call to deprecated method triggerEvent\(\)#'
 		-
-			message: '#Call to deprecated method getError\(\)#'
+			message: '#Call to deprecated method getErrors?\(\)#'

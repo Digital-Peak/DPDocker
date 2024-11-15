@@ -22,6 +22,8 @@ parameters:
 	stubFiles:
 		- stubs/Form.stub
 		- stubs/ListModel.stub
+	universalObjectCratesClasses:
+		- Joomla\CMS\Categories\CategoryNode
 	dynamicConstantNames:
 		- JDEBUG
 	ignoreErrors:

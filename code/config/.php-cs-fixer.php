@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   DPDocker
  * @copyright Copyright (C) 2023 Digital Peak GmbH. <https://www.digital-peak.com>
@@ -24,6 +25,7 @@ $config->setRules([
 		'single_space_around_construct'   => true,
 		'concat_space'                    => ['spacing' => 'one'],
 		'cast_spaces'                     => ['space' => 'none'],
+		'blank_line_after_opening_tag'    => false,
 		'indentation_type'                => true,
 		'no_break_comment'                => false,
 		'no_unused_imports'               => true,

@@ -1,4 +1,4 @@
-ARG PHP_VERSION=8.3
+ARG PHP_VERSION=8.4
 
 FROM thecodingmachine/php:${PHP_VERSION}-v4-apache-node22
 
@@ -19,6 +19,8 @@ ENV PHP_INI_XDEBUG__MODE=coverage,debug,profile,trace
 ENV PHP_INI_XDEBUG__START_WITH_REQUEST=trigger
 ENV PHP_INI_UPLOAD_MAX_FILESIZE=200M
 ENV PHP_INI_POST_MAX_SIZE=200M
+ENV PHP_INI_OPCACHE__JIT=disable
+ENV PHP_INI_OPCACHE__JIT_BUFFER_SIZE=0
 
 # Install
 RUN sudo apt-get update && sudo apt-get install -y \

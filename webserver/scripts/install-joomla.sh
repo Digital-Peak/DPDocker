@@ -46,6 +46,10 @@ if [ -f $root/package.json ]; then
 	fi
 fi
 
+# PHP 8.4 infinite redirect issue
+sed -i "s/&[[:space:]]*\$_COOKIE;/\$_COOKIE;/g" $root/libraries/src/Input/Cookie.php
+sed -i 's/File::write(\$this->file, implode("\\n", \$content));/\$b = implode("\\n", \$content);File::write(\$this->file, \$b);/g' $root/libraries/namespacemap.php
+
 # Install Joomla when no configuration file is available
 if [[ -f $root/configuration.php && -z $rebuild ]]; then
 	exit
@@ -65,8 +69,8 @@ sed -i "s/{DBNAME}/$dbName/g" $root/configuration.php
 sed -i "s/{SMTPHOST}/$smtpHost/g" $root/configuration.php
 sed -i "s/{PATH}/${root//\//\\/}/g" $root/configuration.php
 
-# Joomla 3 needs error reporting simple because of PHP 8.2 deprecations
-if [ ! -f $root/package.json ]; then
+# Joomla 3 and 4 needs error reporting simple because of PHP 8.x deprecations
+if [ ! -d $root/plugins/schemaorg ]; then
 	sed -i "s/error_reporting = 'maximum'/error_reporting = 'simple'/g" $root/configuration.php
 fi
 

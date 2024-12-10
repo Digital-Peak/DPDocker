@@ -10,13 +10,13 @@
 		"@rollup/plugin-terser": "^0.4.4",
 		"js-cleanup": "^1.2.0",
 		"node-watch": "^0.7.4",
-		"rollup": "^4.26.0",
-		"rollup-plugin-import-css": "^3.5.6",
+		"rollup": "^4.28.1",
+		"rollup-plugin-import-css": "^3.5.7",
 		"rollup-plugin-license": "^3.5.3",
 		"rollup-plugin-svg": "^2.0.0",
 		"rollup-plugin-url-resolve": "^0.2.0",
 		"rollup-plugin-vue": "^6.0.0",
-		"sass": "^1.80.7",
-		"terser": "^5.36.0"
+		"sass": "^1.82.0",
+		"terser": "^5.37.0"
 	}
 }

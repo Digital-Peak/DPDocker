@@ -39,3 +39,5 @@ parameters:
 			message: '#Call to deprecated method triggerEvent\(\)#'
 		-
 			message: '#Call to deprecated method getErrors?\(\)#'
+		-
+			message: '#Path in require_once\(\) "/usr/src/Projects/DPDocker/code/tmp/joomla\\#'

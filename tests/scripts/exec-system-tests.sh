@@ -30,10 +30,6 @@ cd $(dirname $0)/../tmp
 cp -r $(dirname $0)/../../../$1/tests .
 cp -r $(dirname $0)/../config/extension/* .
 
-sudo sed -i "s/debug = '1'/debug = 0/g" /var/www/html/joomla/configuration.php
-sudo sed -i "s/sef = '1'/sef = 0/g" /var/www/html/joomla/configuration.php
-sudo sed -i "s/smtphost = 'mailcatcher'/smtphost = 'mailcatcher-test'/g" /var/www/html/joomla/configuration.php
-
 export CODECEPTION_BROWSER=$3
 export CODECEPTION_JOOMLA_VERSION=$2
 export CODECEPTION_PHP_VERSION=$4

@@ -111,6 +111,7 @@ foreach ($folders as $project) {
 	createLinks('/var/www/html/Projects/' . $project . '/', $wwwRoot);
 }
 echo 'Discovering extensions on ' . $wwwRoot . PHP_EOL;
-copy('/var/www/html/Projects/DPDocker/webserver/scripts/discoverapp.php', $wwwRoot . '/discoverapp.php');
-shell_exec('php ' . $wwwRoot . '/discoverapp.php');
-unlink($wwwRoot . '/discoverapp.php');
+// Ugly hack to not abort when an extension fails
+echo shell_exec('sed -i "0,/return -1;/s/return -1;/continue;/" ' . $wwwRoot . '/libraries/src/Console/ExtensionDiscoverInstallCommand.php');
+echo shell_exec('php -d error_reporting=1 ' . $wwwRoot . '/cli/joomla.php extension:discover');
+echo shell_exec('php -d error_reporting=1 ' . $wwwRoot . '/cli/joomla.php extension:discover:install');

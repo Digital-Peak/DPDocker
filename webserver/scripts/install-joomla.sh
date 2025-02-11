@@ -15,16 +15,19 @@ rebuild=$6
 cd $root
 echo "Doing setup on $root"
 
+# Install vscode debug configuration
 if [ ! -d $root/.vscode ]; then
 	sudo cp -rf $(dirname $0)/vscode $root/.vscode
 	sudo chmod -R 777 $root/.vscode
 	sed -i "s|{PATH}|$root|g" $root/.vscode/launch.json
 fi
 
+# Cleanup the namespace cache
 if [ -f $root/administrator/cache/autoload_psr4.php ]; then
 	rm -f $root/administrator/cache/autoload_psr4.php
 fi
 
+# Run composer
 if [[ ! -d $root/libraries/vendor || ! -z $rebuild ]]; then
 	echo "Installing PHP dependencies"
 	rm -rf $root/libraries/vendor
@@ -32,18 +35,18 @@ if [[ ! -d $root/libraries/vendor || ! -z $rebuild ]]; then
 fi
 
 # Run npm
-if [ -f $root/package.json ]; then
-	if [ ! -z $rebuild ]; then
-		echo "Cleaning the assets"
-		rm -rf $root/node_modules
-		rm -rf $root/administrator/components/com_media/node_modules
-		rm -rf $root/media
-	fi
-	if [ ! -d $root/media/vendor ]; then
-		echo "Installing the assets (takes a while!)"
-		mkdir -p $root/media/vendor
-		npm ci &>/dev/null
-	fi
+if [ ! -z $rebuild ]; then
+	echo "Cleaning the assets"
+	rm -rf $root/node_modules
+	rm -rf $root/administrator/components/com_media/node_modules
+	rm -rf $root/media
+fi
+
+# Build the assets
+if [ ! -d $root/media/vendor ]; then
+	echo "Installing the assets (takes a while!)"
+	mkdir -p $root/media/vendor
+	npm ci &>/dev/null
 fi
 
 # PHP 8.4 infinite redirect issue
@@ -57,52 +60,55 @@ fi
 
 echo "Setting up Joomla"
 
+# Enable htaccess
 if [ ! -f $root/.htaccess ]; then
 	cp $root/htaccess.txt $root/.htaccess
 fi
 
-# Setup configuration file
-sudo cp $(dirname $0)/configuration.php $root/configuration.php
-sed -i "s/{SITE}/$site/g" $root/configuration.php
-sed -i "s/{DBHOST}/$dbHost/g" $root/configuration.php
-sed -i "s/{DBNAME}/$dbName/g" $root/configuration.php
-sed -i "s/{SMTPHOST}/$smtpHost/g" $root/configuration.php
-sed -i "s/{PATH}/${root//\//\\/}/g" $root/configuration.php
+echo "Waiting for database server"
+while ! mysqladmin ping -u root -proot -h $dbHost --silent  > /dev/null; do
+	sleep 4
+done
 
-# Joomla 3 and 4 needs error reporting simple because of PHP 8.x deprecations
-if [ ! -d $root/plugins/schemaorg ]; then
-	sed -i "s/error_reporting = 'maximum'/error_reporting = 'simple'/g" $root/configuration.php
+# Define the db type
+dbType="mysqli"
+if [[ $dbHost == 'postgres'* ]]; then
+	dbType="pgsql"
 fi
 
-# Define install folder
-installFolder=$root/installation
-if [ ! -d $installFolder ]; then
-	installFolder=$root/_installation
-fi
+# Clear existing mysql database
+if [ $dbType == 'mysqli' ]; then
+	mysql -u root -proot -h $dbHost -e "DROP DATABASE IF EXISTS $dbName"
+	mysql -u root -proot -h $dbHost -e "CREATE DATABASE $dbName"
+fi;
 
-if [[ -z $dbHost || $dbHost == 'mysql'* ]]; then
-	echo "Installing Joomla with mysql"
-	sed -i "s/{DBDRIVER}/mysqli/g" $root/configuration.php
+# Clear existing pgsql database
+if [ $dbType == 'pgsql' ]; then
+	export PGPASSWORD=root
 
-	echo "Waiting for database server"
-	while ! mysqladmin ping -u root -proot -h $dbHost --silent  > /dev/null; do
-		sleep 4
-	done
-
-	echo "Executing install scripts"
+	# Clear existing connections
+	psql -U root -h $dbHost -c "REVOKE CONNECT ON DATABASE $dbName FROM public" > /dev/null 2>&1
+	psql -U root -h $dbHost -c "SELECT pid, pg_terminate_backend(pid) FROM pg_stat_activity WHERE datname = '$dbName' AND pid <> pg_backend_pid()" > /dev/null
 
 	# Install joomla
-	mysql -u root -proot -h $dbHost -e "drop database if exists $dbName"
-	mysql -u root -proot -h $dbHost -e "create database $dbName"
+	psql -U root -h $dbHost -c "DROP DATABASE IF EXISTS $dbName" > /dev/null
+	psql -U root -h $dbHost -c "CREATE DATABASE $dbName" > /dev/null
+fi;
 
-	if [ -f $installFolder/sql/mysql/joomla.sql ]; then
-		sed "s/#_/j/g" $installFolder/sql/mysql/joomla.sql | mysql -u root -proot -h $dbHost -D $dbName
-	else
-		sed "s/#_/j/g" $installFolder/sql/mysql/base.sql | mysql -u root -proot -h $dbHost -D $dbName
-		sed "s/#_/j/g" $installFolder/sql/mysql/extensions.sql | mysql -u root -proot -h $dbHost -D $dbName
-		sed "s/#_/j/g" $installFolder/sql/mysql/supports.sql | mysql -u root -proot -h $dbHost -D $dbName
-	fi
+# Install Joomla
+php -d error_reporting=1 $root/installation/joomla.php install -n --site-name="$site" --admin-user="Admin" --admin-username=admin --admin-password=adminadminadmin --admin-email=admin@example.com --db-type="$dbType" --db-host="$dbHost" --db-name="$dbName" --db-user=root --db-pass=root --db-prefix="j_"
 
+# Set some parameters
+php -d error_reporting=1 $root/cli/joomla.php config:set secret=XgrJSL137VSjPBVn error_reporting=maximum debug=true mailer=smtp smtphost=$smtpHost smtpport=1025 sef_rewrite=true
+
+# Joomla 4 needs error reporting simple because of PHP 8.x deprecations
+if [ ! -d $root/plugins/schemaorg ]; then
+	php -d error_reporting=1 $root/cli/joomla.php config:set error_reporting=simple
+fi
+
+# Setup the users in mysql
+if [ $dbType == 'mysqli' ]; then
+	mysql -u root -proot -h $dbHost -D $dbName -e "DELETE FROM j_users"
 	mysql -u root -proot -h $dbHost -D $dbName -e "INSERT INTO j_users (id, name, username, email, password, block, registerDate, params) VALUES(42, 'Admin', 'admin', 'admin@example.com', '\$2y\$10\$O.A8bZcuC6yFfgjzycqzku7LuG6zvBiozJcjXD4FP3bhJdvyKdtoG', 0, '2020-01-01 00:00:01', '{}')"
 	mysql -u root -proot -h $dbHost -D $dbName -e "INSERT INTO j_user_usergroup_map (user_id, group_id) VALUES ('42', '8')"
 	mysql -u root -proot -h $dbHost -D $dbName -e "INSERT INTO j_users (id, name, username, email, password, block, registerDate, params) VALUES(43, 'Manager', 'manager', 'manager@example.com', '\$2y\$10\$GICucf86nqR95Jz0mGTPkej8Mvzll/DRdXVClsUOkzyIPl6XF.2hS', 0, '2020-01-01 00:00:01', '{}')"
@@ -113,27 +119,9 @@ if [[ -z $dbHost || $dbHost == 'mysql'* ]]; then
 	mysql -u root -proot -h $dbHost -D $dbName -e "UPDATE j_extensions SET enabled = 0 WHERE name = 'plg_quickicon_eos' OR name = 'plg_system_stats' OR name LIKE '%guided%'"
 fi
 
-if [[ $dbHost == 'postgres'* ]]; then
-	echo "Installing Joomla with postgres"
-	sed -i "s/{DBDRIVER}/pgsql/g" $root/configuration.php
-	export PGPASSWORD=root
-
-	# Clear existing connections
-	psql -U root -h $dbHost -c "REVOKE CONNECT ON DATABASE $dbName FROM public" > /dev/null 2>&1
-	psql -U root -h $dbHost -c "SELECT pid, pg_terminate_backend(pid) FROM pg_stat_activity WHERE datname = '$dbName' AND pid <> pg_backend_pid()" > /dev/null
-
-	# Install joomla
-	psql -U root -h $dbHost -c "drop database if exists $dbName" > /dev/null
-	psql -U root -h $dbHost -c "create database $dbName" > /dev/null
-
-	if [ -f $installFolder/sql/mysql/joomla.sql ]; then
-		sed "s/#_/j/g" $installFolder/sql/postgresql/joomla.sql | psql -U root -h $dbHost -d $dbName > /dev/null
-	else
-		sed "s/#_/j/g" $installFolder/sql/postgresql/base.sql | psql -U root -h $dbHost -d $dbName > /dev/null
-		sed "s/#_/j/g" $installFolder/sql/postgresql/extensions.sql | psql -U root -h $dbHost -d $dbName > /dev/null
-		sed "s/#_/j/g" $installFolder/sql/postgresql/supports.sql | psql -U root -h $dbHost -d $dbName > /dev/null
-	fi
-
+# Setup the users in postgres
+if [ $dbType == 'pgsql' ]; then
+	psql -U root -h $dbHost -d $dbName -c "DELETE FROM j_users" > /dev/null
 	psql -U root -h $dbHost -d $dbName -c "INSERT INTO j_users (id, name, username, email, password, block,  \"registerDate\", params) VALUES(42, 'Admin', 'admin', 'admin@example.com', '\$2y\$10\$O.A8bZcuC6yFfgjzycqzku7LuG6zvBiozJcjXD4FP3bhJdvyKdtoG', 0, '2020-01-01 00:00:00', '{}')" > /dev/null
 	psql -U root -h $dbHost -d $dbName -c "INSERT INTO j_user_usergroup_map (user_id, group_id) VALUES ('42', '8')" > /dev/null
 	psql -U root -h $dbHost -d $dbName -c "INSERT INTO j_users (id, name, username, email, password, block,  \"registerDate\", params) VALUES(43, 'Manager', 'manager', 'manager@example.com', '\$2y\$10\$GICucf86nqR95Jz0mGTPkej8Mvzll/DRdXVClsUOkzyIPl6XF.2hS', 0, '2020-01-01 00:00:00', '{}')" > /dev/null

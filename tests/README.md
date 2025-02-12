@@ -1,5 +1,5 @@
 # Tests task
-This task runs the system tests of an extension on joomla 3, 4 or a branch. System tests are browser tests performed by selenium and written in PHP with [Codeception](https://codeception.com). Since Joomla 4.3, the core system tests of the CMS are ported to [cypress](https://www.cypress.io) and can be xecuted with this task as well.
+This task runs the system tests of an extension on any active Joomla major version or a branch. System tests are browser tests performed by selenium and written in PHP with [Codeception](https://codeception.com). Since Joomla 4.3, the core system tests of the CMS are ported to [cypress](https://www.cypress.io) and can be executed with this task as well.
 
 Through a VNC viewer you can actually see what is executed inside a container in the browser, when the extension system tests are executed. More information can be found in the "Observe" chapter. The joomla extension specific Codeception modules are loaded from DPCeption. They offer extra functionality to test mails, files and do certain Joomla actions like log ins. More information can be found in the [DPCeption Github repository](https://github.com/Digital-Peak/DPCeption).
 
@@ -14,7 +14,7 @@ If you want to test the core system tests, then you need to have a clone of the 
 ## Execute extension tests
 To run the extension tests, execute the following command:
 
-`./run-system-tests.sh -e extension [-t test] [-j jooma-version] [-p php-version]`
+`./run-system-tests.sh -e extension [-t test] [-j joomla-version] [-p php-version]`
 
 Examples
 

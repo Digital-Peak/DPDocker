@@ -11,7 +11,7 @@ services:
       - test:/tmp/tests
 
   joomla-system-tests:
-    image: cypress/included:13.6.6
+    image: cypress/included:13.17.0
     entrypoint: /usr/src/Projects/DPDocker/tests/scripts/exec-joomla-system-tests.sh ${JOOMLA} ${DB} ${TEST}
     ports:
       - 8084:8084
@@ -72,7 +72,7 @@ services:
     environment:
       STARTUP_COMMAND_1: if [[ -f /var/www/html/configuration.php ]]; then mv /var/www/html/configuration.php /var/www/html/configuration.php.bak; fi
       STARTUP_COMMAND_2: sudo chown docker:docker /home/docker && /usr/src/Projects/DPDocker/webserver/scripts/install-joomla.sh /var/www/html ${DB}-test joomla_${JOOMLA} Cypress mailcatcher-test
-      STARTUP_COMMAND_3: php /var/www/html/joomla/cli/joomla.php config:set debug=false secret=tEstValue smtphost="host.docker.internal" smtpport=8084
+      STARTUP_COMMAND_3: php /var/www/html/cli/joomla.php config:set debug=false secret=tEstValue smtphost="host.docker.internal" smtpport=8084
       JOOMLA_INSTALLATION_DISABLE_LOCALHOST_CHECK: 1
       PHP_INI_XDEBUG__DISCOVER_CLIENT_HOST: 1
     depends_on:

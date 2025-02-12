@@ -19,17 +19,17 @@ if [[ ! -f configuration.php.bak && -f configuration.php ]]; then
 fi
 
 # Setup configuration
-cp -f $(dirname $0)/../config/cms/cypress.config.js .
+cp -f $(dirname $0)/../config/cms/cypress.config.mjs .
 
-# Define the site propperly
-sed -i "s/{SITE}/$1/g" cypress.config.js
+# Define the site properly
+sed -i "s/{SITE}/$1/g" cypress.config.mjs
 
-sed -i "s/{DB}/$2-test/g" cypress.config.js
+sed -i "s/{DB}/$2-test/g" cypress.config.mjs
 
 if [[ $2 == 'mysql'* ]]; then
-	sed -i "s/{DBTYPE}/MySQLi/g" cypress.config.js
+	sed -i "s/{DBTYPE}/MySQLi/g" cypress.config.mjs
 else
-	sed -i "s/{DBTYPE}/PostgreSQL\ \(PDO\)/g" cypress.config.js
+	sed -i "s/{DBTYPE}/PostgreSQL\ \(PDO\)/g" cypress.config.mjs
 fi
 
 if [ ! -d libraries/vendor ]; then

@@ -99,7 +99,7 @@ fi;
 php -d error_reporting=1 $root/installation/joomla.php install -n --site-name="$site" --admin-user="Admin" --admin-username=admin --admin-password=adminadminadmin --admin-email=admin@example.com --db-type="$dbType" --db-host="$dbHost" --db-name="$dbName" --db-user=root --db-pass=root --db-prefix="j_"
 
 # Set some parameters
-php -d error_reporting=1 $root/cli/joomla.php config:set secret=XgrJSL137VSjPBVn error_reporting=maximum debug=true mailer=smtp smtphost=$smtpHost smtpport=1025 sef_rewrite=true
+php -d error_reporting=1 $root/cli/joomla.php config:set secret=XgrJSL137VSjPBVn error_reporting=maximum debug=true mailer=smtp smtphost=$smtpHost smtpport=1025 sef_rewrite=true lifetime=9999
 
 # Joomla 4 needs error reporting simple because of PHP 8.x deprecations
 if [ ! -d $root/plugins/schemaorg ]; then

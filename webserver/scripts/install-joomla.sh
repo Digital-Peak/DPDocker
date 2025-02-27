@@ -80,7 +80,7 @@ fi
 if [ $dbType == 'mysqli' ]; then
 	mysql -u root -proot -h $dbHost -e "DROP DATABASE IF EXISTS $dbName"
 	mysql -u root -proot -h $dbHost -e "CREATE DATABASE $dbName"
-fi;
+fi
 
 # Clear existing pgsql database
 if [ $dbType == 'pgsql' ]; then
@@ -93,7 +93,9 @@ if [ $dbType == 'pgsql' ]; then
 	# Install joomla
 	psql -U root -h $dbHost -c "DROP DATABASE IF EXISTS $dbName" > /dev/null
 	psql -U root -h $dbHost -c "CREATE DATABASE $dbName" > /dev/null
-fi;
+fi
+
+sudo rm -rff $root/configuration.php
 
 # Install Joomla
 php -d error_reporting=1 $root/installation/joomla.php install -n --site-name="$site" --admin-user="Admin" --admin-username=admin --admin-password=adminadminadmin --admin-email=admin@example.com --db-type="$dbType" --db-host="$dbHost" --db-name="$dbName" --db-user=root --db-pass=root --db-prefix="j_"

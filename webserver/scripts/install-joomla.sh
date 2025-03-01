@@ -49,10 +49,6 @@ if [ ! -d $root/media/vendor ]; then
 	npm ci &>/dev/null
 fi
 
-# PHP 8.4 infinite redirect issue
-sed -i "s/&[[:space:]]*\$_COOKIE;/\$_COOKIE;/g" $root/libraries/src/Input/Cookie.php
-sed -i 's/File::write(\$this->file, implode("\\n", \$content));/\$b = implode("\\n", \$content);File::write(\$this->file, \$b);/g' $root/libraries/namespacemap.php
-
 # Install Joomla when no configuration file is available
 if [[ -f $root/configuration.php && -z $rebuild ]]; then
 	exit

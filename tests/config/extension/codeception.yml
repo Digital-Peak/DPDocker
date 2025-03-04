@@ -53,7 +53,7 @@ suites:
           url: 'https://web-test/joomla/api/index.php/v1'
           depends: PhpBrowser
           part: Json
-    error_level: 'E_ALL & ~E_STRICT & ~E_DEPRECATED'
+    error_level: 'E_ALL & ~E_DEPRECATED'
 paths:
   tests: tests
   output: _output

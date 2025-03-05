@@ -127,5 +127,5 @@ if [ $dbType == 'pgsql' ]; then
 	psql -U root -h $dbHost -d $dbName -c "INSERT INTO j_users (id, name, username, email, password, block,  \"registerDate\", params) VALUES(44, 'User', 'user', 'user@example.com', '\$2y\$10\$KesDwI5C.oMfZksWG7UHaOP.1TWf91HTZPOi143qx2Tvc/8.hJIU.', 0, '2020-01-01 00:00:00', '{}')" > /dev/null
 	psql -U root -h $dbHost -d $dbName -c "INSERT INTO j_user_usergroup_map (user_id, group_id) VALUES ('44', '2')" > /dev/null
 	psql -U root -h $dbHost -d $dbName -c "UPDATE j_extensions SET manifest_cache='{\"version\":\"3\"}'" > /dev/null
-	psql -U root -h $dbHost -d $dbName -c "UPDATE j_extensions SET enabled = 0 WHERE name = 'plg_quickicon_eos' OR name = '' OR name LIKE '%guided%'" > /dev/null
+	psql -U root -h $dbHost -d $dbName -c "UPDATE j_extensions SET enabled = 0 WHERE name = 'plg_quickicon_eos' OR name = 'plg_system_stats' OR name LIKE '%guided%'" > /dev/null
 fi

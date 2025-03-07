@@ -27,19 +27,20 @@ if [ -f $root/administrator/cache/autoload_psr4.php ]; then
 	rm -f $root/administrator/cache/autoload_psr4.php
 fi
 
-# Run composer
-if [[ ! -d $root/libraries/vendor || ! -z $rebuild ]]; then
-	echo "Installing PHP dependencies"
-	rm -rf $root/libraries/vendor
-	composer install --quiet
-fi
-
-# Run npm
+# Do some cleanup when rebuild is requested
 if [ ! -z $rebuild ]; then
-	echo "Cleaning the assets"
+	echo "Cleaning the installed dependencies and configuration file"
 	rm -rf $root/node_modules
 	rm -rf $root/administrator/components/com_media/node_modules
 	rm -rf $root/media
+	rm -rf $root/libraries/vendor
+	sudo rm -rf $root/configuration.php
+fi
+
+# Run composer
+if [ ! -d $root/libraries/vendor ]; then
+	echo "Installing PHP dependencies"
+	composer install --quiet
 fi
 
 # Build the assets
@@ -49,8 +50,8 @@ if [ ! -d $root/media/vendor ]; then
 	npm ci &>/dev/null
 fi
 
-# Install Joomla when no configuration file is available
-if [[ -f $root/configuration.php && -z $rebuild ]]; then
+# Abort installatio when configuration file exists
+if [ -f $root/configuration.php ]; then
 	exit
 fi
 
@@ -90,8 +91,6 @@ if [ $dbType == 'pgsql' ]; then
 	psql -U root -h $dbHost -c "DROP DATABASE IF EXISTS $dbName" > /dev/null
 	psql -U root -h $dbHost -c "CREATE DATABASE $dbName" > /dev/null
 fi
-
-sudo rm -rff $root/configuration.php
 
 # Install Joomla
 php -d error_reporting=1 $root/installation/joomla.php install -n --site-name="$site" --admin-user="Admin" --admin-username=admin --admin-password=adminadminadmin --admin-email=admin@example.com --db-type="$dbType" --db-host="$dbHost" --db-name="$dbName" --db-user=root --db-pass=root --db-prefix="j_"

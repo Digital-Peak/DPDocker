@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2e7a074be371d82f11f05752efa9b16e",
+    "content-hash": "00fe50f294434f7cf48d5882161d95f5",
     "packages": [
         {
             "name": "behat/gherkin",
@@ -808,29 +808,29 @@
         },
         {
             "name": "digital-peak/dpception",
-            "version": "0.7.2",
+            "version": "0.7.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Digital-Peak/DPCeption.git",
-                "reference": "f229e1170c0c805b8bbc9a368375ae14a4ff60bb"
+                "reference": "aa36cfcb9889b4ed6ef387acf8ecd352f0abe245"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Digital-Peak/DPCeption/zipball/f229e1170c0c805b8bbc9a368375ae14a4ff60bb",
-                "reference": "f229e1170c0c805b8bbc9a368375ae14a4ff60bb",
+                "url": "https://api.github.com/repos/Digital-Peak/DPCeption/zipball/aa36cfcb9889b4ed6ef387acf8ecd352f0abe245",
+                "reference": "aa36cfcb9889b4ed6ef387acf8ecd352f0abe245",
                 "shasum": ""
             },
             "require": {
-                "codeception/codeception": "^5.0.13",
+                "codeception/codeception": "^5.2.1",
                 "codeception/module-asserts": "^3.0.0",
-                "codeception/module-db": "^3.1.2",
+                "codeception/module-db": "^3.2.2",
                 "codeception/module-filesystem": "^3.0.1",
-                "codeception/module-webdriver": "^4.0.0",
-                "digital-peak/thinhttp": "^0.1.0",
+                "codeception/module-webdriver": "^4.0.3",
+                "digital-peak/thinhttp": "^0.1.1",
                 "php": ">=7.4.0"
             },
             "require-dev": {
-                "squizlabs/php_codesniffer": "^3.8.1"
+                "squizlabs/php_codesniffer": "^3.11.3"
             },
             "type": "library",
             "autoload": {
@@ -846,9 +846,9 @@
             "homepage": "https://github.com/Digital-Peak/DPCeption",
             "support": {
                 "issues": "https://github.com/Digital-Peak/DPCeption/issues",
-                "source": "https://github.com/Digital-Peak/DPCeption/tree/0.7.2"
+                "source": "https://github.com/Digital-Peak/DPCeption/tree/0.7.4"
             },
-            "time": "2025-03-12T07:24:41+00:00"
+            "time": "2025-03-17T16:57:37+00:00"
         },
         {
             "name": "digital-peak/thinhttp",
@@ -2337,16 +2337,16 @@
         },
         {
             "name": "psy/psysh",
-            "version": "v0.12.7",
+            "version": "v0.12.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bobthecow/psysh.git",
-                "reference": "d73fa3c74918ef4522bb8a3bf9cab39161c4b57c"
+                "reference": "85057ceedee50c49d4f6ecaff73ee96adb3b3625"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bobthecow/psysh/zipball/d73fa3c74918ef4522bb8a3bf9cab39161c4b57c",
-                "reference": "d73fa3c74918ef4522bb8a3bf9cab39161c4b57c",
+                "url": "https://api.github.com/repos/bobthecow/psysh/zipball/85057ceedee50c49d4f6ecaff73ee96adb3b3625",
+                "reference": "85057ceedee50c49d4f6ecaff73ee96adb3b3625",
                 "shasum": ""
             },
             "require": {
@@ -2410,9 +2410,9 @@
             ],
             "support": {
                 "issues": "https://github.com/bobthecow/psysh/issues",
-                "source": "https://github.com/bobthecow/psysh/tree/v0.12.7"
+                "source": "https://github.com/bobthecow/psysh/tree/v0.12.8"
             },
-            "time": "2024-12-10T01:58:33+00:00"
+            "time": "2025-03-16T03:05:19+00:00"
         },
         {
             "name": "ralouphie/getallheaders",

@@ -12,7 +12,7 @@ tmpDir=$(dirname $0)/../tmp/joomla
 cd $(dirname $0)/../config
 composer install --quiet
 
-if [ ! -d $tmpDir ]; then
+if [ ! -d $tmpDir/.git ]; then
 	git clone https://github.com/joomla/joomla-cms.git $tmpDir
 	mkdir $tmpDir/media
 fi

@@ -50,7 +50,7 @@ Examples
 ```
 
 - -j  
-  The folder where joomla is cloned into.
+  The folder, relative to the parent directory of the DPDocker installation, where joomla is cloned into. It can be also a path to a subfolder, for example when a pr should be tested like `DPDocker/joomla-pr/www/pr/12345`.
 - -php  
   The PHP version is optional. If it is not set, tests will be run on the latest PHP version.
 - -db  

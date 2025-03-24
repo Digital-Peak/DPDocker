@@ -22,7 +22,7 @@ fi
 cp -f $(dirname $0)/../config/cms/cypress.config.mjs .
 
 # Define the site properly
-sed -i "s/{SITE}/$1/g" cypress.config.mjs
+sed -i "s/{SITE}/${1##*/}/g" cypress.config.mjs
 
 sed -i "s/{DB}/$2-test/g" cypress.config.mjs
 

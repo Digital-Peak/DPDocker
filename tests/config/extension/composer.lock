@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3be6153a48319e48aec49dd4a49736f3",
+    "content-hash": "aa509621b9d2acfa9cb7f48b785d2874",
     "packages": [
         {
             "name": "behat/gherkin",
@@ -808,16 +808,16 @@
         },
         {
             "name": "digital-peak/dpception",
-            "version": "0.8.0",
+            "version": "0.8.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Digital-Peak/DPCeption.git",
-                "reference": "c25aff28282e88ccb5640deb629eab37bfd1496b"
+                "reference": "b15273deb816376da9a129261574a4f5679ebd4c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Digital-Peak/DPCeption/zipball/c25aff28282e88ccb5640deb629eab37bfd1496b",
-                "reference": "c25aff28282e88ccb5640deb629eab37bfd1496b",
+                "url": "https://api.github.com/repos/Digital-Peak/DPCeption/zipball/b15273deb816376da9a129261574a4f5679ebd4c",
+                "reference": "b15273deb816376da9a129261574a4f5679ebd4c",
                 "shasum": ""
             },
             "require": {
@@ -846,9 +846,9 @@
             "homepage": "https://github.com/Digital-Peak/DPCeption",
             "support": {
                 "issues": "https://github.com/Digital-Peak/DPCeption/issues",
-                "source": "https://github.com/Digital-Peak/DPCeption/tree/0.8.0"
+                "source": "https://github.com/Digital-Peak/DPCeption/tree/0.8.1"
             },
-            "time": "2025-03-20T14:58:12+00:00"
+            "time": "2025-03-25T15:18:45+00:00"
         },
         {
             "name": "digital-peak/thinhttp",
@@ -1973,16 +1973,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "11.5.14",
+            "version": "11.5.15",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "9d6046153c2893b521784069e6b5249ce7d2acae"
+                "reference": "4b6a4ee654e5e0c5e1f17e2f83c0f4c91dee1f9c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/9d6046153c2893b521784069e6b5249ce7d2acae",
-                "reference": "9d6046153c2893b521784069e6b5249ce7d2acae",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/4b6a4ee654e5e0c5e1f17e2f83c0f4c91dee1f9c",
+                "reference": "4b6a4ee654e5e0c5e1f17e2f83c0f4c91dee1f9c",
                 "shasum": ""
             },
             "require": {
@@ -2054,7 +2054,7 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/phpunit/issues",
                 "security": "https://github.com/sebastianbergmann/phpunit/security/policy",
-                "source": "https://github.com/sebastianbergmann/phpunit/tree/11.5.14"
+                "source": "https://github.com/sebastianbergmann/phpunit/tree/11.5.15"
             },
             "funding": [
                 {
@@ -2070,7 +2070,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-03-19T13:45:48+00:00"
+            "time": "2025-03-23T16:02:11+00:00"
         },
         {
             "name": "psr/container",

@@ -27,6 +27,7 @@ fi
 
 if [ ! -d $(dirname $0)/www ]; then
 	mkdir $(dirname $0)/www
+	touch $(dirname $0)/www/index.html
 	ssh-keygen -q -t rsa -N '' -f $(dirname $0)/www/key
 fi
 

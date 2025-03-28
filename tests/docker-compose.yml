@@ -8,6 +8,7 @@ services:
     volumes:
       - ./www:/var/www/html
       - ../..:/usr/src/Projects
+      - ./logs:/tmp/web_logs
       - test:/tmp/tests
 
   joomla-system-tests:
@@ -25,6 +26,7 @@ services:
     volumes:
       - ../../${JOOMLA}:/e2e
       - ../..:/usr/src/Projects
+      - ./logs:/tmp/web_logs
       - ~/.Xauthority:/root/.Xauthority:rw
       - /tmp/.X11-unix:/tmp/.X11-unix
 
@@ -62,6 +64,7 @@ services:
       - 8080:80
     volumes:
       - ./www:/var/www/html
+      - ./logs:/var/log/apache2
       - ../..:/var/www/html/Projects
       - ../..:/usr/src/Projects
     extra_hosts:

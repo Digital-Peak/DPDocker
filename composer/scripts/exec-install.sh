@@ -42,8 +42,8 @@ for fname in $(find $root/$1/$2 -path ./vendor -prune -o -name "composer.json" 2
 		sudo rm -rf "$projectDirectory/vendor"
 	fi
 
-	# Make simple update for DPDocker
-	if [ $1 == "DPDocker" ]; then
+	# Make simple install for DPDocker and DPCeption
+	if [[ $1 == "DPDocker" || $1 == "DPCeption" ]]; then
 		composer install
 		continue
 	fi

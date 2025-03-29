@@ -43,21 +43,24 @@ vendor/bin/codecept build
 mkdir -p $(dirname $0)/../../../$1/tests/src/Support/_generated
 cp -f $(dirname $0)/../tmp/tests/src/Support/_generated/AcceptanceTesterActions.php $(dirname $0)/../../../$1/tests/src/Support/_generated/AcceptanceTesterActions.php
 
+# Cleanup error logs
+sudo chmod 777 /tmp/web_logs/error.log
+sudo echo -n "" > /tmp/web_logs/error.log
+
+# Run the install task first
 if [[ -d tests/src/Acceptance/Install && -z "$5" ]]; then
-	# Run the install task first
 	vendor/bin/codecept run --env desktop tests/src/Acceptance/Install
 fi
 
+# Remove the install tests, so they wont be executed again
 if [ -d tests/src/Acceptance/Install ]; then
-	# Remove the install tests, so they wont be executed again
 	rm -rf tests/src/Acceptance/Install
 fi
 
 # Check if there are multiple tests to run
 if [[ ! -z $5 && $5 == *".php:"* ]]; then
 	vendor/bin/codecept run --debug --steps --env desktop $5
-	exit $?
+else
+	# Run the tests
+	vendor/bin/codecept run --ext "DigitalPeak\Extension\Reporter" --env desktop $5
 fi
-
-# Run the tests
-vendor/bin/codecept run --ext "DigitalPeak\Extension\Reporter" --env desktop $5

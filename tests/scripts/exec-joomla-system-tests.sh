@@ -50,3 +50,9 @@ cypress open --project /e2e --e2e
 if [ -f configuration.php.bak ]; then
 	mv -f configuration.php.bak configuration.php
 fi
+
+if [ -f /tmp/web_logs/error.log ]; then
+	cat /tmp/web_logs/error.log
+else
+	echo "No error log found"
+fi

@@ -85,9 +85,14 @@ async function watchAssets(root, assets) {
 						console.log(`Finished to create bundles ${Array.isArray(event.output) ? event.output.join(',') : event.output} in ${Date.now() - startBundleTime}ms`);
 						break;
 					case 'END':
-						console.log(`Waiting for changes`);
+						console.log('Waiting for changes');
+						break;
+					case 'ERROR':
+						event.error.watchFiles=[];
+						console.log(event.error);
 						break;
 					default:
+						console.log(event);
 						break;
 				}
 			});

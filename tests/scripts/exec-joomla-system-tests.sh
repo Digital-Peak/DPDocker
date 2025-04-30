@@ -21,17 +21,6 @@ fi
 # Setup configuration
 cp -f $(dirname $0)/../config/cms/cypress.config.mjs .
 
-# Define the site properly
-sed -i "s/{SITE}/${1##*/}/g" cypress.config.mjs
-
-sed -i "s/{DB}/$2-test/g" cypress.config.mjs
-
-if [[ $2 == 'mysql'* ]]; then
-	sed -i "s/{DBTYPE}/MySQLi/g" cypress.config.mjs
-else
-	sed -i "s/{DBTYPE}/PostgreSQL\ \(PDO\)/g" cypress.config.mjs
-fi
-
 if [ ! -d libraries/vendor ]; then
 	echo "Installing PHP dependencies"
 	rm -rf libraries/vendor
@@ -44,7 +33,18 @@ if [ ! -d media/vendor ]; then
 	npm ci &>/dev/null
 fi
 
-cypress open --project /e2e --e2e
+# Do an install if the cache folder is empty
+if [ -z "$( ls -A '/root/.cache/Cypress' )" ]; then
+  npx cypress install
+  npx cypress verify
+fi
+
+DB_TYPE=MySQLi
+if [[ $2 != 'mysql'* ]]; then
+	DB_TYPE=PostgreSQL
+fi
+
+npx cypress open --project /e2e --e2e  --env db_type=$DB_TYPE,db_name=joomla_${1##*/},db_host=$2-test
 
 # Restore original configuration
 if [ -f configuration.php.bak ]; then

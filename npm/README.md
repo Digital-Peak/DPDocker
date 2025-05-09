@@ -83,8 +83,14 @@ This is a helper property which can contain an array of file paths relative to t
 ### vendor
 The vendor property can contain an array of web dependencies like Javascript, CSS or icon files from the node_modules folder. Every entry has a _src_ and _dest_ property. where the _src_ property is the relative location (file or folder) in the node_modules folder and the _dest_ the relative one from the top level root folder. _src_ can also be an array, so multiple files are concatenated together except when the destination folder is a directory. This is handy when you have a library which is split into multiple files and you want to use only the ones you actually need.
 
-### docBlock
+### config
+The config property holds some configuration options for all assets.
+
+#### docBlock
 A docblock which is added to the top of the generated JS files. All the other ones are then stripped out of the file.
+
+#### includes
+If the assets do rely on dependencies in other folders outside of the assets.json folder, then does the _include_ attribute allow to define additional paths relative to the folder of asset.json file. For example when a module uses the node_modules folder from the component, then this attribute might be useful. The node_modules folder in the same directory as the assets.json file is automatically added.
 
 ### Example
 Example of assets.json file in com_foo/resources:
@@ -116,10 +122,9 @@ Example of assets.json file in com_foo/resources:
   ],
    "config": {
     "docBlock": "/**\n * @package   Foo\n * @copyright My inc. <https://www.example.com>\n * @license   http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL\n */",
-    "compatibility": [
-      ",> 0.25%, not dead",
-      "ie 11"
-    ]
+    "includes": [
+		"../../com_foo/resources/node_modules"
+	]
   }
 }
 ```

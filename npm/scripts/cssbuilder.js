@@ -105,6 +105,12 @@ function transpile(source, destination, config) {
 		fs.mkdirSync(path.dirname(destination), { recursive: true });
 	}
 
+	const includes = ['node_modules'];
+	if (config.includes) {
+		includes.push(...config.includes);
+	}
+	includes.forEach((include, index) => includes[index] = config.moduleRoot + '/' + include);
+
 	// Transpile the files
 	switch (path.extname(source).replace('.', '')) {
 		case 'scss':
@@ -114,7 +120,7 @@ function transpile(source, destination, config) {
 				const result = sass.compile(source, {
 					outFile: destination,
 					style: 'compressed',
-					loadPaths: [config.moduleRoot + '/node_modules'],
+					loadPaths: includes,
 					quietDeps: true,
 					silenceDeprecations: ['import']
 				});
@@ -131,7 +137,7 @@ function transpile(source, destination, config) {
 				indentType: 'tab',
 				indentWidth: 1,
 				sourceMap: true,
-				loadPaths: [config.moduleRoot + '/node_modules'],
+				loadPaths: includes,
 				quietDeps: true,
 				silenceDeprecations: ['import']
 			});

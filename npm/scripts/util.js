@@ -27,6 +27,8 @@ const css = require('rollup-plugin-import-css');
  * @param object config Some configuration options
  */
 function transpile(source, destination, isVendor, config) {
+	console.log('Building no modules is deprecated and will be removed soon!! Add "modules:true" to your assets.json.');
+
 	// Ensure that the target directory exists
 	if (!fs.existsSync(path.dirname(destination))) {
 		fs.mkdirSync(path.dirname(destination), { recursive: true });

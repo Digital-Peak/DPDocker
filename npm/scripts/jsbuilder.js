@@ -114,6 +114,13 @@ function getConfig(root, asset, config) {
 		files[file.replace(root + '/js/', '').replace('.js', '')] = file;
 	});
 
+	const includes = ['node_modules'];
+	if (config.includes) {
+		includes.push(...config.includes);
+	}
+
+	includes.forEach((include, index) => includes[index] = config.moduleRoot + '/' + include);
+
 	// Create the hash from the current timestamp minus the timestamp from 1.1.2024 to make it a bit shorter
 	const hash = Math.floor(Date.now() / 1000) - 1704070800;
 	return {
@@ -161,7 +168,7 @@ function getConfig(root, asset, config) {
 					'process.env.VUE_ENV': JSON.stringify('browser')
 				}
 			}),
-			resolve.nodeResolve({ modulePaths: [config.moduleRoot + '/node_modules'] }),
+			resolve.nodeResolve({ modulePaths: includes}),
 			urlresolve(),
 			svg(),
 			vue(),

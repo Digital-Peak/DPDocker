@@ -158,15 +158,9 @@ services:
       - ./www:/data
 
   webdavserver-test:
-    image: apachewebdav/apachewebdav
-    environment:
-      PUID: ${USER_ID}
-      PGID: ${GROUP_ID}
-      AUTH_TYPE: Digest
-      USERNAME: webdav
-      PASSWORD: webdav
+    image: digitpeak/dpdocker-web:${PHP_VERSION}
     volumes:
-      - test:/var/lib/dav/data
+      - test:/var/www/html/webdav
 
 volumes:
   test:

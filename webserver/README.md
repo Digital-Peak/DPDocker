@@ -25,6 +25,7 @@ All attributes are optional.
   - 8.1
   - 8.2
   - 8.3
+  - 8.4
 - -db  
   You can use either _mysql_ or _postgres_ as value. If set then the Joomla installations will be installed with the respective driver. _mysql_ is loaded by default.
 - -my  
@@ -50,17 +51,15 @@ After linking they are mostly installed as well. In all cases you can discover t
 When the web server is successfully started then are the following sites available:
 
 - **Patch release development site**  
-With the url _localhost/{j3|j4}_ you get access to a joomla instance which contains your linked extensions. This site is used for patch release development. Only extensions which do have no _-_ in its directory name are linked into this site.  
-You can log in on the site with admin/admin.
+With the url _localhost/{j4|j5}_ you get access to a joomla instance which contains your linked extensions. This site is used for patch release development. Only extensions which do have no _-_ in its directory name are linked into this site.  
+You can log in on the site with admin/admin. In the "/webdav" subdirectory you get access to a webdav server instance, if the document root is mounted by a volume, then this directory needs to be created manually. The credentials to log in are webdav/webdav.
 - **Feature release development site**  
-With the url _localhost/{dev3|dev4}_ you get access to a joomla instance which contains your linked extensions. This site is used for feature release development. Only extensions which do have a _-Dev_ in its directory name are linked into this site.  
-You can log in on the site with admin/admin.
-- **Joomla 3 core dev site**  
-With the url _localhost/cms3_ you get access to a joomla instance which is linked from the _cms3_ folder in the same directory as you have this project. This folder can be a clone of the joomla _staging_ branch which contains the actual code of Joomla 3.
+With the url _localhost/{dev4|dev5}_ you get access to a joomla instance which contains your linked extensions. This site is used for feature release development. Only extensions which do have a _-Dev_ in its directory name are linked into this site.  
+You can log in on the site with admin/admin. In the "/webdav" subdirectory you get access to a webdav server instance, if the document root is mounted by a volume, then this directory needs to be created manually. The credentials to log in are webdav/webdav.
 - **Joomla 4 core dev site**  
-With the url _localhost/cms4_ you get access to a joomla instance which is linked from the _cms4_ folder in the same directory as you have this project. This folder can be a clone of the joomla _4.0-dev_ branch which contains the actual code of Joomla 4. When you have opened the site for the first time, then all the assets should be built already and the PHP dependencies installed.
+With the url _localhost/cms4_ you get access to a joomla instance which is linked from the _cms4_ folder in the same directory as you have this project. This folder can be a clone of the joomla _4.0-dev_ branch which contains the actual code of Joomla 4. When you have opened the site for the first time, then all the assets should be built already and the PHP dependencies installed. In the "/webdav" subdirectory you get access to a webdav server instance, if the document root is mounted by a volume, then this directory needs to be created manually. The credentials to log in are webdav/webdav.
 - **Playground site**  
-With the url _localhost/{play3|play4}_ you get access to a joomla instance which is intended to be used to mess around. There are no linked extensions into it.
+With the url _localhost/{play4|play5}_ you get access to a joomla instance which is intended to be used to mess around. There are no linked extensions into it. In the "/webdav" subdirectory you get access to a webdav server instance, if the document root is mounted by a volume, then this directory needs to be created manually. The credentials to log in are webdav/webdav.
 - **Webgrind profiler**  
 With the url _localhost/wg_ you get access to a webgrind instance, which displays some profiling information. Profiling is enabled on all sites but only with a trigger. This means you have to add _XDEBUG_PROFILE_ to the url or use a browser extension like [Xdebug helper for Firefox](https://addons.mozilla.org/en-US/firefox/addon/xdebug-helper-for-firefox) to profile a site. More information how webgrind works can be found [here](https://github.com/jokkedk/webgrind).
 - **phpMyAdmin**  
@@ -73,5 +72,3 @@ With the url _localhost:83_ you get access to a MailCatcher instance. [Mailcatch
 With the url _localhost:21_ you get access to a FTP server instance. You can log in with ftp/ftp. Please use none secure connections.
 - **SSH server**  
 With the url _localhost:2222_ you get access to a SSH server instance with SFTP support. You can log in with sftp/sftp or the key which is available in the web root on /var/www/html/key.
-- **WebDAV server**  
-With the url _localhost:84_ you get access to a webdav server instance which points to the www root directory. You can log in with webdav/webdav.

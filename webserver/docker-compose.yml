@@ -89,26 +89,13 @@ services:
   sshserver:
     image: lscr.io/linuxserver/openssh-server:latest
     environment:
-      - PUID=${USER_ID}
-      - PGID=${GROUP_ID}
-      - USER_PASSWORD=sftp
-      - USER_NAME=sftp
-      - PASSWORD_ACCESS=true
-      - PUBLIC_KEY_FILE=/data/key.pub
+      PUID: ${USER_ID}
+      PGID: ${GROUP_ID}
+      USER_NAME: sftp
+      PASSWORD_ACCESS: true
+      SUDO_ACCESS: true
+      PUBLIC_KEY_FILE: /data/key.pub
     volumes:
       - ./www:/data
     ports:
       - 2222:2222
-
-  webdavserver:
-    image: apachewebdav/apachewebdav
-    ports:
-      - 84:80
-    environment:
-      PUID: ${USER_ID}
-      PGID: ${GROUP_ID}
-      AUTH_TYPE: Digest
-      USERNAME: webdav
-      PASSWORD: webdav
-    volumes:
-      - ./www:/var/lib/dav/data

@@ -38,6 +38,8 @@ RUN sudo apt-get update && sudo apt-get install -y \
 RUN sudo npm update -g npm && sudo npm install -g bun
 
 # Enable the apache ssl extensions
+ENV APACHE_EXTENSION_DAV=1
+ENV APACHE_EXTENSION_DAV_FS=1
 ENV APACHE_EXTENSION_SOCACHE_SHMCB=1
 ENV APACHE_EXTENSION_SSL=1
 
@@ -45,4 +47,7 @@ ENV APACHE_EXTENSION_SSL=1
 RUN mkdir /home/docker/keys
 RUN sudo openssl req -new -newkey rsa:4096 -nodes -keyout /home/docker/keys/server.key -out /home/docker/keys/server.csr -subj "/CN=localhost"
 RUN sudo openssl x509 -req -days 365 -in /home/docker/keys/server.csr -signkey /home/docker/keys/server.key -out /home/docker/keys/server.crt
+COPY 000-default.conf /etc/apache2/sites-enabled/000-default.conf
 COPY 000-default-ssl.conf /etc/apache2/sites-enabled/000-default-ssl.conf
+COPY webdav.user /etc/apache2/webdav.user
+RUN mkdir -p -m 777 /var/www/html/webdav

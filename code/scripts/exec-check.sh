@@ -27,7 +27,7 @@ fi
 # Eslint needs to config and pattern below the current path
 # https://github.com/eslint/eslint/discussions/18806
 cd $(dirname $0)/../../../
-$(dirname $0)/../config/node_modules/.bin/eslint --config $file $(dirname $0)/../../../$1/$2 || status=$?
+$(dirname $0)/../config/node_modules/.bin/eslint --config $file $(realpath $(dirname $0)/../../../$1/$2) || status=$?
 cd $(dirname $0)/../config
 
 echo -e "\nChecking for CSS code style issues"

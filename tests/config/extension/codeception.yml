@@ -28,12 +28,12 @@ suites:
             acceptInsecureCerts: true
             'goog:chromeOptions':
               prefs:
-                download.default_directory: '/tmp/tests'
+                download.default_directory: '%CODECEPTION_DOWNLOAD_DIR%'
           username: 'admin'
           password: 'admin'
           admin email: 'admin@example.com'
           timeout: 10
-          downloads: '/tmp/tests'
+          downloads: '%CODECEPTION_DOWNLOAD_DIR%'
           home_dir: '/usr/src/Projects/DPDocker/tests/www/joomla'
           joomla_version: '%CODECEPTION_JOOMLA_VERSION%'
           php_version: '%CODECEPTION_PHP_VERSION%'
@@ -45,7 +45,7 @@ suites:
           password: 'root'
           prefix: 'j_'
         DigitalPeak\Module\DPFile:
-          files_root: '/tmp/tests'
+          files_root: '%CODECEPTION_DOWNLOAD_DIR%'
         DigitalPeak\Module\DPMail:
           url: 'http://mailcatcher-test:1080'
         Tests\Support\Helper\Acceptance:

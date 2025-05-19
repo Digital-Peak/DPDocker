@@ -15,10 +15,6 @@ done
 
 echo "Running Tests on Joomla $2 and PHP $4 with $3"
 
-# Setup download dir with correct permissions
-sudo rm -rf /tmp/tests/*
-sudo chmod 777 /tmp/tests
-
 # Make sure the dependencies are correct
 cd $(dirname $0)/../config/extension
 composer install --quiet
@@ -34,6 +30,11 @@ export CODECEPTION_BROWSER=$3
 export CODECEPTION_JOOMLA_VERSION=$2
 export CODECEPTION_PHP_VERSION=$4
 export CODECEPTION_EXTENSION=$1
+export CODECEPTION_DOWNLOAD_DIR=${CODECEPTION_DOWNLOAD_DIR:-/tmp/tests}
+
+# Setup download dir with correct permissions
+sudo rm -rf $CODECEPTION_DOWNLOAD_DIR/*
+sudo chmod 777 $CODECEPTION_DOWNLOAD_DIR
 
 # Build the actions class and copy it back
 vendor/bin/codecept clean

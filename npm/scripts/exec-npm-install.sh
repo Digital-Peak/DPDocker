@@ -11,11 +11,11 @@ fi
 # Link host directory as npm dir for caching
 rm -rf /home/docker/.npm
 
-if [ ! -d /usr/src/Projects/DPDocker/npm/tmp ]; then
-	mkdir /usr/src/Projects/DPDocker/npm/tmp
+if [ ! -d $(dirname $0)/../../tmp ]; then
+	mkdir $(dirname $0)/../../tmp
 fi
 
-ln -s /usr/src/Projects/DPDocker/npm/tmp /home/docker/.npm
+ln -s $(dirname $0)/../../tmp /home/docker/.npm
 
 echo "Cleaning up in $root/$1/$2 the assets"
 sudo find $root/$1/$2 -path "*/media/css" -type d -exec rm -rf {} \; &>/dev/null
@@ -52,4 +52,4 @@ for fname in $(find $root/$1/$2 -path ./node_modules -prune -o -name "package.js
 	echo "Finished installing $(dirname ${fname#"$root/"})!"
 done
 
-$(dirname $0)/exec-build.sh $root/$1 all
+$(dirname $0)/exec-build.sh $root/$1 $2

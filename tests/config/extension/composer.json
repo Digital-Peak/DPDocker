@@ -5,7 +5,7 @@
 		}
 	},
 	"require": {
-		"codeception/codeception": "^5.2.1",
+		"codeception/codeception": "^5.3.1",
 		"codeception/module-rest": "^3.4.1",
 		"codeception/module-phpbrowser": "^3.0.1",
 		"codeception/module-db": "^3.2.2",

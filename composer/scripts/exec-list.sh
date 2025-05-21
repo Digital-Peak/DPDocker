@@ -11,11 +11,11 @@ fi
 # Link host directory as composer dir for caching
 rm -rf /home/docker/.composer
 
-if [ ! -d $(dirname $0)/../../tmp ]; then
-	mkdir $(dirname $0)/../../tmp
+if [ ! -d $(dirname $0)/../tmp ]; then
+	mkdir $(dirname $0)/../tmp
 fi
 
-ln -s $(dirname $0)/../../tmp /home/docker/.composer
+ln -s $(dirname $0)/../tmp /home/docker/.composer
 
 echo "Started to show the PHP dependency list on $root/$1!"
 

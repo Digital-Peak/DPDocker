@@ -28,13 +28,13 @@ Example
 ### Build assets
 To build the local assets, execute the following command:
 
-`./run-build.sh extension [all]`
+`./run-build.sh extension [extension path]`
 
 Example
 
 `./run-build.sh Foo`
 
-The all argument is optional. If set it then are also the dependencies built.
+The extension path argument is optional. If set it then are only the dependencies built from the passed extension path. Can be a relative path to an extension.
 
 ### Watch assets
 While you are on development, then you don't want to manually build the assets. For that a watch script is available which detects file changes and builds only the respective asset, to do so execute the following command:

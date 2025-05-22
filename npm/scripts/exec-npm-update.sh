@@ -52,4 +52,4 @@ for fname in $(find $root/$1/$2 -path ./node_modules -prune -o -name "package.js
 	echo "Finished updating $(dirname ${fname#"$root/"})!"
 done
 
-$(dirname $0)/exec-build.sh /usr/src/Projects/$1 $2
+$(dirname $0)/exec-build.sh $root/$1 $2

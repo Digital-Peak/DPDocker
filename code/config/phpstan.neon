@@ -35,7 +35,7 @@ parameters:
 		- message: '#Call to deprecated method triggerEvent\(\)#'
 		- message: '#Call to method triggerEvent\(\) of deprecated interface#'
 		- message: '#Call to deprecated method getErrors?\(\)#'
-		- message: '#Path in require_once\(\) "/usr/src/Projects/DPDocker/code/tmp/joomla\\#'
+		- message: '#Path in require_once\(\) "([^"]+)/DPDocker/code/tmp/joomla\\#'
 		- message: '#expects array, Joomla\\Event\\DispatcherInterface given#'
 		- message: '#of deprecated interface Joomla\\Database\\Query\\PreparableInterface#'
 		- message: '#of deprecated interface Joomla\\Database\\Query\\LimitableInterface#'

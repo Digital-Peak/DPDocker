@@ -34,10 +34,10 @@ suites:
           admin email: 'admin@example.com'
           timeout: 10
           downloads: '%CODECEPTION_DOWNLOAD_DIR%'
-          home_dir: '/usr/src/Projects/DPDocker/tests/www/joomla'
+          home_dir: '%CODECEPTION_HOME_DIR%'
           joomla_version: '%CODECEPTION_JOOMLA_VERSION%'
           php_version: '%CODECEPTION_PHP_VERSION%'
-          extension_dir: '/usr/src/Projects/%CODECEPTION_EXTENSION%'
+          extension_dir: '%CODECEPTION_EXTENSION_DIR%'
           web_logs_error_file: /tmp/web_logs/error.log
         DigitalPeak\Module\DPDb:
           dsn: 'mysql:host=mysql-test;dbname=sites_joomla'
@@ -50,7 +50,7 @@ suites:
           url: 'http://mailcatcher-test:1080'
         Tests\Support\Helper\Acceptance:
           url: 'http://localhost/joomla'
-          extension_dir: '/usr/src/Projects/%CODECEPTION_EXTENSION%'
+          extension_dir: '%CODECEPTION_EXTENSION_DIR%'
         REST:
           url: 'https://web-test/joomla/api/index.php/v1'
           depends: PhpBrowser

@@ -29,6 +29,12 @@ suites:
             'goog:chromeOptions':
               prefs:
                 download.default_directory: '%CODECEPTION_DOWNLOAD_DIR%'
+                autofill.credit_card_enabled: false
+                credentials_enable_service: false
+                profile.password_manager_enabled: false
+                profile.password_manager_leak_detection: false
+                profile.default_content_settings.popups: false
+                profile.default_content_setting_values.automatic_downloads: 1
           username: 'admin'
           password: 'admin'
           admin email: 'admin@example.com'

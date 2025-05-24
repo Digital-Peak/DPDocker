@@ -34,7 +34,6 @@ suites:
                 profile.password_manager_enabled: false
                 profile.password_manager_leak_detection: false
                 profile.default_content_settings.popups: false
-                profile.default_content_setting_values.automatic_downloads: 1
           username: 'admin'
           password: 'admin'
           admin email: 'admin@example.com'

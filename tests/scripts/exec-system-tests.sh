@@ -31,7 +31,7 @@ export CODECEPTION_JOOMLA_VERSION=$2
 export CODECEPTION_PHP_VERSION=$4
 export CODECEPTION_EXTENSION_DIR=$(realpath $(dirname $0)/../../../$1)
 export CODECEPTION_HOME_DIR=${CODECEPTION_HOME_DIR:-/usr/src/Projects/DPDocker/tests/www/joomla}
-export CODECEPTION_DOWNLOAD_DIR=${CODECEPTION_DOWNLOAD_DIR:-/tmp/tests}
+export CODECEPTION_DOWNLOAD_DIR=$(realpath ${CODECEPTION_DOWNLOAD_DIR:-/tmp/tests})
 
 # Setup download dir with correct permissions
 sudo rm -rf $CODECEPTION_DOWNLOAD_DIR/*

@@ -33,6 +33,7 @@ RUN sudo apt-get update && sudo apt-get install -y \
 	rsync \
 	zip \
 	unzip \
+	jq \
 	php-pear
 
 # Update NPM and install bun

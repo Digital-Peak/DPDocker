@@ -40,3 +40,4 @@ parameters:
 		- message: '#of deprecated interface Joomla\\Database\\Query\\PreparableInterface#'
 		- message: '#of deprecated interface Joomla\\Database\\Query\\LimitableInterface#'
 		- message: '#Call to method get\(\) of deprecated class Joomla\\CMS\\MVC\\Model\\State#'
+		- message: '#constructor expects Joomla\\Database\\DatabaseDriver, Joomla\\Database\\DatabaseInterface given#'

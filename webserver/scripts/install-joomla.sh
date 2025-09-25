@@ -102,6 +102,7 @@ php -d error_reporting=1 $root/cli/joomla.php config:set secret=XgrJSL137VSjPBVn
 if [ ! -d $root/plugins/schemaorg ]; then
 	# Needs error reporting simple because of PHP 8.x deprecations
 	php -d error_reporting=1 $root/cli/joomla.php config:set error_reporting=simple
+	sed -i '/\\E_STRICT/ s/^/\/\//' $root/libraries/vendor/symfony/error-handler/ErrorHandler.php
 fi
 
 # Setup the users in mysql

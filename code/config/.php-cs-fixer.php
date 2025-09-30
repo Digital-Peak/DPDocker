@@ -51,6 +51,7 @@ $config->setRules([
 	->setUsingCache(false)
 	->setIndent("\t")
 	->setFinder($finder)
-	->setParallelConfig(ParallelConfigFactory::detect());
+	->setParallelConfig(ParallelConfigFactory::detect())
+	->setUnsupportedPhpVersionAllowed(true);
 
 return $config;

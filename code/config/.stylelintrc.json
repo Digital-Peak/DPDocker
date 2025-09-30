@@ -11,6 +11,7 @@
 		"scss/at-extend-no-missing-placeholder": null,
 		"selector-id-pattern": null,
 		"no-duplicate-selectors": null,
+		"nesting-selector-no-missing-scoping-root": null,
 		"rule-empty-line-before": [
 			"always",
 			{

@@ -28,6 +28,16 @@ if (!$completeVersion) {
 		}
 
 		$completeVersion = $branch->version;
+
+		// Because of the security repos in the composer file, we need to use the branches
+		if ($completeVersion === '4.4.14') {
+			$completeVersion = '0334ccf0bf1067766d4523bda32ae0ebfd2645f5';
+		}
+
+		if ($completeVersion === '5.3.4') {
+			$completeVersion = 'a3baa9a50668fc17d778487acec89df9fd2282b8';
+		}
+
 		break;
 	}
 }
@@ -42,7 +52,7 @@ if (!is_dir($root . '/cache/' . $completeVersion)) {
 	echo 'Cloning ' . $completeVersion . ' from repo to cache directory' . PHP_EOL;
 	shell_exec('git clone https://github.com/joomla/joomla-cms.git ' . $root . '/cache/' . $completeVersion . ' > /dev/null 2>&1');
 	// Checkout latest stable release
-	shell_exec('git --work-tree=' . $root . '/cache/' . $completeVersion . ' --git-dir=' . $root . '/cache/' . $completeVersion . '/.git checkout ' . ($isBranch ? $completeVersion : 'tags/' . $completeVersion) . ' > /dev/null 2>&1');
+	shell_exec('git --work-tree=' . $root . '/cache/' . $completeVersion . ' --git-dir=' . $root . '/cache/' . $completeVersion . '/.git checkout ' . ($isBranch || strlen($completeVersion) === 40  ? $completeVersion : 'tags/' . $completeVersion) . ' > /dev/null 2>&1');
 	$syncBack = true;
 }
 
@@ -61,10 +71,19 @@ shell_exec('rsync -r --delete --exclude .git ' . $root . '/cache/' . $completeVe
 echo 'Using version ' . $completeVersion . ' on ' . $wwwRoot . PHP_EOL;
 
 // Put joomla in dev state so we don't have to delete the installation directory
-file_put_contents(
-	$wwwRoot . '/libraries/src/Version.php',
-	str_replace("const DEV_STATUS = 'Stable';", "const DEV_STATUS = 'Development';", file_get_contents($wwwRoot . '/libraries/src/Version.php'))
-);
+$versionFile = file_get_contents($wwwRoot . '/libraries/src/Version.php');
+$versionFile = str_replace("const DEV_STATUS = 'Stable';", "const DEV_STATUS = 'Development';", $versionFile);
+$versionFile = str_replace("public const EXTRA_VERSION = 'dev';", "public const EXTRA_VERSION = '';", $versionFile);
+
+if ($joomlaVersion == 4 && strlen($completeVersion) === 40) {
+	$versionFile = str_replace("public const PATCH_VERSION = 15;", "public const PATCH_VERSION = 14;", $versionFile);
+}
+
+if ($joomlaVersion == 5 && strlen($completeVersion) === 40) {
+	$versionFile = str_replace("public const PATCH_VERSION = 5;", "public const PATCH_VERSION = 4;", $versionFile);
+}
+
+file_put_contents($wwwRoot . '/libraries/src/Version.php', $versionFile);
 
 // Live output the install Joomla command
 while (@ob_end_flush());

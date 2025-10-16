@@ -9,7 +9,7 @@ my=${my:-8.3}
 php=${php:-latest}
 e=${e:-}
 t=${t:-}
-j=${j:-5}
+j=${j:-6}
 b=${b:-chrome}
 
 while [ $# -gt 0 ]; do

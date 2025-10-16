@@ -98,13 +98,6 @@ php -d error_reporting=1 $root/installation/joomla.php install -n --site-name="$
 # Set some parameters
 php -d error_reporting=1 $root/cli/joomla.php config:set secret=XgrJSL137VSjPBVn error_reporting=maximum debug=true mailer=smtp smtphost=$smtpHost smtpport=1025 sef_rewrite=true lifetime=9999
 
-# Special Joomla 4 adaptions
-if [ ! -d $root/plugins/schemaorg ]; then
-	# Needs error reporting simple because of PHP 8.x deprecations
-	php -d error_reporting=1 $root/cli/joomla.php config:set error_reporting=simple
-	sed -i '/\\E_STRICT/ s/^/\/\//' $root/libraries/vendor/symfony/error-handler/ErrorHandler.php
-fi
-
 # Setup the users in mysql
 if [ $dbType == 'mysqli' ]; then
 	mysql -u root -proot -h $dbHost -D $dbName -e "DELETE FROM j_users"

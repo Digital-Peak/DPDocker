@@ -20,12 +20,12 @@ Examples
 
 ```
 ./run-system-tests.sh -e Foo # All tests on Joomla 4 on the latest PHP version on chrome
-./run-system-tests.sh -e Foo -b firefox -j 5.0-dev # All tests on Joomla 5.0-dev on the latest PHP version on firefox
-./run-system-tests.sh -e Foo -j 3 -php 7.3 # All tests only on Joomla 3 and PHP 7.3 on chrome
-./run-system-tests.sh -e Foo -t tests/acceptance/views -php 8.3 # Test in folder tests/acceptance/views on Joomla 4 on PHP 8.3 on chrome
-./run-system-tests.sh -e Foo -t tests/acceptance/views -j 4 # Tests in folder tests/acceptance/views on Joomla 4 on the latest PHP version on chrome
-./run-system-tests.sh -e Foo -t tests/acceptance/views/ArticleViewCest.php:canSeeArticle # Test tests/acceptance/views/ArticleViewCest.php:canSeeArticle on Joomla 4 on the latest PHP version on chrome
-./run-system-tests.sh -e Foo -t tests/acceptance/views/ArticleViewCest.php:canSeeArticle -j 4 -php 8.1 # Test tests/acceptance/views/ArticleViewCest.php:canSeeArticle on Joomla 4 on PHP 8.1 on chrome
+./run-system-tests.sh -e Foo -b firefox -j 6.0-dev # All tests on Joomla 6.0-dev on the latest PHP version on firefox
+./run-system-tests.sh -e Foo -j 5 -php 8.3 # All tests only on Joomla 5 and PHP 8.3 on chrome
+./run-system-tests.sh -e Foo -t tests/acceptance/views -php 8.3 # Test in folder tests/acceptance/views on Joomla 6 on PHP 8.3 on chrome
+./run-system-tests.sh -e Foo -t tests/acceptance/views -j 6 # Tests in folder tests/acceptance/views on Joomla 6 on the latest PHP version on chrome
+./run-system-tests.sh -e Foo -t tests/acceptance/views/ArticleViewCest.php:canSeeArticle # Test tests/acceptance/views/ArticleViewCest.php:canSeeArticle on Joomla 6 on the latest PHP version on chrome
+./run-system-tests.sh -e Foo -t tests/acceptance/views/ArticleViewCest.php:canSeeArticle -j 5 -php 8.1 # Test tests/acceptance/views/ArticleViewCest.php:canSeeArticle on Joomla 5 on PHP 8.1 on chrome
 ```
 
 - -e  
@@ -33,7 +33,7 @@ Examples
 - -t  
   The test attribute is optional. If it is set then only this test is executed, otherwise the whole extension.
 - -j  
-  The Joomla version is optional, if not set it defaults to the latest stable version of Joomla 4. An actual branch can also be specified, like 4.4-dev or 5.0-dev, then the latest code is fetched from the repository.
+  The Joomla version is optional, if not set it defaults to the latest stable version of Joomla 6. An actual branch can also be specified, like 5.4-dev or 6.0-dev, then the latest code is fetched from the repository.
 - -php  
   The PHP version is optional. If it is not set, tests will be run on the latest PHP version.
 
@@ -46,7 +46,7 @@ Examples
 
 ```
 ./run-joomla-system-tests.sh -j cms4 #All tests including the installation test on the latest PHP where joomla is cloned into the folder cms4
-./run-joomla-system-tests.sh -j joomla-cms -php 7.3 #All tests including the installation test on PHP 7.3 where joomla is cloned into the folder joomla-cms
+./run-joomla-system-tests.sh -j joomla-cms -php 8.3 #All tests including the installation test on PHP 8.3 where joomla is cloned into the folder joomla-cms
 ```
 
 - -j  

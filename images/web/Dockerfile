@@ -1,6 +1,6 @@
 ARG PHP_VERSION=8.4
 
-FROM thecodingmachine/php:${PHP_VERSION}-v4-apache-node22
+FROM thecodingmachine/php:${PHP_VERSION}-v5-apache-node22
 
 # Enable extensions
 ENV PHP_EXTENSION_GD=1
@@ -28,16 +28,15 @@ RUN sudo apt-get update && sudo apt-get install -y \
 	mariadb-client \
 	postgresql-client \
 	sqlite3 \
-	graphviz python \
-	build-essential \
 	rsync \
 	zip \
 	unzip \
 	jq \
 	php-pear
 
-# Update NPM and install bun
-RUN sudo npm update -g npm && sudo npm install -g bun
+# Update NPM
+RUN npm config set update-notifier false
+RUN sudo npm update -g npm
 
 # Enable the apache ssl extensions
 ENV APACHE_EXTENSION_DAV=1

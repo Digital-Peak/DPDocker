@@ -15,9 +15,14 @@ $db            = \array_key_exists(3, $argv) ? $argv[3] : 'mysql';
 $joomlaVersion = \array_key_exists(4, $argv) ? $argv[4] : (substr($name, -1) == 6 ? 6 : 5);
 $force         = \array_key_exists(5, $argv) && $argv[5] === 'yes' ? true : false;
 $isBranch      = strpos($joomlaVersion, '-dev') !== false;
+$syncBack      = false;
 
 if (is_dir($wwwRoot) && !$force) {
 	return;
+}
+
+if (is_dir($wwwRoot)) {
+	shell_exec('rm -rf ' . $wwwRoot);
 }
 
 $completeVersion = $isBranch ? $joomlaVersion : null;
@@ -38,22 +43,46 @@ if (!$completeVersion) {
 	return;
 }
 
-$syncBack = false;
-if (!is_dir($root . '/cache/' . $completeVersion)) {
-	downloadStableJoomla($completeVersion, $root);
+if (!$isBranch && !is_dir($root . '/cache/' . $completeVersion)) {
+	echo 'Downloading ' . $completeVersion . ' from site to cache directory' . PHP_EOL;
+
+	$version     = str_replace('.', '-', $completeVersion);
+	$downloadUrl = 'https://downloads.joomla.org/cms/joomla' . $joomlaVersion . '/' . $version . '/Joomla_' . $version . '-Stable-Full_Package.zip?format=zip';
+
+	download($downloadUrl, $root . '/cache/' . $completeVersion);
 }
 
-echo 'Syncing cache to ' . $wwwRoot . PHP_EOL;
-shell_exec('rsync -r --delete --exclude .git ' . $root . '/cache/' . $completeVersion . '/ ' . $wwwRoot . ' > /dev/null 2>&1');
+if ($isBranch && !is_dir($root . '/cache/' . $completeVersion)) {
+	echo 'Downloading ' . $joomlaVersion . ' from repository to cache directory' . PHP_EOL;
+	download('https://github.com/joomla/joomla-cms/archive/refs/heads/' . $joomlaVersion . '.zip', $root . '/cache');
+	rename($root . '/cache/joomla-cms-' . $joomlaVersion, $root . '/cache/' . $completeVersion);
+	$syncBack = true;
+}
+
+echo 'Copy cache to ' . $wwwRoot . PHP_EOL;
+shell_exec('cp -R ' . $root . '/cache/' . $completeVersion . ' ' . $wwwRoot . ' > /dev/null 2>&1');
 
 echo 'Using version ' . $completeVersion . ' on ' . $wwwRoot . PHP_EOL;
 
+// Put joomla in dev state so we don't have to delete the installation directory
+$versionFile = file_get_contents($wwwRoot . '/libraries/src/Version.php');
+$versionFile = str_replace("const DEV_STATUS = 'Stable';", "const DEV_STATUS = 'Development';", $versionFile);
+$versionFile = str_replace("public const EXTRA_VERSION = 'dev';", "public const EXTRA_VERSION = '';", $versionFile);
+
+file_put_contents($wwwRoot . '/libraries/src/Version.php', $versionFile);
+
 // Live output the install Joomla command
 while (@ob_end_flush());
-$proc = popen($root . '/Projects/DPDocker/webserver/scripts/install-joomla.sh ' . $wwwRoot . ' ' . $db . ' sites_' . $name . ' "Joomla ' . $name . '" mailcatcher', 'r');
+$proc = popen($root . '/Projects/DPDocker/webserver/scripts/install-joomla.sh ' . $wwwRoot . ' ' . $db . ' sites_' . $name . ' "Joomla ' . $name . '" mailcatcher' .($isBranch ? ' r' : ''), 'r');
 while (!feof($proc)) {
 	echo fread($proc, 4096);
 	@flush();
+}
+
+// When cloned sync back the assets and dependencies
+if ($syncBack) {
+	echo 'Syncing assets and dependencies back to cache ' . $wwwRoot . PHP_EOL;
+	shell_exec('rsync -r --delete --exclude configuration.php --exclude node_modules --exclude .vscode ' . $wwwRoot . '/ ' . $root . '/cache/' . $completeVersion . ' > /dev/null 2>&1');
 }
 
 // Check if extensions are needed to be installed
@@ -97,25 +126,16 @@ echo shell_exec('sed -i "0,/return -1;/s/return -1;/continue;/" ' . $wwwRoot . '
 echo shell_exec('php -d error_reporting=1 ' . $wwwRoot . '/cli/joomla.php extension:discover');
 echo shell_exec('php -d error_reporting=1 ' . $wwwRoot . '/cli/joomla.php extension:discover:install');
 
-function downloadStableJoomla($version, $root)
-{
-	echo 'Downloading ' . $version . ' from site to cache directory' . PHP_EOL;
-
-	$destinationDir = $root . '/cache/' . $version;
+function download(string $url, string $destinationDir): void {
+	$filename = basename(parse_url($url, PHP_URL_PATH));
+	$zipPath  = $destinationDir . '/' . $filename;
 
 	// Download ZIP
 	if (!is_dir($destinationDir)) {
 		mkdir($destinationDir, 0755, true);
 	}
 
-	[$major]     = explode('.', $version);
-	$version     = str_replace('.', '-', $version);
-	$downloadUrl = 'https://downloads.joomla.org/cms/joomla' . $major . '/' . $version . '/Joomla_' . $version . '-Stable-Full_Package.zip?format=zip';
-
-	$filename = basename(parse_url($downloadUrl, PHP_URL_PATH));
-	$zipPath  = $destinationDir . '/' . $filename;
-
-	$ch = curl_init($downloadUrl);
+	$ch = curl_init($url);
 	$fp = fopen($zipPath, 'w');
 	curl_setopt($ch, CURLOPT_FILE, $fp);
 	curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
@@ -140,26 +160,4 @@ function downloadStableJoomla($version, $root)
 	unlink($zipPath);
 
 	echo 'Extracted successfully' . PHP_EOL;
-}
-
-function downloadDevJoomla($version, $branch, $root)
-{
-
-	$syncBack = false;
-	if (!is_dir($root . '/cache/' . $version)) {
-		echo 'Cloning ' . $version . ' from repo to cache directory' . PHP_EOL;
-		shell_exec('git clone https://github.com/joomla/joomla-cms.git ' . $root . '/cache/' . $version . ' > /dev/null 2>&1');
-		// Checkout latest stable release
-		shell_exec('git --work-tree=' . $root . '/cache/' . $version . ' --git-dir=' . $root . '/cache/' . $version . '/.git checkout ' . ($isBranch ? $version : 'tags/' . $version) . ' > /dev/null 2>&1');
-		$syncBack = true;
-	}
-
-	// Only update when it is a branch and not newly cloned
-	if ($isBranch && !$syncBack) {
-		echo 'Updating branch ' . $version . PHP_EOL;
-		shell_exec('git --work-tree=' . $root . '/cache/' . $version . ' --git-dir=' . $root . '/cache/' . $version . '/.git fetch > /dev/null 2>&1');
-		shell_exec('git --work-tree=' . $root . '/cache/' . $version . ' --git-dir=' . $root . '/cache/' . $version . '/.git reset --hard > /dev/null 2>&1');
-		shell_exec('git --work-tree=' . $root . '/cache/' . $version . ' --git-dir=' . $root . '/cache/' . $version . '/.git pull > /dev/null 2>&1');
-		$syncBack = true;
-	}
 }

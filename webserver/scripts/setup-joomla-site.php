@@ -5,15 +5,12 @@
  * @license   http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
  */
 
-$name    = basename($argv[1]);
-$wwwRoot = $argv[1];
-if (!str_starts_with($wwwRoot, '/')) {
-	$wwwRoot = '/var/www/html/' . $wwwRoot;
-}
-$root          = dirname($wwwRoot);
-$db			   = array_key_exists(3, $argv) ? $argv[3] : 'mysql';
-$joomlaVersion = array_key_exists(4, $argv) ? $argv[4] : (substr($name, -1) == 6 ? 6 : 5);
-$force		   = array_key_exists(5, $argv) && $argv[5] === 'yes' ? true : false;
+$wwwRoot       = !str_starts_with($argv[1], '/') ? '/var/www/html/' . $argv[1] : $argv[1];
+$name          = basename($wwwRoot);
+$root          = \dirname($wwwRoot);
+$db            = \array_key_exists(3, $argv) ? $argv[3] : 'mysql';
+$joomlaVersion = \array_key_exists(4, $argv) ? $argv[4] : (substr($name, -1) == 6 ? 6 : 5);
+$force         = \array_key_exists(5, $argv) && $argv[5] === 'yes' ? true : false;
 $isBranch      = strpos($joomlaVersion, '-dev') !== false;
 
 if (is_dir($wwwRoot) && !$force) {
@@ -38,26 +35,23 @@ if (!$completeVersion) {
 	return;
 }
 
-$syncBack = false;
-if (!is_dir($root . '/cache/' . $completeVersion)) {
-	echo 'Cloning ' . $completeVersion . ' from repo to cache directory' . PHP_EOL;
-	shell_exec('git clone https://github.com/joomla/joomla-cms.git ' . $root . '/cache/' . $completeVersion . ' > /dev/null 2>&1');
-	// Checkout latest stable release
-	shell_exec('git --work-tree=' . $root . '/cache/' . $completeVersion . ' --git-dir=' . $root . '/cache/' . $completeVersion . '/.git checkout ' . ($isBranch  ? $completeVersion : 'tags/' . $completeVersion) . ' > /dev/null 2>&1');
-	$syncBack = true;
+if (!$isBranch && !is_dir($root . '/cache/' . $completeVersion)) {
+	echo 'Downloading ' . $completeVersion . ' from site to cache directory' . PHP_EOL;
+
+	download('/releases/download/' . $completeVersion . '/Joomla_' . $completeVersion . '-Stable-Full_Package.zip', $root . '/cache/' . $completeVersion);
 }
 
-// Only update when it is a branch and not newly cloned
-if ($isBranch && !$syncBack) {
-	echo 'Updating branch ' . $completeVersion . PHP_EOL;
-	shell_exec('git --work-tree=' . $root . '/cache/' . $completeVersion . ' --git-dir=' . $root . '/cache/' . $completeVersion . '/.git fetch > /dev/null 2>&1');
-	shell_exec('git --work-tree=' . $root . '/cache/' . $completeVersion . ' --git-dir=' . $root . '/cache/' . $completeVersion . '/.git reset --hard > /dev/null 2>&1');
-	shell_exec('git --work-tree=' . $root . '/cache/' . $completeVersion . ' --git-dir=' . $root . '/cache/' . $completeVersion . '/.git pull > /dev/null 2>&1');
-	$syncBack = true;
+if ($isBranch) {
+	echo 'Downloading ' . $completeVersion . ' from repository to cache directory' . PHP_EOL;
+
+	// Remove existing cache to have always the latest code
+	shell_exec('rm -rf ' . $root . '/cache/' . $completeVersion);
+	download('/archive/refs/heads/' . $completeVersion . '.zip', $root . '/cache');
+	rename($root . '/cache/joomla-cms-' . $completeVersion, $root . '/cache/' . $completeVersion);
 }
 
 echo 'Syncing cache to ' . $wwwRoot . PHP_EOL;
-shell_exec('rsync -r --delete --exclude .git ' . $root . '/cache/' . $completeVersion . '/ ' . $wwwRoot . ' > /dev/null 2>&1');
+shell_exec('rsync -r --delete ' . $root . '/cache/' . $completeVersion . '/ ' . $wwwRoot . ' > /dev/null 2>&1');
 
 echo 'Using version ' . $completeVersion . ' on ' . $wwwRoot . PHP_EOL;
 
@@ -70,16 +64,10 @@ file_put_contents($wwwRoot . '/libraries/src/Version.php', $versionFile);
 
 // Live output the install Joomla command
 while (@ob_end_flush());
-$proc = popen($root . '/Projects/DPDocker/webserver/scripts/install-joomla.sh ' . $wwwRoot . ' ' . $db . ' sites_' . $name . ' "Joomla ' . $name . '" mailcatcher' .($isBranch ? ' r' : ''), 'r');
+$proc = popen($root . '/Projects/DPDocker/webserver/scripts/install-joomla.sh ' . $wwwRoot . ' ' . $db . ' sites_' . $name . ' "Joomla ' . $name . '" mailcatcher' . ($isBranch ? ' r' : ''), 'r');
 while (!feof($proc)) {
 	echo fread($proc, 4096);
 	@flush();
-}
-
-// When cloned sync back the assets and dependencies
-if ($syncBack) {
-	echo 'Syncing assets and dependencies back to cache ' . $wwwRoot . PHP_EOL;
-	shell_exec('rsync -r --delete --exclude .git --exclude configuration.php --exclude node_modules --exclude .vscode ' . $wwwRoot . '/ ' . $root . '/cache/' . $completeVersion . ' > /dev/null 2>&1');
 }
 
 // Check if extensions are needed to be installed
@@ -89,7 +77,7 @@ if (!$argv[2]) {
 
 $folders = explode(',', $argv[2]);
 if ($argv[2] == 'all') {
-	$folders = array_diff(scandir(dirname(dirname(dirname(__DIR__)))), ['..', '.', 'DPDocker']);
+	$folders = array_diff(scandir(\dirname(__DIR__, 3)), ['..', '.', 'DPDocker']);
 }
 
 require_once 'link-extension.php';
@@ -117,8 +105,46 @@ foreach ($folders as $project) {
 
 	createLinks($root . '/Projects/' . $project . '/', $wwwRoot);
 }
+
 echo 'Discovering extensions on ' . $wwwRoot . PHP_EOL;
 // Ugly hack to not abort when an extension fails
 echo shell_exec('sed -i "0,/return -1;/s/return -1;/continue;/" ' . $wwwRoot . '/libraries/src/Console/ExtensionDiscoverInstallCommand.php');
 echo shell_exec('php -d error_reporting=1 ' . $wwwRoot . '/cli/joomla.php extension:discover');
 echo shell_exec('php -d error_reporting=1 ' . $wwwRoot . '/cli/joomla.php extension:discover:install');
+
+function download(string $url, string $destinationDir): void
+{
+	$filename = basename(parse_url($url, PHP_URL_PATH));
+	$zipPath  = $destinationDir . '/' . $filename;
+
+	// Download ZIP
+	if (!is_dir($destinationDir)) {
+		mkdir($destinationDir, 0755, true);
+	}
+
+	$ch = curl_init('https://github.com/joomla/joomla-cms' . $url);
+	$fp = fopen($zipPath, 'w');
+	curl_setopt($ch, CURLOPT_FILE, $fp);
+	curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+	curl_setopt($ch, CURLOPT_TIMEOUT, 600);
+	curl_exec($ch);
+	curl_close($ch);
+	fclose($fp);
+
+	// Unzip
+	if (!is_dir($destinationDir)) {
+		mkdir($destinationDir, 0755, true);
+	}
+
+	$zip = new ZipArchive();
+	if (!$zip->open($zipPath) === true) {
+		throw new RuntimeException('Could not extract Joomla package');
+	}
+
+	$zip->extractTo($destinationDir);
+	$zip->close();
+
+	unlink($zipPath);
+
+	echo 'Extracted successfully' . PHP_EOL;
+}

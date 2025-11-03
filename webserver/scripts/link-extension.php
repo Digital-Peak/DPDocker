@@ -157,6 +157,6 @@ function createLink($source, $target)
 {
 	$source = realpath($source);
 
-	@mkdir(dirname($target), 0777, true);
+	@mkdir(\dirname($target), 0777, true);
 	shell_exec('ln -sfn ' . $source . ' ' . $target);
 }

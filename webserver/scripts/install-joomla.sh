@@ -50,7 +50,7 @@ if [ ! -d $root/media/vendor ]; then
 	npm ci &>/dev/null
 fi
 
-# Abort installatio when configuration file exists
+# Abort installation when configuration file exists
 if [ -f $root/configuration.php ]; then
 	exit
 fi

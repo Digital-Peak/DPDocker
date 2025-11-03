@@ -92,7 +92,7 @@ if (!$argv[2]) {
 
 $folders = explode(',', $argv[2]);
 if ($argv[2] == 'all') {
-	$folders = array_diff(scandir(\dirname(\dirname(\dirname(__DIR__)))), ['..', '.', 'DPDocker']);
+	$folders = array_diff(scandir(\dirname(__DIR__, 3)), ['..', '.', 'DPDocker']);
 }
 
 require_once 'link-extension.php';
@@ -120,6 +120,7 @@ foreach ($folders as $project) {
 
 	createLinks($root . '/Projects/' . $project . '/', $wwwRoot);
 }
+
 echo 'Discovering extensions on ' . $wwwRoot . PHP_EOL;
 // Ugly hack to not abort when an extension fails
 echo shell_exec('sed -i "0,/return -1;/s/return -1;/continue;/" ' . $wwwRoot . '/libraries/src/Console/ExtensionDiscoverInstallCommand.php');

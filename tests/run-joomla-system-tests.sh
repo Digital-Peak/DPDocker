@@ -38,7 +38,7 @@ export GROUP_ID=$(id -g)
 # Stop the containers
 docker compose -f $(dirname $0)/docker-compose.yml stop
 
-sudo xhost +
+xhost +local:docker
 
 # Run the tests
 docker compose -f $(dirname $0)/docker-compose.yml up joomla-system-tests

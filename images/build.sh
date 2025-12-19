@@ -12,8 +12,10 @@ fi
 docker build $(dirname $0)/cli $f -t digitpeak/dpdocker-cli:8.2 --build-arg PHP_VERSION=8.2
 docker build $(dirname $0)/cli $f -t digitpeak/dpdocker-cli:8.3 --build-arg PHP_VERSION=8.3
 docker build $(dirname $0)/cli $f -t digitpeak/dpdocker-cli:8.4 --build-arg PHP_VERSION=8.4
-docker build $(dirname $0)/cli $f -t digitpeak/dpdocker-cli:latest --build-arg PHP_VERSION=8.4
+docker build $(dirname $0)/cli $f -t digitpeak/dpdocker-cli:8.5 --build-arg PHP_VERSION=8.5
+docker build $(dirname $0)/cli $f -t digitpeak/dpdocker-cli:latest --build-arg PHP_VERSION=8.5
 docker build $(dirname $0)/web $f -t digitpeak/dpdocker-web:8.2 --build-arg PHP_VERSION=8.2
 docker build $(dirname $0)/web $f -t digitpeak/dpdocker-web:8.3 --build-arg PHP_VERSION=8.3
 docker build $(dirname $0)/web $f -t digitpeak/dpdocker-web:8.4 --build-arg PHP_VERSION=8.4
-docker build $(dirname $0)/web $f -t digitpeak/dpdocker-web:latest --build-arg PHP_VERSION=8.4
+docker build $(dirname $0)/web $f -t digitpeak/dpdocker-web:8.5 --build-arg PHP_VERSION=8.5
+docker build $(dirname $0)/web $f -t digitpeak/dpdocker-web:latest --build-arg PHP_VERSION=8.5

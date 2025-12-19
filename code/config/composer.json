@@ -1,6 +1,6 @@
 {
 	"require": {
-		"friendsofphp/php-cs-fixer": "^3.92.1",
+		"friendsofphp/php-cs-fixer": "^3.92.3",
 		"rector/rector": "^2.2.14",
 		"phpstan/phpstan": "^2.1.33",
 		"phpstan/phpstan-deprecation-rules": "^2.0.3"

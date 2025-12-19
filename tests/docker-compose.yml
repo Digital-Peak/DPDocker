@@ -5,6 +5,8 @@ services:
     depends_on:
       - web-test
       - selenium-test
+    environment:
+      PHP_INI_REGISTER_ARGC_ARGV: 1
     volumes:
       - ./www:/var/www/html
       - ../..:/usr/src/Projects

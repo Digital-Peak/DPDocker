@@ -43,6 +43,11 @@ if [ ! -d $root/libraries/vendor ]; then
 	composer install --quiet
 fi
 
+# Temporary fix https://github.com/algo26-matthias/idna-convert/pull/59
+if [ -f $root/libraries/vendor/algo26-matthias/idna-convert/src/TranscodeUnicode/ByteLengthTrait.php ]; then
+	sed -i 's@strlen((binary) $string);@strlen((string) $string);@g' $root/libraries/vendor/algo26-matthias/idna-convert/src/TranscodeUnicode/ByteLengthTrait.php
+fi
+
 # Build the assets
 if [ ! -d $root/media/vendor ]; then
 	echo "Installing the assets (takes a while!)"

@@ -5,11 +5,11 @@
 		}
 	},
 	"require": {
-		"codeception/codeception": "^5.3.2",
+		"codeception/codeception": "^5.3.3",
 		"codeception/module-rest": "^3.4.1",
 		"codeception/module-phpbrowser": "^3.0.2",
 		"codeception/module-db": "^3.2.2",
-		"digital-peak/dpception": "^0.11.2"
+		"digital-peak/dpception": "^0.11.3"
 	},
 	"autoload-dev": {
 		"psr-4": {

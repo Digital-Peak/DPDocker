@@ -128,7 +128,6 @@ function download(string $url, string $destinationDir): void
 	curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
 	curl_setopt($ch, CURLOPT_TIMEOUT, 600);
 	curl_exec($ch);
-	curl_close($ch);
 	fclose($fp);
 
 	// Unzip

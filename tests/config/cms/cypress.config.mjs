@@ -26,8 +26,9 @@ export default defineConfig({
     screenshotOnRunFailure: true,
     video: false,
 	experimentalRunAllSpecs: true,
+	allowCypressEnv: false,
   },
-  env: {
+  expose: {
     sitename: 'Joomla CMS Test',
     name: 'Admin',
     email: 'admin@example.com',

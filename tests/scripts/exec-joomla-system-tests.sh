@@ -44,7 +44,7 @@ if [[ $2 != 'mysql'* ]]; then
 	DB_TYPE=PostgreSQL
 fi
 
-npx cypress open --project /e2e --e2e  --env db_type=$DB_TYPE,db_name=joomla_${1##*/},db_host=$2-test
+npx cypress open --project /e2e --e2e  --expose db_type=$DB_TYPE,db_name=joomla_${1##*/},db_host=$2-test
 
 # Restore original configuration
 if [ -f configuration.php.bak ]; then

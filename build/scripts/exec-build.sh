@@ -37,6 +37,10 @@ fi
 echo "Clearing comments from ini files"
 find $workingDir/$extension -type f -name "*.ini" -exec sed -i "/^;/d;/^$/d" {} +
 
+echo "Remove empty language files"
+find $workingDir/$extension -type f -name "*.ini" -empty -delete
+find $workingDir/$extension -type d -path "*/language/*" -empty -delete
+
 echo "Executing the build script to create the installation packages"
 php $(dirname $0)/build.php $workingDir/$extension
 

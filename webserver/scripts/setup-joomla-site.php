@@ -109,6 +109,10 @@ foreach ($folders as $project) {
 echo 'Discovering extensions on ' . $wwwRoot . PHP_EOL;
 // Ugly hack to not abort when an extension fails
 echo shell_exec('sed -i "0,/return -1;/s/return -1;/continue;/" ' . $wwwRoot . '/libraries/src/Console/ExtensionDiscoverInstallCommand.php');
+echo shell_exec(
+	"sed -i \"s|\\\$manifestScriptFile = \\\$this->parent->getPath('source') . '/' . \\\$manifestScript;|\\\$manifestScriptFile = \\\$this->parent->getPath('extension_root') . '/' . \\\$manifestScript;|\" "
+	. $wwwRoot . "/libraries/src/Installer/InstallerAdapter.php"
+);
 echo shell_exec('php -d error_reporting=1 ' . $wwwRoot . '/cli/joomla.php extension:discover');
 echo shell_exec('php -d error_reporting=1 ' . $wwwRoot . '/cli/joomla.php extension:discover:install');
 

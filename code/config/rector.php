@@ -19,6 +19,7 @@ use Rector\DeadCode\Rector\StaticCall\RemoveParentCallWithoutParentRector;
 use Rector\EarlyReturn\Rector\If_\ChangeOrIfContinueToMultiContinueRector;
 use Rector\Set\ValueObject\LevelSetList;
 use Rector\Set\ValueObject\SetList;
+use Rector\TypeDeclaration\Rector\StmtsAwareInterface\SafeDeclareStrictTypesRector;
 use Rector\ValueObject\PhpVersion;
 
 return static function (RectorConfig $rectorConfig): void {
@@ -40,7 +41,6 @@ return static function (RectorConfig $rectorConfig): void {
 		SetList::INSTANCEOF,
 		// SetList::NAMING,
 		SetList::PRIVATIZATION,
-		SetList::STRICT_BOOLEANS,
 		SetList::TYPE_DECLARATION,
 		LevelSetList::UP_TO_PHP_81
 	]);
@@ -64,6 +64,8 @@ return static function (RectorConfig $rectorConfig): void {
 		ChangeOrIfContinueToMultiContinueRector::class,
 		// Multiuse should be allowed in component classes
 		SeparateMultiUseImportsRector::class => ['*Component.php'],
+		// Do not add strict types
+		SafeDeclareStrictTypesRector::class,
 
 		// Ignore not project files
 		'*/vendor/*',

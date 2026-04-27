@@ -14,7 +14,7 @@ services:
       - test:/tmp/tests
 
   joomla-system-tests:
-    image: joomlaprojects/docker-images:cypress8.4
+    image: joomlaprojects/docker-images:cypress8.5
     entrypoint: /usr/src/Projects/DPDocker/tests/scripts/exec-joomla-system-tests.sh ${JOOMLA} ${DB} ${TEST}
     ports:
       - 8084:8084
@@ -33,7 +33,7 @@ services:
       - /tmp/.X11-unix:/tmp/.X11-unix
 
   selenium-test:
-    image: selenium/standalone-${BROWSER}:4.38.0-20251101
+    image: selenium/standalone-${BROWSER}:4.43.0-20260404
     ports:
       - 4444:4444
       - 5900:5900

@@ -176,12 +176,17 @@ function getConfig(root, asset, config) {
 			css({ modules: true }),
 			{
 				name: 'dp-cache',
-				renderChunk(code) {
+				renderChunk(code, chunk) {
 					// Append hash to the imported files for busting
 					let transformed = code.replaceAll('.min.js', '.min.js?' + hash);
 
-					// Directly append the css to the browser with polyfill
-					if (transformed.endsWith('export { sheet as default };')) {
+					if (chunk.fileName.endsWith('.css.min.js')) {
+						// Ensure there is an export
+						if (!transformed.endsWith('export { sheet as default };')) {
+							transformed += '\nexport { sheet as default };';
+						}
+
+						// Directly append the css to the browser with polyfill
 						transformed = transformed.replace('export { sheet as default };', 'if(document.adoptedStyleSheets)document.adoptedStyleSheets.push(sheet);else{var styleString="";for(let e=0;e<sheet.cssRules.length;e++)styleString=styleString.concat(sheet.cssRules[e].cssText);var style=document.createElement("style");style.type="text/css",style.innerHTML=styleString,document.getElementsByTagName("head")[0].appendChild(style)}');
 					}
 

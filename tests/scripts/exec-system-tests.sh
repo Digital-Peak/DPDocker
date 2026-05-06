@@ -26,10 +26,6 @@ cd $(dirname $0)/../tmp
 cp -r $(dirname $0)/../../../$1/tests .
 cp -r $(dirname $0)/../config/extension/* .
 
-# Temporary code when for local development
-cp -rf $(dirname $0)/../../../DPCeption/src/* vendor/digital-peak/dpception/src
-cp -rf $(dirname $0)/../../../ThinHTTP/src/* vendor/digital-peak/thinhttp/src
-
 export CODECEPTION_BROWSER=$3
 export CODECEPTION_JOOMLA_VERSION=$2
 export CODECEPTION_PHP_VERSION=$4

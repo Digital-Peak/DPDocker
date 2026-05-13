@@ -38,6 +38,9 @@ RUN sudo apt-get update && sudo apt-get install -y \
 RUN npm config set update-notifier false
 RUN sudo npm update -g npm
 
+# Update composer
+RUN sudo composer self-update
+
 # Enable the apache ssl extensions
 ENV APACHE_EXTENSION_DAV=1
 ENV APACHE_EXTENSION_DAV_FS=1

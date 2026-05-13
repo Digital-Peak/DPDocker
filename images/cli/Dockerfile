@@ -37,3 +37,6 @@ RUN sudo apt-get update && sudo apt-get install -y \
 # Update NPM
 RUN npm config set update-notifier false
 RUN sudo npm update -g npm
+
+# Update composer
+RUN sudo composer self-update

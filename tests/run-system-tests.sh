@@ -5,7 +5,7 @@
 
 db=${db:-mysql}
 pg=${pg:-latest}
-my=${my:-8.3}
+my=${my:-latest}
 php=${php:-latest}
 e=${e:-}
 t=${t:-}

@@ -67,15 +67,18 @@ if [ ! -f $root/.htaccess ]; then
 	cp $root/htaccess.txt $root/.htaccess
 fi
 
-echo "Waiting for database server"
-while ! mysqladmin ping -u root -proot -h $dbHost --silent  > /dev/null; do
-	sleep 4
-done
-
 # Define the db type
 dbType="mysqli"
 if [[ $dbHost == 'postgres'* ]]; then
 	dbType="pgsql"
+fi
+
+echo "Waiting for database server"
+
+if [ $dbType == 'mysqli' ]; then
+	while ! mysqladmin ping -u root -proot -h $dbHost --silent  > /dev/null; do sleep 4; done
+else
+	while ! pg_isready -U root -h $dbHost > /dev/null 2>&1; do sleep 4; done
 fi
 
 # Clear existing mysql database
@@ -99,6 +102,9 @@ fi
 
 # Install Joomla
 php -d error_reporting=1 $root/installation/joomla.php install -n --site-name="$site" --admin-user="Admin" --admin-username=admin --admin-password=adminadminadmin --admin-email=admin@example.com --db-type="$dbType" --db-host="$dbHost" --db-name="$dbName" --db-user=root --db-pass=root --db-prefix="j_"
+
+# Ensure cache is writable
+chmod 777 -R $root/administrator/cache
 
 # Set some parameters
 php -d error_reporting=1 $root/cli/joomla.php config:set secret=XgrJSL137VSjPBVn error_reporting=maximum debug=true mailer=smtp smtphost=$smtpHost smtpport=1025 sef_rewrite=true lifetime=9999

@@ -39,6 +39,7 @@ services:
     environment:
       POSTGRES_PASSWORD: root
       POSTGRES_USER: root
+      PGDATA: /var/lib/postgresql/data/pgdata
     ports:
       - 5432:5432
     volumes:

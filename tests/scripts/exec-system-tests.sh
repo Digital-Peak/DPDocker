@@ -46,7 +46,8 @@ mkdir -p $(dirname $0)/../../../$1/tests/src/Support/_generated
 cp -f $(dirname $0)/../tmp/tests/src/Support/_generated/AcceptanceTesterActions.php $(dirname $0)/../../../$1/tests/src/Support/_generated/AcceptanceTesterActions.php
 
 # Cleanup error logs
-sudo chmod 777 /tmp/web_logs/error.log
+sudo rm -rf /tmp/web_logs/*
+sudo chmod -R 777 /tmp/web_logs
 sudo echo -n "" > /tmp/web_logs/error.log
 
 # Run the install task first

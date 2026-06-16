@@ -21,11 +21,11 @@ Examples
 ```
 ./run-system-tests.sh -e Foo # All tests on Joomla 4 on the latest PHP version on chrome
 ./run-system-tests.sh -e Foo -b firefox -j 6.0-dev # All tests on Joomla 6.0-dev on the latest PHP version on firefox
-./run-system-tests.sh -e Foo -j 5 -php 8.3 # All tests only on Joomla 5 and PHP 8.3 on chrome
-./run-system-tests.sh -e Foo -t tests/acceptance/views -php 8.3 # Test in folder tests/acceptance/views on Joomla 6 on PHP 8.3 on chrome
+./run-system-tests.sh -e Foo -j 5 -php 8.5 # All tests only on Joomla 5 and PHP 8.5 on chrome
+./run-system-tests.sh -e Foo -t tests/acceptance/views -php 8.5 # Test in folder tests/acceptance/views on Joomla 6 on PHP 8.5 on chrome
 ./run-system-tests.sh -e Foo -t tests/acceptance/views -j 6 # Tests in folder tests/acceptance/views on Joomla 6 on the latest PHP version on chrome
 ./run-system-tests.sh -e Foo -t tests/acceptance/views/ArticleViewCest.php:canSeeArticle # Test tests/acceptance/views/ArticleViewCest.php:canSeeArticle on Joomla 6 on the latest PHP version on chrome
-./run-system-tests.sh -e Foo -t tests/acceptance/views/ArticleViewCest.php:canSeeArticle -j 5 -php 8.1 # Test tests/acceptance/views/ArticleViewCest.php:canSeeArticle on Joomla 5 on PHP 8.1 on chrome
+./run-system-tests.sh -e Foo -t tests/acceptance/views/ArticleViewCest.php:canSeeArticle -j 5 -php 8.4 # Test tests/acceptance/views/ArticleViewCest.php:canSeeArticle on Joomla 5 on PHP 8.4 on chrome
 ```
 
 - -e  
@@ -46,7 +46,7 @@ Examples
 
 ```
 ./run-joomla-system-tests.sh -j cms4 #All tests including the installation test on the latest PHP where joomla is cloned into the folder cms4
-./run-joomla-system-tests.sh -j joomla-cms -php 8.3 #All tests including the installation test on PHP 8.3 where joomla is cloned into the folder joomla-cms
+./run-joomla-system-tests.sh -j joomla-cms -php 8.5 #All tests including the installation test on PHP 8.5 where joomla is cloned into the folder joomla-cms
 ```
 
 - -j  

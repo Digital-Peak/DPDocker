@@ -14,8 +14,8 @@ To start the web server, execute the following command in a terminal inside the 
 
 - `joomla-pr/run-joomla-pr-webserver.sh 22228 -db postgres -r rebuild`  
 Runs the web server for pr 22228 on a postgres database and rebuilds it when already fetched.
-- `joomla-pr/run-joomla-pr-webserver.sh 33333 -db mysql -php 8.1`  
-Runs the web server for pr 33333 on a mysql database with PHP 8.1.
+- `joomla-pr/run-joomla-pr-webserver.sh 33333 -db mysql -php 8.5`  
+Runs the web server for pr 33333 on a mysql database with PHP 8.5.
 - `joomla-pr/run-joomla-pr-webserver.sh 4.0-dev`  
 Runs the web server for pr branch 4.0-dev with the default PHP version and mysql database.
 
@@ -26,6 +26,8 @@ The first argument must always be the pr number or branch, the other ones are op
     - 8.1
     - 8.2
     - 8.3
+    - 8.4
+    - 8.5
 - -db  
   You can use either _mysql_ or _postgres_ as value. If set then the Joomla installations will be installed with the respective driver. _mysql_ is loaded by default.
 - -my  

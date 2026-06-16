@@ -15,9 +15,9 @@ To start the web server, execute the following command:
 
 Examples
 
-- `./run.sh -php 8.1 -db mysql -my 5.6`
+- `./run.sh -php 8.4 -db mysql -my 5.6`
 
-- `./run.sh -php 8.3 -db postgres -pg 13 -r yes`
+- `./run.sh -php 8.5 -db postgres -pg 13 -r yes`
 
 All attributes are optional.
 - -php  
@@ -26,6 +26,7 @@ All attributes are optional.
   - 8.2
   - 8.3
   - 8.4
+  - 8.5
 - -db  
   You can use either _mysql_ or _postgres_ as value. If set then the Joomla installations will be installed with the respective driver. _mysql_ is loaded by default.
 - -my  

@@ -1,4 +1,4 @@
-ARG PHP_VERSION=8.4
+ARG PHP_VERSION=8.5
 
 FROM thecodingmachine/php:${PHP_VERSION}-v5-apache-node24
 

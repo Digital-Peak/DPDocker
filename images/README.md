@@ -23,10 +23,11 @@ The images are built normally with docker. Every image contains a DOCKERFILE whi
 The hooks folder within the cli and web folder are for dockerhub to build the images automatically during branch updates. You can find more about build hooks [here](https://docs.docker.com/docker-hub/builds/advanced/#override-build-test-or-push-commands).
 
 ### Cli
-The cli image is intended to be used with cli tasks like running scripts or other tasks.
+The [cli image](images/cli/Dockerfile) is intended to be used with cli tasks like running scripts or other tasks. Additionally it comes with some common binaries installed for database and other cli stuff.
 
 ### Web
-The web image runs an apache web server with all needed extensions enabled.
+The [web image](images/web/Dockerfile) runs an apache web server with all needed extensions enabled. Additionally it comes with SSL support (self signed) and some common binaries installed for database and other cli stuff. In the web image is also `localtunnel` installed to quickly start a local tunnel within the web server:
+`lt --port 80`
 
 ## Result
-The docker registry contains two new images, digitpeak/dpdocker-cli and digitpeak/dpdocker-web which are ready to be used. If you want to use a specific PHP version then use the images with a tag, like `digitpeak/dpdocker-cli:8.3`.
+The docker registry contains two new images, digitpeak/dpdocker-cli and digitpeak/dpdocker-web which are ready to be used. If you want to use a specific PHP version then use the images with a tag, like `digitpeak/dpdocker-cli:8.5`.

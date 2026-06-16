@@ -55,3 +55,6 @@ COPY 000-default.conf /etc/apache2/sites-enabled/000-default.conf
 COPY 000-default-ssl.conf /etc/apache2/sites-enabled/000-default-ssl.conf
 COPY webdav.user /etc/apache2/webdav.user
 RUN mkdir -p -m 777 /var/www/html/webdav
+
+# Install localtunnel fro remote access
+RUN sudo npm install -g localtunnel

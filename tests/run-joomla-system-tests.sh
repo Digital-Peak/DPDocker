@@ -27,6 +27,7 @@ fi
 export EXTENSION=$e
 export TEST=$t
 export JOOMLA=$j
+export JOOMLA_DB=${j##*/}
 export DB=$db
 export MYSQL_DBVERSION=$my
 export POSTGRES_DBVERSION=$pg

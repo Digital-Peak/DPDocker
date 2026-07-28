@@ -23,6 +23,8 @@ sudo find $root/$1/$2 -path "*/media/js" -type d -exec rm -rf {} \; &>/dev/null
 
 echo "Started to install and build the assets for $root/$1!"
 
+export NPM_CONFIG_ALLOW_GIT=all
+
 # Loop over manifest files
 for fname in $(find $root/$1/$2 -path ./node_modules -prune -o -name "package.json" 2>/dev/null); do
 	# Exclude the files in node_modules directories

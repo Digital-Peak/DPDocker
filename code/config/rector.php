@@ -16,7 +16,6 @@ use Rector\DeadCode\Rector\ClassMethod\RemoveUselessParamTagRector;
 use Rector\DeadCode\Rector\ClassMethod\RemoveUselessReturnTagRector;
 use Rector\DeadCode\Rector\If_\UnwrapFutureCompatibleIfPhpVersionRector;
 use Rector\DeadCode\Rector\StaticCall\RemoveParentCallWithoutParentRector;
-use Rector\EarlyReturn\Rector\If_\ChangeOrIfContinueToMultiContinueRector;
 use Rector\Set\ValueObject\LevelSetList;
 use Rector\Set\ValueObject\SetList;
 use Rector\TypeDeclaration\Rector\StmtsAwareInterface\SafeDeclareStrictTypesRector;
@@ -60,8 +59,6 @@ return static function (RectorConfig $rectorConfig): void {
 		RemoveParentCallWithoutParentRector::class,
 		// Keep the or in JEXEC
 		LogicalToBooleanRector::class,
-		// No splitting if with ||
-		ChangeOrIfContinueToMultiContinueRector::class,
 		// Multiuse should be allowed in component classes
 		SeparateMultiUseImportsRector::class => ['*Component.php'],
 		// Do not add strict types

@@ -1,15 +1,10 @@
 {
-	"config": {
-		"platform": {
-			"php": "8.2.0"
-		}
-	},
 	"require": {
 		"codeception/codeception": "^5.3.5",
 		"codeception/module-rest": "^3.4.3",
 		"codeception/module-phpbrowser": "^3.0.2",
 		"codeception/module-db": "^3.2.2",
-		"digital-peak/dpception": "^0.13.4"
+		"digital-peak/dpception": "^0.14.0"
 	},
 	"autoload-dev": {
 		"psr-4": {

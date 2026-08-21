@@ -52,13 +52,13 @@ fi
 docker compose -f $(dirname $0)/docker-compose.yml up -d web-test
 
 # Run VNC viewer
-if [[ $(command -v vinagre) ]]; then
+if [[ $(command -v remmina) ]]; then
 	# Waiting for selenium server
 	while ! curl http://localhost:4444 > /dev/null 2>&1; do
 		echo "$(date) - waiting for selenium server"
 		sleep 4
 	done
-	vinagre localhost > /dev/null 2>&1 &
+	remmina -c vnc://user:secret@localhost > /dev/null 2>&1 &
 fi
 
 # Run the tests

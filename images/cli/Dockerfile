@@ -35,6 +35,7 @@ RUN sudo apt-get update && sudo apt-get install -y \
 	php-pear
 
 # Update NPM
+RUN npm config set fund false
 RUN npm config set update-notifier false
 RUN sudo npm update -g npm
 

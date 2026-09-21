@@ -1,10 +1,10 @@
 {
 	"require": {
 		"codeception/codeception": "^5.3.5",
-		"codeception/module-rest": "^3.4.3",
+		"codeception/module-rest": "^3.4.4",
 		"codeception/module-phpbrowser": "^3.0.2",
 		"codeception/module-db": "^3.2.2",
-		"digital-peak/dpception": "^0.14.0"
+		"digital-peak/dpception": "^0.14.1"
 	},
 	"autoload-dev": {
 		"psr-4": {

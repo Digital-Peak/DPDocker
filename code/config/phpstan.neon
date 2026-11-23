@@ -32,12 +32,10 @@ parameters:
 		- message: '#Variable \$displayData might not be defined.#'
 		  path: */layouts/*
 		- message: '#no value type specified in iterable type array.#'
-		- message: '#Call to deprecated method triggerEvent\(\)#'
-		- message: '#Call to method triggerEvent\(\) of deprecated interface#'
 		- message: '#Call to deprecated method getErrors?\(\)#'
 		- message: '#Path in require_once\(\) "([^"]+)/DPDocker/code/tmp/joomla\\#'
-		- message: '#expects array, Joomla\\Event\\DispatcherInterface given#'
 		- message: '#of deprecated interface Joomla\\Database\\Query\\PreparableInterface#'
 		- message: '#of deprecated interface Joomla\\Database\\Query\\LimitableInterface#'
 		- message: '#Call to method get\(\) of deprecated class Joomla\\CMS\\MVC\\Model\\State#'
 		- message: '#constructor expects Joomla\\Database\\DatabaseDriver, Joomla\\Database\\DatabaseInterface given#'
+		- message: '#Plugin should implement DispatcherAwareInterface on its own, when it is needed.#'

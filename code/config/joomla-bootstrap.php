@@ -21,6 +21,10 @@ if (!defined('_JEXEC')) {
 	//require_once JPATH_BASE . '/tmp/libraries/bootstrap.php';
 }
 
+// The Akeeba S3 library dies on every file when this constant is not defined. PHPStan
+// loads classes in its workers, so the die() would kill the worker silently.
+defined('AKEEBAENGINE') || define('AKEEBAENGINE', 1);
+
 // Start the auto loaders
 foreach (new RecursiveIteratorIterator(new RecursiveDirectoryIterator(getenv('DPDOCKER_EXTENSION_PATH'))) as $file) {
 	if (strpos($file, '/vendor/autoload.php') !== false) {

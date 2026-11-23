@@ -16,37 +16,25 @@ use Rector\DeadCode\Rector\ClassMethod\RemoveUselessParamTagRector;
 use Rector\DeadCode\Rector\ClassMethod\RemoveUselessReturnTagRector;
 use Rector\DeadCode\Rector\If_\UnwrapFutureCompatibleIfPhpVersionRector;
 use Rector\DeadCode\Rector\StaticCall\RemoveParentCallWithoutParentRector;
-use Rector\EarlyReturn\Rector\If_\ChangeOrIfContinueToMultiContinueRector;
-use Rector\Set\ValueObject\LevelSetList;
-use Rector\Set\ValueObject\SetList;
 use Rector\TypeDeclaration\Rector\StmtsAwareInterface\SafeDeclareStrictTypesRector;
 use Rector\ValueObject\PhpVersion;
 
-return static function (RectorConfig $rectorConfig): void {
+$config = RectorConfig::configure()
 	// Min version
-	$rectorConfig->phpVersion(PhpVersion::PHP_81);
-
-	// No short class import
-	$rectorConfig->importShortClasses(false);
-
-	// Tabs for indentation
-	$rectorConfig->indent('	', 1);
-
+	->withPhpVersion(PhpVersion::PHP_81)
+	->withPhpSets(php81: true)
 	// Complete sets with rules
-	$rectorConfig->sets([
-		SetList::CODE_QUALITY,
-		SetList::CODING_STYLE,
-		SetList::DEAD_CODE,
-		SetList::EARLY_RETURN,
-		SetList::INSTANCEOF,
-		// SetList::NAMING,
-		SetList::PRIVATIZATION,
-		SetList::TYPE_DECLARATION,
-		LevelSetList::UP_TO_PHP_81
-	]);
-
+	->withPreparedSets(
+		deadCode: true,
+		codeQuality: true,
+		codingStyle: true,
+		typeDeclarations: true,
+		privatization: true
+	)
+	// Tabs for indentation
+	->withIndent("\t", 1)
 	// Skip some rules and folders/files
-	$rectorConfig->skip([
+	->withSkip([
 		// Keep Joomla version compare
 		UnwrapFutureCompatibleIfPhpVersionRector::class,
 		// Keep docs
@@ -64,29 +52,25 @@ return static function (RectorConfig $rectorConfig): void {
 		SeparateMultiUseImportsRector::class => ['*Component.php'],
 		// Do not add strict types
 		SafeDeclareStrictTypesRector::class,
-		// No split
-		ChangeOrIfContinueToMultiContinueRector::class,
 
 		// Ignore not project files
 		'*/vendor/*',
 		'*/AcceptanceTesterActions.php',
 		'*/deleted.php'
-	]);
-
+	])
 	// The bootstrap file, which finds the core classes and loads the extension namespace
-	$rectorConfig->bootstrapFiles([__DIR__ . '/joomla-bootstrap.php']);
-
+	->withBootstrapFiles([__DIR__ . '/joomla-bootstrap.php'])
 	// Do not overload the system
-	$rectorConfig->parallel(120, 2, 2);
+	->withParallel(120, 2, 2);
 
-	// Check if the temp dir exists
-	if (!is_dir('/tmp/rector')){
-		return;
+// The cache directory, only when the temp dir exists
+if (is_dir('/tmp/rector')) {
+	$cacheDir = '/tmp/rector/' . getenv('DPDOCKER_EXTENSION_NAME');
+	if (!is_dir($cacheDir)) {
+		mkdir($cacheDir);
 	}
 
-	// The cache directory
-	if (!is_dir('/tmp/rector/' . getenv('DPDOCKER_EXTENSION_NAME'))) {
-		mkdir('/tmp/rector/' . getenv('DPDOCKER_EXTENSION_NAME'));
-	}
-	$rectorConfig->cacheDirectory('/tmp/rector/' . getenv('DPDOCKER_EXTENSION_NAME'));
-};
+	$config->withCache($cacheDir);
+}
+
+return $config;
